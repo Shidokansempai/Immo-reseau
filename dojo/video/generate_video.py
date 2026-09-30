@@ -188,13 +188,13 @@ def scene_shidokan(img, t):
          al, scale=1 + 0.3 * (1 - ease_back(prog(t, a + 0.2, 0.5))))
     text(img, "créé par Maître Yoshiji Soeno", font(F_BEBAS, 72), W / 2, 820, GREY,
          al * ease_out(prog(t, a + 0.8, 0.5)), tracking=3)
-    text(img, "LE « TRIATHLON » DES ARTS MARTIAUX", font(F_BEBAS, 70), W / 2, 980, GOLD,
+    text(img, "BASE KYOKUSHINKAI", font(F_ANTON, 100), W / 2, 990, GOLD,
          al * ease_out(prog(t, a + 1.6, 0.5)), tracking=4)
-    items = ["KARATÉ KNOCKDOWN", "BOXE THAÏ", "LUTTE AU SOL"]
+    items = ["+ SAISIES", "+ PROJECTIONS", "+ SOUMISSIONS"]
     for i, s in enumerate(items):
         st = a + 2.4 + i * BEAT * 2
         p = ease_out(prog(t, st, 0.4))
-        y = 1140 + i * 150
+        y = 1170 + i * 150
         bar(img, W / 2, y, 760 * p, 118, (30, 8, 10), al * 0.9)
         bar(img, W / 2 - 380 * p, y, 14, 118 * p, RED, al)
         text(img, s, font(F_ANTON, 84), W / 2, y, WHITE, al * p, dx=-120 * (1 - p), tracking=4)
@@ -203,16 +203,23 @@ def scene_shidokan(img, t):
 def scene_disciplines(img, t):
     a, b = S["disciplines"]
     al = fade_io(t, a, b)
-    text(img, "4 DISCIPLINES · 1 ÉCOLE", font(F_BEBAS, 88), W / 2, 380, GOLD,
+    text(img, "3 DISCIPLINES · 1 ÉCOLE", font(F_BEBAS, 88), W / 2, 360, GOLD,
          al * ease_out(prog(t, a, 0.4)), tracking=6)
-    items = [("KARATÉ", RED), ("KICK-BOXING", WHITE), ("MMA", RED), ("GRAPPLING", WHITE)]
-    for i, (s, c) in enumerate(items):
-        st = a + 0.6 + i * BEAT * 2
+    items = [
+        ("KARATÉ SHIDOKAN", RED, ("Base Kyokushinkai", "Saisies · Projections · Soumissions")),
+        ("SHIDOBOXING", WHITE, ("Kick-boxing K1 rules · Thaï boxing",)),
+        ("SHIDO-MIX-MARTIAL", RED, ("Grappling · MMA · Lutte",)),
+    ]
+    for i, (s, c, sub) in enumerate(items):
+        st = a + 0.6 + i * BEAT * 3
         p = ease_back(prog(t, st, 0.45))
-        y = 620 + i * 280
+        y = 580 + i * 450
         side = -1 if i % 2 == 0 else 1
-        slash(img, t, st - 0.05, y + 95, color=c if c == RED else GOLD, thick=5, dur=0.3, alpha=al * 0.8)
-        text(img, s, font(F_ANTON, 200), W / 2, y, c, al * clamp(p), dx=side * 700 * (1 - clamp(p)))
+        text(img, s, font(F_ANTON, 130), W / 2, y, c, al * clamp(p), dx=side * 700 * (1 - clamp(p)))
+        slash(img, t, st + 0.2, y + 90, color=GOLD if c == RED else RED, thick=5, dur=0.3, alpha=al * 0.8)
+        for k, line in enumerate(sub):
+            text(img, line, font(F_BEBAS, 62), W / 2, y + 160 + k * 70, GREY,
+                 al * ease_out(prog(t, st + 0.45 + k * 0.15, 0.4)), tracking=2)
 
 
 def scene_profs(img, t):
