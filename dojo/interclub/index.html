@@ -92,6 +92,16 @@ textarea{resize:vertical;min-height:70px}
 .chip.d-mma{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 40%,transparent);background:var(--gold-soft)}
 .chip.d-grappling{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent);background:color-mix(in srgb,var(--ok) 12%,transparent)}
 .chip.d-kata{color:var(--fg)}
+.chip.d-triathlon{color:var(--fg);border-color:var(--gold);background:linear-gradient(90deg,var(--aka-soft),var(--gold-soft),var(--ao-soft))}
+.ava{flex:none;width:56px;height:56px;border-radius:8px;overflow:hidden;background:var(--sunk);border:1px solid var(--line);display:grid;place-items:center;font:20px var(--f-display);color:var(--muted)}
+.ava img{width:100%;height:100%;object-fit:cover;display:block}
+.ava.sm{width:40px;height:40px;font-size:15px;border-radius:50%}
+.ava.lg{width:96px;height:128px;font-size:34px}
+.fiche-id{display:flex;gap:12px;align-items:center;min-width:0}
+.fiche-id>div{min-width:0}
+.photo-pick{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.p-photo{width:min(200px,100%);aspect-ratio:3/4;object-fit:cover;border-radius:10px;border:2px solid var(--line);max-width:100%}
+.side.aka .p-photo{border-color:var(--aka)} .side.ao .p-photo{border-color:var(--ao);justify-self:end}
 .chip.ex{border-style:dashed}
 .chip.warn{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 45%,transparent);background:color-mix(in srgb,var(--warn) 12%,transparent)}
 .chip.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%,transparent);background:color-mix(in srgb,var(--ok) 12%,transparent)}
@@ -161,9 +171,10 @@ textarea{resize:vertical;min-height:70px}
 .b-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .b-meta .title{font:600 13px var(--f-label);letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
 .corners{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center}
-.corner{display:grid;gap:1px;padding:8px 12px;border-radius:8px;min-width:0;position:relative}
+.corner{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;min-width:0;position:relative}
 .corner.aka{background:var(--aka-soft);border-left:4px solid var(--aka)}
-.corner.ao{background:var(--ao-soft);border-right:4px solid var(--ao);text-align:right}
+.corner.ao{background:var(--ao-soft);border-right:4px solid var(--ao);text-align:right;flex-direction:row-reverse}
+.ctext{display:grid;gap:1px;min-width:0}
 .corner b{font:20px/1.05 var(--f-display);text-transform:uppercase;letter-spacing:.01em;overflow-wrap:anywhere}
 .corner small{font:600 13px var(--f-label);letter-spacing:.04em;color:var(--muted);text-transform:uppercase;overflow-wrap:anywhere}
 .corner.win b::after{content:" ✓";color:var(--ok)}
@@ -257,7 +268,8 @@ body.ro [data-w]{display:none!important}
   .b-num strong{font-size:18px}
   .corners{grid-template-columns:minmax(0,1fr)}
   .vs{text-align:center;font-size:14px}
-  .corner.ao{text-align:left;border-right:0;border-left:4px solid var(--ao)}
+  .corner.ao{text-align:left;border-right:0;border-left:4px solid var(--ao);flex-direction:row}
+  .side.ao .p-photo{justify-self:start}
   .g3,.g4,.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .p-main{grid-template-columns:minmax(0,1fr)}
   .p-main .side.ao{text-align:left}
@@ -306,6 +318,7 @@ const DISC={
   kick:{label:"Shidoboxing",fmt:{adulte:"3 × 2 min",jeune:"2 × 1 min 30"}},
   mma:{label:"Shido-MMA",fmt:{adulte:"3 × 3 min",jeune:"2 × 2 min"}},
   grappling:{label:"Grappling",fmt:{adulte:"1 × 6 min",jeune:"1 × 4 min"}},
+  triathlon:{label:"Triathlon Shidokan",fmt:{adulte:"3 × 3 min · karaté, boxe thaï, grappling",jeune:"3 × 2 min · karaté, kick, grappling"}},
   kata:{label:"Kata",fmt:{adulte:"Duel au drapeau",jeune:"Duel au drapeau"}}
 };
 const AGE_CATS=[[0,7,"Poussins"],[8,9,"Pupilles"],[10,11,"Benjamins"],[12,13,"Minimes"],[14,15,"Cadets"],[16,17,"Juniors"],[18,34,"Seniors"],[35,120,"Vétérans"]];
@@ -358,8 +371,10 @@ function derive(f){
   return{age,cat,sex,w,wc,minor,doss,missing,complete:missing.length===0,
     label:cat?`${cat} ${sex==="F"?"F":"H"}${wc?" · "+wc:""}`:"Catégorie à préciser"};
 }
+const avatar=(f,cls="")=>{const ini=((f?.prenom||"?")[0]+((f?.nom||"")[0]||"")).toUpperCase();
+  return `<span class="ava ${cls}">${f?.photo?`<img src="${esc(f.photo)}" alt="Photo de ${esc(f.prenom||"")}">`:esc(ini)}</span>`};
 const fname=f=>f?`${f.prenom||""} ${(f.nom||"").toUpperCase()}`.trim():"À désigner";
-const fighters=()=>Object.values(S.fighters).sort((a,b)=>(a.nom||"").localeCompare(b.nom||"","fr")||(a.prenom||"").localeCompare(b.prenom||"","fr"));
+const fighters=()=>Object.values(S.fighters).sort((a,b)=>(a.nom||a.prenom||"").localeCompare(b.nom||b.prenom||"","fr")||(a.prenom||"").localeCompare(b.prenom||"","fr"));
 function runningOrder(){
   const bs=Object.values(S.bouts);
   return SECTIONS.flatMap(s=>bs.filter(b=>(b.section||"Préliminaires")===s).sort((a,b)=>(a.order||0)-(b.order||0)));
@@ -495,7 +510,7 @@ function rDash(){
     </div>
   </div>`;
 }
-function discColor(k){return{shidokan:"var(--aka)",kick:"var(--ao)",mma:"var(--gold)",grappling:"var(--ok)",kata:"var(--muted)"}[k]}
+function discColor(k){return{shidokan:"var(--aka)",kick:"var(--ao)",mma:"var(--gold)",grappling:"var(--ok)",triathlon:"var(--fg)",kata:"var(--muted)"}[k]}
 function liveBox(b,kind){
   const i=boutInfo(b),n=runningOrder().indexOf(b)+1;
   return `<div class="${kind}"><span class="label">${kind==="now"?'<span class="dot"></span> En cours':"À suivre"} · Combat #${String(n).padStart(2,"0")} · Aire ${esc(b.aire||1)}</span>
@@ -538,8 +553,8 @@ function ficheCard(f){
   const tag=(ok,t)=>ok===null?"":`<span class="${ok?"y":"n"}">${t}</span>`;
   return `<article class="fiche" tabindex="0" data-act="edit-fighter" data-id="${f.id}" style="--belt:${belt}">
     <div class="fiche-top"><span class="belt-name"><i></i>${esc(f.grade||"Grade ?")}</span>${f.exemple?'<span class="chip ex">Exemple</span>':""}</div>
-    <div><h3 class="fname">${esc(f.prenom)} ${esc((f.nom||"").toUpperCase())}${f.surnom?`<small>« ${esc(f.surnom)} »</small>`:""}</h3>
-    <div class="club">${esc(f.club||"Club non renseigné")}</div></div>
+    <div class="fiche-id">${avatar(f)}<div><h3 class="fname">${esc(f.prenom)} ${esc((f.nom||"").toUpperCase())}${f.surnom?`<small>« ${esc(f.surnom)} »</small>`:""}</h3>
+    <div class="club">${esc(f.club||"Club non renseigné")}</div></div></div>
     <dl class="tape"><div><dt>Âge</dt><dd>${d.age??"—"}</dd></div><div><dt>Poids</dt><dd>${d.w!=null?d.w.toLocaleString("fr-FR"):"—"}</dd></div><div><dt>Taille</dt><dd>${num(f.taille)??"—"}</dd></div><div><dt>V-D-N</dt><dd>${rec.join("-")}</dd></div></dl>
     <div class="catline">${esc(d.label)} · ${esc(f.niveau||"Niveau ?")}</div>
     <div class="chips">${(f.disciplines||[]).map(k=>`<span class="chip d-${k}">${esc(DISC[k]?.label||k)}</span>`).join("")||'<span class="chip warn">Aucune discipline</span>'}</div>
@@ -576,9 +591,9 @@ function boutRow(b,n,sec){
       <div class="b-meta">${b.title?`<span class="title">${esc(b.title)}</span>`:""}<span class="chip d-${b.discipline}">${esc(DISC[b.discipline]?.label||"")}</span><span class="chip">${esc(i.cat||"—")}</span><span class="chip">${esc(b.format||"")}</span>
         ${st==="encours"?'<span class="chip live">En cours</span>':st==="termine"?'<span class="chip ok">Terminé</span>':""}${i.r?.exemple?'<span class="chip ex">Exemple</span>':""}</div>
       <div class="corners">
-        <div class="corner aka ${i.r?cls("aka"):"tbd"}"><b>${esc(fname(i.r))}</b><small>${i.r?esc((i.r.club||"")+" · "+kg(i.dr.w)):"Coin rouge"}</small></div>
+        <div class="corner aka ${i.r?cls("aka"):"tbd"}">${avatar(i.r,"sm")}<div class="ctext"><b>${esc(fname(i.r))}</b><small>${i.r?esc((i.r.club||"")+" · "+kg(i.dr.w)):"Coin rouge"}</small></div></div>
         <div class="vs">VS</div>
-        <div class="corner ao ${i.l?cls("ao"):"tbd"}"><b>${esc(fname(i.l))}</b><small>${i.l?esc((i.l.club||"")+" · "+kg(i.dl.w)):"Coin bleu"}</small></div>
+        <div class="corner ao ${i.l?cls("ao"):"tbd"}">${avatar(i.l,"sm")}<div class="ctext"><b>${esc(fname(i.l))}</b><small>${i.l?esc((i.l.club||"")+" · "+kg(i.dl.w)):"Coin bleu"}</small></div></div>
       </div>
       ${i.warn.length&&st!=="termine"?`<div class="chips">${i.warn.map(w=>`<span class="chip warn">${esc(w)}</span>`).join("")}</div>`:""}
       <div class="b-foot"><span class="res">${st==="termine"?resultText(b,i):""}</span>
@@ -640,14 +655,14 @@ function rPoster(){
   const main=order.find(b=>b.title==="Combat vedette")||[...order].reverse().find(b=>(b.section||"")==="Carte principale")||order[order.length-1];
   const live=order.find(b=>b.status==="encours"),next=order.find(b=>b.status!=="termine"&&b!==live);
   const mi=main&&boutInfo(main);
-  const side=(f,dv,c)=>`<div class="side ${c}"><span class="corner-tag">${c==="aka"?"Coin rouge":"Coin bleu"}</span><b>${esc(f?f.prenom:"À désigner")}<br>${esc((f?.nom||"").toUpperCase())}</b>
+  const side=(f,dv,c)=>`<div class="side ${c}">${f?.photo?`<img class="p-photo" src="${esc(f.photo)}" alt="Photo de ${esc(f.prenom||"")}">`:""}<span class="corner-tag">${c==="aka"?"Coin rouge":"Coin bleu"}</span><b>${esc(f?f.prenom:"À désigner")}${f?.nom?"<br>"+esc(f.nom.toUpperCase()):""}</b>
     ${f?.surnom?`<span class="nick">« ${esc(f.surnom)} »</span>`:""}<span class="stats">${f?esc(f.club||""):""}</span>
     ${f?`<span class="stats">${dv.age??"—"} ans · ${kg(dv.w)} · ${num(f.taille)?num(f.taille)+" cm":""} · ${[num(f.v)||0,num(f.d)||0,num(f.n)||0].join("-")}</span>`:""}</div>`;
   p.innerHTML=`
   <div class="panel-head"><div><h2>Affiche</h2><p>À projeter le jour J : les résultats et le combat en cours se mettent à jour en direct.</p></div>
     <div class="actions"><button class="btn" data-act="fullscreen">Plein écran</button><button class="btn" data-act="copy-card">Copier pour les réseaux</button></div></div>
   <div class="poster" id="poster">
-    <div class="p-head"><span class="kicker">Shidokan · Karaté · Shidoboxing · MMA · Grappling</span><h2>${esc(e.name||"Interclub")}</h2>
+    <div class="p-head"><span class="kicker">Karaté · Shidoboxing · Triathlon · MMA · Grappling</span><h2>${esc(e.name||"Interclub")}</h2>
       <span class="when">${isNaN(d)?esc(e.date):esc(d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}))}</span><span class="where">${esc(e.lieu||"")}</span></div>
     ${live||next?`<div class="p-live">${live?liveBox(live,"now"):""}${next?liveBox(next,"next"):""}</div>`:""}
     ${main?`<div class="p-main">${side(mi.r,mi.dr,"aka")}<div class="mid"><span class="label">${esc(main.title||"Combat vedette")}</span><span class="vsbig">VS</span><span class="label">${esc(DISC[main.discipline]?.label||"")}</span><span class="label muted">${esc(mi.cat)} · ${esc(main.format||"")}</span>${main.status==="termine"?`<span class="chip ok">${resultText(main,mi)}</span>`:""}</div>${side(mi.l,mi.dl,"ao")}</div>`
@@ -691,14 +706,20 @@ function rSettings(){
 function openModal(html){const m=$("#modal");$("#sheet").innerHTML=html;m.hidden=false;setTimeout(()=>{const f=$("#sheet input,#sheet select");f&&f.focus()},30)}
 function closeModal(){$("#modal").hidden=true;$("#sheet").innerHTML=""}
 function fighterForm(f){
-  const isNew=!f;f=f||{id:uid(),sexe:"M",disciplines:[],niveau:"Novice",grade:"Sans grade",club:"Fighter Academy Karaté"};
+  const isNew=!f;pendingPhoto=undefined;f=f||{id:uid(),sexe:"M",disciplines:[],niveau:"Novice",grade:"Sans grade",club:"Fighter Academy Karaté"};
   const clubs=[...new Set(Object.values(S.fighters).map(x=>x.club).concat(["Fighter Academy Karaté"]).filter(Boolean))];
   openModal(`<form id="ff" data-id="${f.id}" data-new="${isNew?1:0}">
   <div class="sheet-head"><h3>${isNew?"Nouvelle fiche":esc(fname(f))}</h3><button type="button" class="btn ghost sm" data-act="close">Fermer</button></div>
   <div class="sheet-body">
+    <div class="grp"><span class="label">Photo</span>
+      <div class="photo-pick"><span id="ff-ava">${avatar(f,"lg")}</span>
+        <div class="actions" data-w><label class="btn" for="ff-photo-file">${f.photo?"Changer la photo":"Ajouter une photo"}<input type="file" id="ff-photo-file" accept="image/*" hidden></label>
+        <button type="button" class="btn ghost" data-act="photo-del" ${f.photo?"":"hidden"} id="ff-photo-del">Retirer</button></div>
+        <span class="muted" style="font-size:13px">JPG ou PNG. Recadrée en portrait pour la fiche et l'affiche.</span></div>
+    </div>
     <div class="grp"><span class="label">Identité</span>
       <div class="g3"><label class="field"><span>Prénom</span><input type="text" id="ff-prenom" required value="${esc(f.prenom)}"></label>
-      <label class="field"><span>Nom</span><input type="text" id="ff-nom" required value="${esc(f.nom)}"></label>
+      <label class="field"><span>Nom</span><input type="text" id="ff-nom" value="${esc(f.nom)}" placeholder="facultatif"></label>
       <label class="field"><span>Surnom</span><input type="text" id="ff-surnom" value="${esc(f.surnom)}" placeholder="facultatif"></label></div>
       <div class="g3"><label class="field"><span>Sexe</span><select id="ff-sexe"><option value="M" ${f.sexe!=="F"?"selected":""}>Homme</option><option value="F" ${f.sexe==="F"?"selected":""}>Femme</option></select></label>
       <label class="field"><span>Date de naissance</span><input type="date" id="ff-naissance" value="${esc(f.naissance)}"></label>
@@ -734,12 +755,22 @@ function fighterForm(f){
   $("#ff").addEventListener("input",upd);upd();
   if(!S.canWrite)$$("#ff input,#ff select,#ff textarea").forEach(i=>i.disabled=true);
 }
+let pendingPhoto;
+function shrinkPhoto(file){return new Promise((res,rej)=>{
+  const url=URL.createObjectURL(file),img=new Image();
+  img.onload=()=>{const W=240,H=320,c=document.createElement("canvas");c.width=W;c.height=H;
+    const k=Math.max(W/img.width,H/img.height),dw=img.width*k,dh=img.height*k;
+    c.getContext("2d").drawImage(img,(W-dw)/2,(H-dh)*.3,dw,dh);URL.revokeObjectURL(url);res(c.toDataURL("image/jpeg",.82))};
+  img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error("image"))};img.src=url})}
+function setPhotoPreview(){const id=$("#ff")?.dataset.id;if(!id)return;const x=readFighter(S.fighters[id]||{});
+  $("#ff-ava").innerHTML=avatar(x,"lg");$("#ff-photo-del").hidden=!x.photo;
+  $("label[for=ff-photo-file]").firstChild.textContent=x.photo?"Changer la photo":"Ajouter une photo"}
 function readFighter(base){
   const v=id=>$("#ff-"+id).value.trim(),c=id=>$("#ff-"+id).checked;
   return{...base,prenom:v("prenom"),nom:v("nom"),surnom:v("surnom"),sexe:v("sexe"),naissance:v("naissance"),club:v("club"),
     poids:v("poids"),poidsPesee:v("poidsPesee"),taille:v("taille"),niveau:v("niveau"),grade:v("grade"),v:v("v"),d:v("d"),n:v("n"),
     disciplines:$$("#ff input[name=disc]:checked").map(i=>i.value),certif:c("certif"),licence:c("licence"),autorisation:c("autorisation"),
-    licenceNo:v("licenceNo"),contact:v("contact"),notes:v("notes")};
+    licenceNo:v("licenceNo"),contact:v("contact"),notes:v("notes"),photo:pendingPhoto!==undefined?pendingPhoto:(base.photo||"")};
 }
 
 /* ---------- Combat (modale) ---------- */
@@ -784,8 +815,8 @@ function readBout(base){
 /* ---------- Exemple ---------- */
 function demoData(){
   const C=["Fighter Academy Karaté","Dojo de Saint-Pierre","Team Saint-Louis","Karaté Club du Nord"];
-  const rows=[["Kévin","Payet","M","1998-04-12",C[0],70.4,176,"Marron","Confirmé",["shidokan","kick"],5,2,0,"Le Cyclone"],
-    ["Mickaël","Hoarau","M","1996-09-02",C[1],71.8,178,"Noire 1er dan","Confirmé",["shidokan","kick"],7,3,1,""],
+  const rows=[["Kévin","Payet","M","1998-04-12",C[0],70.4,176,"Marron","Confirmé",["shidokan","kick","triathlon"],5,2,0,"Le Cyclone"],
+    ["Mickaël","Hoarau","M","1996-09-02",C[1],71.8,178,"Noire 1er dan","Confirmé",["shidokan","kick","triathlon"],7,3,1,""],
     ["Jérémy","Grondin","M","2000-01-20",C[2],83.0,182,"Bleue","Intermédiaire",["mma","grappling"],2,1,0,"Le Requin"],
     ["Yannick","Técher","M","1999-06-30",C[0],84.6,180,"Verte","Intermédiaire",["mma","grappling"],3,1,0,""],
     ["Laura","Fontaine","F","2001-11-08",C[0],57.2,165,"Marron","Confirmé",["shidokan","kata"],4,1,0,"Tempête"],
@@ -830,6 +861,7 @@ document.addEventListener("click",async ev=>{
   const el=ev.target.closest("[data-act]");if(!el)return;
   const a=el.dataset.act,id=el.dataset.id;
   if(a==="close")return closeModal();
+  if(a==="photo-del"){pendingPhoto="";setPhotoPreview();return}
   if(a==="edit-fighter")return fighterForm(S.fighters[id]);
   if(a==="fullscreen"){const p=$("#poster");try{document.fullscreenElement?await document.exitFullscreen():await p.requestFullscreen()}catch(e){toast("Plein écran indisponible ici.")}return}
   if(a==="copy-card")return copyText(cardText());
@@ -868,6 +900,9 @@ document.addEventListener("input",e=>{
   if(m){S.f[m]=e.target.value;const pos=e.target.selectionStart;rFighters();const n=$("#"+e.target.id);if(n){n.focus();if(m==="q")try{n.setSelectionRange(pos,pos)}catch(x){}}}
 });
 document.addEventListener("change",async e=>{
+  if(e.target.id==="ff-photo-file"){const file=e.target.files[0];if(!file)return;
+    try{pendingPhoto=await shrinkPhoto(file);setPhotoPreview()}catch(x){toast("Image illisible : choisissez une photo JPG ou PNG.")}
+    e.target.value="";return}
   if(e.target.id!=="imp")return;const file=e.target.files[0];if(!file)return;
   try{const d=JSON.parse(await file.text());let n=0;
     if(d.event)await B.saveEvent({...S.event,...d.event});
@@ -879,7 +914,7 @@ document.addEventListener("change",async e=>{
 document.addEventListener("submit",async e=>{
   e.preventDefault();const f=e.target;
   if(f.id==="ff"){const base=S.fighters[f.dataset.id]||{id:f.dataset.id};const x=readFighter(base);
-    if(!x.prenom||!x.nom)return toast("Indiquez au moins le prénom et le nom.");
+    if(!x.prenom)return toast("Indiquez au moins le prénom.");
     if(await B.saveFighter(x)){S.everWrote=true;closeModal();toast(f.dataset.new==="1"?`${x.prenom} est inscrit·e. Ossu !`:"Fiche enregistrée.")}}
   if(f.id==="bf"){const base=S.bouts[f.dataset.id]||{id:f.dataset.id};const x=readBout(base);
     if(x.aka&&x.aka===x.ao)return toast("Choisissez deux combattants différents.");
