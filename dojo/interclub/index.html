@@ -117,13 +117,14 @@ textarea{resize:vertical;min-height:70px}
 .box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;align-content:start;min-width:0}
 .box h3{font:600 15px var(--f-label);letter-spacing:.08em;text-transform:uppercase}
 .bars{display:grid;gap:10px}
-.bar-row{display:grid;grid-template-columns:130px minmax(0,1fr) 70px;gap:10px;align-items:center;font-size:14px}
+.bar-row{display:grid;grid-template-columns:130px minmax(0,1fr) 90px;gap:10px;align-items:center;font-size:14px}
 .bar{height:10px;background:var(--sunk);border-radius:99px;overflow:hidden;display:flex}
 .bar i{display:block;height:100%}
 .bar-row .num{text-align:right;color:var(--muted);font:600 13px var(--f-label)}
 .todo{display:grid;gap:6px;margin:0;padding:0;list-style:none}
-.todo li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:8px;background:var(--sunk);min-width:0}
-.todo li button{background:none;border:0;padding:0;text-align:left;font-weight:600;cursor:pointer;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.todo li{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px 10px;padding:8px 10px;border-radius:8px;background:var(--sunk);min-width:0}
+.todo .chip{white-space:normal}
+.todo li button{flex:1 1 120px;background:none;border:0;padding:0;text-align:left;font-weight:600;cursor:pointer;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .todo li button:hover{color:var(--aka)}
 .muted{color:var(--muted)}
 .empty{background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:32px 20px;display:grid;gap:12px;justify-items:center;text-align:center}
@@ -179,7 +180,7 @@ textarea{resize:vertical;min-height:70px}
 .corner small{font:600 13px var(--f-label);letter-spacing:.04em;color:var(--muted);text-transform:uppercase;overflow-wrap:anywhere}
 .corner.win b::after{content:" ✓";color:var(--ok)}
 .corner.lose{opacity:.55}
-.corner.tbd b{color:var(--muted)}
+.corner.tbd b{color:var(--muted);font-family:var(--f-body);font-style:italic;font-weight:600;text-transform:none}
 .vs{font:18px var(--f-display);color:var(--muted)}
 .b-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .b-foot .res{font:600 14px var(--f-label);letter-spacing:.05em;text-transform:uppercase}
@@ -221,8 +222,8 @@ textarea{resize:vertical;min-height:70px}
 @keyframes pulse{50%{opacity:.25}}
 .p-sec{display:grid;gap:8px}
 .p-sec h3{font:600 14px var(--f-label);letter-spacing:.3em;text-transform:uppercase;color:var(--gold);text-align:center}
-.p-row{display:grid;grid-template-columns:40px minmax(0,1fr) 38px minmax(0,1fr);gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
-.p-row .n{font:18px var(--f-display);color:var(--muted);font-variant-numeric:tabular-nums}
+.p-row{display:grid;grid-template-columns:54px minmax(0,1fr) 38px minmax(0,1fr);gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.p-row .n{font:17px var(--f-display);color:var(--muted);font-variant-numeric:tabular-nums}
 .p-row .l,.p-row .r{min-width:0}
 .p-row .r{text-align:right}
 .p-row b{font:clamp(17px,2.6vw,24px)/1.05 var(--f-display);text-transform:uppercase;display:block;overflow-wrap:anywhere}
@@ -231,6 +232,10 @@ textarea{resize:vertical;min-height:70px}
 .p-row .meta{grid-column:2/-1;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
 .p-row.done .l:not(.w) b,.p-row.done .r:not(.w) b{opacity:.45}
 .p-row .w b::after{content:" ✓";color:var(--ok)}
+.prog{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.prog div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;display:grid;gap:2px;background:var(--surface)}
+.prog strong{font:20px/1 var(--f-display);color:var(--gold);font-variant-numeric:tabular-nums}
+.prog span{font:600 13px var(--f-label);letter-spacing:.03em}
 .p-foot{text-align:center;color:var(--muted);font:600 13px var(--f-label);letter-spacing:.14em;text-transform:uppercase}
 
 /* Settings */
@@ -274,7 +279,7 @@ body.ro [data-w]{display:none!important}
   .p-main{grid-template-columns:minmax(0,1fr)}
   .p-main .side.ao{text-align:left}
   .p-live{grid-template-columns:minmax(0,1fr)}
-  .p-row{grid-template-columns:28px minmax(0,1fr) 22px minmax(0,1fr);gap:6px}
+  .p-row{grid-template-columns:44px minmax(0,1fr) 22px minmax(0,1fr);gap:6px}
   .bar-row{grid-template-columns:96px minmax(0,1fr) 56px}
   .sugg-row{grid-template-columns:minmax(0,1fr)}
 }
@@ -362,10 +367,10 @@ try{const t=localStorage.getItem("ic-tab");if(t)S.tab=t}catch(e){}
 const h=(location.hash||"").slice(1);if(["dash","fighters","card","poster","settings"].includes(h))S.tab=h;
 
 function derive(f){
-  const age=ageAt(f.naissance,S.event.date),cat=ageCat(age),sex=f.sexe==="F"?"F":"M";
+  const age=ageAt(f.naissance,S.event.date),cat=ageCat(age)||(WEIGHTS[f.catAge]?f.catAge:null),sex=f.sexe==="F"?"F":"M";
   const w=num(f.poidsPesee)??num(f.poids);
-  const wc=cat&&w!=null?weightCat(w,WEIGHTS[cat][sex]):null;
-  const minor=age!=null&&age<18;
+  const wc=f.catPoids?f.catPoids:cat&&w!=null?weightCat(w,WEIGHTS[cat][sex]):null;
+  const minor=age!=null?age<18:!!cat&&!["Seniors","Vétérans"].includes(cat);
   const doss={certif:!!f.certif,licence:!!f.licence,autor:minor?!!f.autorisation:null,pesee:num(f.poidsPesee)!=null};
   const missing=[];if(!doss.certif)missing.push("certificat médical");if(!doss.licence)missing.push("licence");if(minor&&!doss.autor)missing.push("autorisation parentale");
   return{age,cat,sex,w,wc,minor,doss,missing,complete:missing.length===0,
@@ -383,7 +388,8 @@ function boutsOf(id){return Object.values(S.bouts).filter(b=>b.aka===id||b.ao===
 function boutInfo(b){
   const r=S.fighters[b.aka],l=S.fighters[b.ao],warn=[];let cat="";
   const dr=r&&derive(r),dl=l&&derive(l);
-  if(!r||!l)warn.push("Adversaire à désigner");
+  const open=(f,lab)=>!f&&!/^(vainqueur|perdant)/i.test(lab||"");
+  if(open(r,b.akaLabel)||open(l,b.aoLabel))warn.push("Adversaire à désigner");
   if(dr&&dl){
     const tol=num(S.event.tolerance)??3;
     if(b.discipline!=="kata"&&dr.w!=null&&dl.w!=null&&Math.abs(dr.w-dl.w)>tol)warn.push(`Écart ${kg(Math.abs(dr.w-dl.w))}`);
@@ -396,7 +402,8 @@ function boutInfo(b){
     if(!d.complete)warn.push(`Dossier : ${f.prenom||f.nom}`);
     if(!(f.disciplines||[]).includes(b.discipline))warn.push(`${f.prenom||f.nom} non inscrit·e en ${DISC[b.discipline]?.label||b.discipline}`);
   }
-  return{r,l,dr,dl,warn,cat};
+  if(b.categorie)cat=b.categorie;
+  return{r,l,dr,dl,warn,cat,rn:r?fname(r):(b.akaLabel||"À désigner"),ln:l?fname(l):(b.aoLabel||"À désigner")};
 }
 
 /* ---------- Stockage : base partagée (db) ou local ---------- */
@@ -456,7 +463,7 @@ async function boot(){
 function render(){
   const e=S.event,d=new Date(e.date+"T09:00:00");
   $("#h-name").textContent=e.name||"Interclub";
-  $("#h-meta").textContent=(isNaN(d)?e.date:d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}))+" · "+(e.lieu||"");
+  $("#h-meta").textContent=(isNaN(d)?e.date:d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}))+(e.horaires?" · "+e.horaires:"")+" · "+(e.lieu||"");
   const today=new Date();today.setHours(0,0,0,0);const days=Math.round((new Date(e.date+"T00:00:00")-today)/864e5);
   $("#h-count").innerHTML=isNaN(days)?"":days>0?`<strong>J-${days}</strong> avant le gong`:days===0?"<strong>Jour J</strong> Ossu !":"<strong>Terminé</strong>";
   $$("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===S.tab)));
@@ -491,6 +498,7 @@ function rDash(){
     <div class="kpi"><span class="label">Combats</span><strong>${bs.length}</strong><small>${done} terminé${done>1?"s":""} · ${bs.length-done} à venir</small></div>
     <div class="kpi"><span class="label">Dossiers incomplets</span><strong style="color:${incomplete.length?"var(--warn)":"var(--ok)"}">${incomplete.length}</strong><small>certificat, licence, autorisation</small></div>
   </div>
+  ${programme()}
   ${fs.length?"":emptyBlock()}
   ${live||next?`<div class="p-live">${live?liveBox(live,"now"):""}${next?liveBox(next,"next"):""}</div>`:""}
   <div class="grid2">
@@ -513,8 +521,8 @@ function rDash(){
 function discColor(k){return{shidokan:"var(--aka)",kick:"var(--ao)",mma:"var(--gold)",grappling:"var(--ok)",triathlon:"var(--fg)",kata:"var(--muted)"}[k]}
 function liveBox(b,kind){
   const i=boutInfo(b),n=runningOrder().indexOf(b)+1;
-  return `<div class="${kind}"><span class="label">${kind==="now"?'<span class="dot"></span> En cours':"À suivre"} · Combat #${String(n).padStart(2,"0")} · Aire ${esc(b.aire||1)}</span>
-  <strong><span style="color:var(--aka)">${esc(fname(i.r))}</span> <span class="muted">vs</span> <span style="color:var(--ao)">${esc(fname(i.l))}</span></strong>
+  return `<div class="${kind}"><span class="label">${kind==="now"?'<span class="dot"></span> En cours':"À suivre"}${b.heure?" · "+esc(b.heure):""} · Combat #${String(n).padStart(2,"0")} · Aire ${esc(b.aire||1)}</span>
+  <strong><span style="color:var(--aka)">${esc(i.rn)}</span> <span class="muted">vs</span> <span style="color:var(--ao)">${esc(i.ln)}</span></strong>
   <span class="muted">${esc(DISC[b.discipline]?.label||"")} · ${esc(i.cat)} · ${esc(b.format||"")}</span></div>`;
 }
 
@@ -586,14 +594,14 @@ function boutRow(b,n,sec){
   const i=boutInfo(b),st=b.status||"prevu",idx=sec.indexOf(b);
   const win=b.winner,cls=s=>st==="termine"&&win&&win!=="nul"?(win===s?"win":"lose"):"";
   return `<article class="bout ${st}">
-    <div class="b-num"><span>Combat</span><strong>${String(n).padStart(2,"0")}</strong><span>Aire ${esc(b.aire||1)}</span></div>
+    <div class="b-num"><span>${b.heure?esc(b.heure):"Combat"}</span><strong>${String(n).padStart(2,"0")}</strong><span>Aire ${esc(b.aire||1)}</span></div>
     <div class="b-body">
-      <div class="b-meta">${b.title?`<span class="title">${esc(b.title)}</span>`:""}<span class="chip d-${b.discipline}">${esc(DISC[b.discipline]?.label||"")}</span><span class="chip">${esc(i.cat||"—")}</span><span class="chip">${esc(b.format||"")}</span>
+      <div class="b-meta">${b.title?`<span class="title">${esc(b.title)}</span>`:""}<span class="chip d-${b.discipline}">${esc(DISC[b.discipline]?.label||"")}</span><span class="chip">${esc(i.cat||"—")}</span>${b.phase?`<span class="chip">${esc(b.phase)}</span>`:""}<span class="chip">${esc(b.format||"")}</span>
         ${st==="encours"?'<span class="chip live">En cours</span>':st==="termine"?'<span class="chip ok">Terminé</span>':""}${i.r?.exemple?'<span class="chip ex">Exemple</span>':""}</div>
       <div class="corners">
-        <div class="corner aka ${i.r?cls("aka"):"tbd"}">${avatar(i.r,"sm")}<div class="ctext"><b>${esc(fname(i.r))}</b><small>${i.r?esc((i.r.club||"")+" · "+kg(i.dr.w)):"Coin rouge"}</small></div></div>
+        <div class="corner aka ${i.r?cls("aka"):"tbd"}">${avatar(i.r,"sm")}<div class="ctext"><b>${esc(i.rn)}</b><small>${i.r?esc((i.r.club||"")+" · "+kg(i.dr.w)):"Coin rouge"}</small></div></div>
         <div class="vs">VS</div>
-        <div class="corner ao ${i.l?cls("ao"):"tbd"}">${avatar(i.l,"sm")}<div class="ctext"><b>${esc(fname(i.l))}</b><small>${i.l?esc((i.l.club||"")+" · "+kg(i.dl.w)):"Coin bleu"}</small></div></div>
+        <div class="corner ao ${i.l?cls("ao"):"tbd"}">${avatar(i.l,"sm")}<div class="ctext"><b>${esc(i.ln)}</b><small>${i.l?esc((i.l.club||"")+" · "+kg(i.dl.w)):"Coin bleu"}</small></div></div>
       </div>
       ${i.warn.length&&st!=="termine"?`<div class="chips">${i.warn.map(w=>`<span class="chip warn">${esc(w)}</span>`).join("")}</div>`:""}
       <div class="b-foot"><span class="res">${st==="termine"?resultText(b,i):""}</span>
@@ -655,7 +663,7 @@ function rPoster(){
   const main=order.find(b=>b.title==="Combat vedette")||[...order].reverse().find(b=>(b.section||"")==="Carte principale")||order[order.length-1];
   const live=order.find(b=>b.status==="encours"),next=order.find(b=>b.status!=="termine"&&b!==live);
   const mi=main&&boutInfo(main);
-  const side=(f,dv,c)=>`<div class="side ${c}">${f?.photo?`<img class="p-photo" src="${esc(f.photo)}" alt="Photo de ${esc(f.prenom||"")}">`:""}<span class="corner-tag">${c==="aka"?"Coin rouge":"Coin bleu"}</span><b>${esc(f?f.prenom:"À désigner")}${f?.nom?"<br>"+esc(f.nom.toUpperCase()):""}</b>
+  const side=(f,dv,c)=>`<div class="side ${c}">${f?.photo?`<img class="p-photo" src="${esc(f.photo)}" alt="Photo de ${esc(f.prenom||"")}">`:""}<span class="corner-tag">${c==="aka"?"Coin rouge":"Coin bleu"}</span><b>${esc(f?f.prenom:(c==="aka"?mi.rn:mi.ln))}${f?.nom?"<br>"+esc(f.nom.toUpperCase()):""}</b>
     ${f?.surnom?`<span class="nick">« ${esc(f.surnom)} »</span>`:""}<span class="stats">${f?esc(f.club||""):""}</span>
     ${f?`<span class="stats">${dv.age??"—"} ans · ${kg(dv.w)} · ${num(f.taille)?num(f.taille)+" cm":""} · ${[num(f.v)||0,num(f.d)||0,num(f.n)||0].join("-")}</span>`:""}</div>`;
   p.innerHTML=`
@@ -663,20 +671,25 @@ function rPoster(){
     <div class="actions"><button class="btn" data-act="fullscreen">Plein écran</button><button class="btn" data-act="copy-card">Copier pour les réseaux</button></div></div>
   <div class="poster" id="poster">
     <div class="p-head"><span class="kicker">Karaté · Shidoboxing · Triathlon · MMA · Grappling</span><h2>${esc(e.name||"Interclub")}</h2>
-      <span class="when">${isNaN(d)?esc(e.date):esc(d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}))}</span><span class="where">${esc(e.lieu||"")}</span></div>
+      <span class="when">${isNaN(d)?esc(e.date):esc(d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}))}</span><span class="where">${esc(e.lieu||"")}${e.horaires?" · "+esc(e.horaires):""}</span></div>
     ${live||next?`<div class="p-live">${live?liveBox(live,"now"):""}${next?liveBox(next,"next"):""}</div>`:""}
     ${main?`<div class="p-main">${side(mi.r,mi.dr,"aka")}<div class="mid"><span class="label">${esc(main.title||"Combat vedette")}</span><span class="vsbig">VS</span><span class="label">${esc(DISC[main.discipline]?.label||"")}</span><span class="label muted">${esc(mi.cat)} · ${esc(main.format||"")}</span>${main.status==="termine"?`<span class="chip ok">${resultText(main,mi)}</span>`:""}</div>${side(mi.l,mi.dl,"ao")}</div>`
       :`<div class="empty"><h3>La fight card arrive</h3><p>Ajoutez des combats dans l'onglet Fight card pour remplir l'affiche.</p></div>`}
-    ${[...SECTIONS].reverse().map(sec=>{const bs=order.filter(b=>(b.section||"Préliminaires")===sec&&b!==main);if(!bs.length)return"";
+    ${programme()}
+    ${SECTIONS.map(sec=>{const bs=order.filter(b=>(b.section||"Préliminaires")===sec&&b!==main);if(!bs.length)return"";
       return `<div class="p-sec"><h3>${sec}</h3>${bs.map(b=>{const i=boutInfo(b),done=b.status==="termine";
-        return `<div class="p-row ${done?"done":""}"><span class="n">${String(order.indexOf(b)+1).padStart(2,"0")}</span>
-          <div class="l ${done&&b.winner==="aka"?"w":""}"><b style="color:var(--aka)">${esc(fname(i.r))}</b><small>${esc(i.r?.club||"")}</small></div><span class="c">VS</span>
-          <div class="r ${done&&b.winner==="ao"?"w":""}"><b style="color:var(--ao)">${esc(fname(i.l))}</b><small>${esc(i.l?.club||"")}</small></div>
-          <div class="meta"><span class="chip d-${b.discipline}">${esc(DISC[b.discipline]?.label||"")}</span><span class="chip">${esc(i.cat)}</span>${b.status==="encours"?'<span class="chip live">En cours</span>':""}${done?`<span class="chip ok">${b.winner==="nul"?"Nul":esc(b.method||"Terminé")}</span>`:""}</div></div>`}).join("")}</div>`}).join("")}
+        return `<div class="p-row ${done?"done":""}"><span class="n">${b.heure?esc(b.heure):String(order.indexOf(b)+1).padStart(2,"0")}</span>
+          <div class="l ${done&&b.winner==="aka"?"w":""}"><b style="color:var(--aka)">${esc(i.rn)}</b><small>${esc(i.r?.club||"")}</small></div><span class="c">VS</span>
+          <div class="r ${done&&b.winner==="ao"?"w":""}"><b style="color:var(--ao)">${esc(i.ln)}</b><small>${esc(i.l?.club||"")}</small></div>
+          <div class="meta"><span class="chip d-${b.discipline}">${esc(DISC[b.discipline]?.label||"")}</span><span class="chip">${esc(i.cat)}</span>${b.phase?`<span class="chip">${esc(b.phase)}</span>`:""}${b.status==="encours"?'<span class="chip live">En cours</span>':""}${done?`<span class="chip ok">${b.winner==="nul"?"Nul":esc(b.method||"Terminé")}</span>`:""}</div></div>`}).join("")}</div>`}).join("")}
     <div class="p-foot">Organisé par ${esc(e.orga||"")} · Ossu</div>
   </div>`;
 }
 
+function programme(){
+  const items=String(S.event.programme||"").split("\n").map(l=>l.trim()).filter(Boolean).map(l=>{const m=l.match(/^(\d{1,2}\s*[h:]\s*\d{0,2})\s*[-–·:]?\s*(.*)$/i);return m?[m[1].replace(/\s/g,""),m[2]]:["",l]});
+  return items.length?`<div class="prog">${items.map(([t,l])=>`<div><strong>${esc(t)}</strong><span>${esc(l)}</span></div>`).join("")}</div>`:"";
+}
 function rSettings(){
   const p=$("#p-settings"),e=S.event,ex=Object.values(S.fighters).filter(f=>f.exemple).length+Object.values(S.bouts).filter(b=>b.exemple).length;
   p.innerHTML=`
@@ -689,6 +702,8 @@ function rSettings(){
     <label class="field full"><span>Lieu</span><input type="text" id="ev-lieu" value="${esc(e.lieu)}"></label>
     <label class="field full"><span>Organisation</span><input type="text" id="ev-orga" value="${esc(e.orga)}"></label>
     <label class="field"><span>Tolérance de poids (kg)</span><input type="number" min="0" step="0.5" id="ev-tol" value="${esc(e.tolerance)}"></label>
+    <label class="field"><span>Horaires</span><input type="text" id="ev-horaires" value="${esc(e.horaires)}" placeholder="9h – 15h"></label>
+    <label class="field full"><span>Programme (une étape par ligne)</span><textarea id="ev-programme" rows="6" placeholder="9h00 Accueil &amp; pesée">${esc(e.programme)}</textarea></label>
   </div><div data-w><button class="btn primary" type="submit">Enregistrer</button></div></form>
   <div class="box"><h3>Données</h3>
     <p class="muted" style="margin:0">Exportez une sauvegarde avant le jour J. L'import fusionne les fiches et combats sans effacer l'existant.</p>
@@ -734,6 +749,8 @@ function fighterForm(f){
       <label class="field"><span>Victoires</span><input type="number" min="0" id="ff-v" value="${esc(f.v??0)}"></label>
       <label class="field"><span>Défaites</span><input type="number" min="0" id="ff-d" value="${esc(f.d??0)}"></label>
       <label class="field"><span>Nuls</span><input type="number" min="0" id="ff-n" value="${esc(f.n??0)}"></label></div>
+      <div class="g2"><label class="field"><span>Catégorie d'âge (sans date de naissance)</span><select id="ff-catAge"><option value="">Calculée</option>${AGE_CATS.map(c=>`<option ${f.catAge===c[2]?"selected":""}>${c[2]}</option>`).join("")}</select></label>
+      <label class="field"><span>Catégorie de poids imposée</span><input type="text" id="ff-catPoids" value="${esc(f.catPoids)}" placeholder="ex. -80 kg (sinon calculée)"></label></div>
       <div class="calc" id="ff-calc"></div>
     </div>
     <div class="grp"><span class="label">Disciplines et épreuves</span>
@@ -768,7 +785,7 @@ function setPhotoPreview(){const id=$("#ff")?.dataset.id;if(!id)return;const x=r
 function readFighter(base){
   const v=id=>$("#ff-"+id).value.trim(),c=id=>$("#ff-"+id).checked;
   return{...base,prenom:v("prenom"),nom:v("nom"),surnom:v("surnom"),sexe:v("sexe"),naissance:v("naissance"),club:v("club"),
-    poids:v("poids"),poidsPesee:v("poidsPesee"),taille:v("taille"),niveau:v("niveau"),grade:v("grade"),v:v("v"),d:v("d"),n:v("n"),
+    catAge:v("catAge"),catPoids:v("catPoids"),poids:v("poids"),poidsPesee:v("poidsPesee"),taille:v("taille"),niveau:v("niveau"),grade:v("grade"),v:v("v"),d:v("d"),n:v("n"),
     disciplines:$$("#ff input[name=disc]:checked").map(i=>i.value),certif:c("certif"),licence:c("licence"),autorisation:c("autorisation"),
     licenceNo:v("licenceNo"),contact:v("contact"),notes:v("notes"),photo:pendingPhoto!==undefined?pendingPhoto:(base.photo||"")};
 }
@@ -786,12 +803,17 @@ function boutForm(b,finish){
       <label class="field"><span>Format</span><input type="text" id="bf-format" value="${esc(b.format)}"></label>
       <label class="field"><span>Aire</span><select id="bf-aire">${Array.from({length:Math.max(1,num(S.event.aires)||1)},(_, i)=>`<option ${String(b.aire)===String(i+1)?"selected":""}>${i+1}</option>`).join("")}</select></label>
       <label class="field"><span>Partie de la soirée</span><select id="bf-section">${SECTIONS.map(s=>`<option ${b.section===s?"selected":""}>${s}</option>`).join("")}</select></label>
+      <label class="field"><span>Heure</span><input type="text" id="bf-heure" value="${esc(b.heure)}" placeholder="10:20"></label>
+      <label class="field"><span>Phase</span><input type="text" id="bf-phase" list="phases" value="${esc(b.phase)}" placeholder="Poule, Demi 1, Finale…"><datalist id="phases">${["Poule","Combat unique","Quart 1","Quart 2","Quart 3","Quart 4","Demi 1","Demi 2","Barrage","Petite finale","Finale","Exhibition"].map(x=>`<option value="${x}">`).join("")}</datalist></label>
+      <label class="field"><span>Catégorie affichée</span><input type="text" id="bf-categorie" value="${esc(b.categorie)}" placeholder="calculée si vide"></label>
       <label class="field"><span>Affiche</span><select id="bf-title">${TITLES.map(t=>`<option value="${t}" ${b.title===t?"selected":""}>${t||"Combat standard"}</option>`).join("")}</select></label>
       <label class="field"><span>Statut</span><select id="bf-status"><option value="prevu" ${b.status==="prevu"?"selected":""}>Prévu</option><option value="encours" ${b.status==="encours"?"selected":""}>En cours</option><option value="termine" ${b.status==="termine"||finish?"selected":""}>Terminé</option></select></label>
     </div></div>
     <div class="grp"><span class="label">Coins</span><div class="g2">
       <label class="field"><span style="color:var(--aka)">Coin rouge · Aka</span><select id="bf-aka">${opt(b.aka)}</select></label>
-      <label class="field"><span style="color:var(--ao)">Coin bleu · Ao</span><select id="bf-ao">${opt(b.ao)}</select></label></div>
+      <label class="field"><span style="color:var(--ao)">Coin bleu · Ao</span><select id="bf-ao">${opt(b.ao)}</select></label>
+      <label class="field"><span>Si à désigner (rouge)</span><input type="text" id="bf-akaLabel" value="${esc(b.akaLabel)}" placeholder="Vainqueur 31, Fixé à la pesée…"></label>
+      <label class="field"><span>Si à désigner (bleu)</span><input type="text" id="bf-aoLabel" value="${esc(b.aoLabel)}" placeholder="Vainqueur 32…"></label></div>
       <div class="chips" id="bf-warn"></div></div>
     <div class="grp"><span class="label">Résultat</span><div class="g3">
       <label class="field"><span>Vainqueur</span><select id="bf-winner"><option value="">—</option><option value="aka" ${b.winner==="aka"?"selected":""}>Coin rouge</option><option value="ao" ${b.winner==="ao"?"selected":""}>Coin bleu</option><option value="nul" ${b.winner==="nul"?"selected":""}>Match nul</option></select></label>
@@ -803,13 +825,13 @@ function boutForm(b,finish){
   </form>`);
   const upd=e=>{const x=readBout(b);if(e&&e.target.id==="bf-discipline"){const minor=[S.fighters[x.aka],S.fighters[x.ao]].some(f=>f&&derive(f).minor);$("#bf-format").value=DISC[x.discipline].fmt[minor?"jeune":"adulte"]}
     const i=boutInfo(readBout(b));$("#bf-warn").innerHTML=(i.cat?`<span class="chip">${esc(i.cat)}</span>`:"")+(i.warn.length?i.warn.map(w=>`<span class="chip warn">${esc(w)}</span>`).join(""):'<span class="chip ok">Appariement conforme</span>')};
-  $("#bf").addEventListener("change",upd);upd();
+  $("#bf").addEventListener("change",upd);$("#bf").addEventListener("input",e=>{if(e.target.type==="text")upd()});upd();
   if(finish)setTimeout(()=>$("#bf-winner").focus(),40);
 }
 function readBout(base){
   const v=id=>$("#bf-"+id).value;
   return{...base,discipline:v("discipline"),format:v("format"),aire:v("aire"),section:v("section"),title:v("title"),status:v("status"),
-    aka:v("aka"),ao:v("ao"),winner:v("winner"),method:v("method"),round:v("round"),order:base.order??(Math.max(0,...Object.values(S.bouts).map(x=>x.order||0))+1)};
+    heure:v("heure").trim(),phase:v("phase").trim(),categorie:v("categorie").trim(),akaLabel:v("akaLabel").trim(),aoLabel:v("aoLabel").trim(),aka:v("aka"),ao:v("ao"),winner:v("winner"),method:v("method"),round:v("round"),order:base.order??(Math.max(0,...Object.values(S.bouts).map(x=>x.order||0))+1)};
 }
 
 /* ---------- Exemple ---------- */
@@ -837,9 +859,9 @@ async function copyText(t){
 function cardText(){
   const e=S.event,order=runningOrder(),d=new Date(e.date+"T09:00:00");
   let t=`🥋 ${e.name.toUpperCase()}\n📅 ${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}\n📍 ${e.lieu}\n`;
-  for(const sec of [...SECTIONS].reverse()){const bs=order.filter(b=>(b.section||"Préliminaires")===sec);if(!bs.length)continue;
-    t+=`\n— ${sec.toUpperCase()} —\n`;for(const b of [...bs].reverse()){const i=boutInfo(b);
-      t+=`${b.title?"⭐ "+b.title.toUpperCase()+"\n":""}🔴 ${fname(i.r)} vs ${fname(i.l)} 🔵\n   ${DISC[b.discipline]?.label} · ${i.cat}${b.status==="termine"?" · "+(b.winner==="nul"?"Nul":"Vainqueur : "+fname(b.winner==="aka"?i.r:i.l)+(b.method?" ("+b.method+")":"")):""}\n`}}
+  for(const sec of SECTIONS){const bs=order.filter(b=>(b.section||"Préliminaires")===sec);if(!bs.length)continue;
+    t+=`\n— ${sec.toUpperCase()} —\n`;for(const b of bs){const i=boutInfo(b);
+      t+=`${b.title?"⭐ "+b.title.toUpperCase()+"\n":""}${b.heure?b.heure+" ":""}🔴 ${i.rn} vs ${i.ln} 🔵\n   ${DISC[b.discipline]?.label} · ${i.cat}${b.phase?" · "+b.phase:""}${b.status==="termine"?" · "+(b.winner==="nul"?"Nul":"Vainqueur : "+fname(b.winner==="aka"?i.r:i.l)+(b.method?" ("+b.method+")":"")):""}\n`}}
   return t+`\nOrganisé par ${e.orga}\nOssu ! #Shidokan #Karate #LaReunion #LeTampon #Interclub`;
 }
 async function offerFile(name,data){
@@ -921,7 +943,7 @@ document.addEventListener("submit",async e=>{
     if(x.winner&&x.status!=="termine")x.status="termine";
     if(await B.saveBout(x)){S.everWrote=true;closeModal();toast(f.dataset.new==="1"?"Combat ajouté à la carte.":"Combat enregistré.")}}
   if(f.id==="ev-form"){const v=id=>$("#ev-"+id).value.trim();
-    if(await B.saveEvent({...S.event,name:v("name")||EVENT_DEFAULT.name,date:v("date")||EVENT_DEFAULT.date,lieu:v("lieu"),orga:v("orga"),aires:num(v("aires"))||1,tolerance:num(v("tol"))??3})){S.everWrote=true;toast("Événement enregistré.")}}
+    if(await B.saveEvent({...S.event,name:v("name")||EVENT_DEFAULT.name,date:v("date")||EVENT_DEFAULT.date,lieu:v("lieu"),orga:v("orga"),horaires:v("horaires"),programme:$("#ev-programme").value,aires:num(v("aires"))||1,tolerance:num(v("tol"))??3})){S.everWrote=true;toast("Événement enregistré.")}}
 });
 boot();
 </script>
