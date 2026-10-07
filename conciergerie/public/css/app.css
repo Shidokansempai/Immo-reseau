@@ -149,3 +149,4 @@ fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px
 @media (max-width: 520px) { .g2, .g3, .g4 { grid-template-columns: 1fr; } .kpi .v { font-size: 20px; } }
 @media print { .side, .topbar .actions, .no-print { display: none !important; } .layout { display: block; } }
 .topbar select, .topbar input { width: auto; }
+.doc-frame { width: 100%; height: 75vh; border: 1px solid var(--line); border-radius: 8px; background: #fff; }

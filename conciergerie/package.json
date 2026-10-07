@@ -8,7 +8,8 @@
     "start": "node --no-warnings src/server.js",
     "dev": "node --no-warnings --watch src/server.js",
     "seed": "node --no-warnings src/seed.js",
-    "test": "node --no-warnings --test test/*.test.js"
+    "test": "node --no-warnings --test test/*.test.js",
+    "build:demo": "node demo/build.js"
   },
   "engines": {
     "node": ">=22.5"
@@ -18,5 +19,9 @@
   "dependencies": {
     "express": "^5.2.1",
     "nodemailer": "^10.0.15"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.12",
+    "sql.js": "1.13"
   }
 }

@@ -1,4 +1,4 @@
-import { html, str, api, on, $, fdate, fdatetime, ftime, hours, money, qs, today, modal, attempt, formModal, L, raw } from '../ui.js';
+import { html, str, api, on, $, fdate, fdatetime, ftime, hours, money, qs, today, modal, attempt, formModal, L, raw, download } from '../ui.js';
 import { topbar } from '../app.js';
 
 /** Best-effort geolocation (resolves to {} when refused/unavailable). */
@@ -96,7 +96,7 @@ export default async function timeView(el, { me }) {
   }
 
   on(el, 'change', '[data-f]', (e, i) => { f[i.dataset.f] = i.value; load(); });
-  on(el, 'click', '[data-csv]', (e) => { e.preventDefault(); location.href = `/api/time/export.csv${qs(f)}`; });
+  on(el, 'click', '[data-csv]', (e) => { e.preventDefault(); attempt(() => download(`/time/export.csv${qs(f)}`, 'pointages.csv')); });
   const toLocal = (iso) => (iso ? new Date(new Date(iso).getTime() + 4 * 3600000).toISOString().slice(0, 16) : '');
   const fromLocal = (v) => (v ? `${v}:00+04:00` : null);
   const entryForm = (t = {}) => formModal({

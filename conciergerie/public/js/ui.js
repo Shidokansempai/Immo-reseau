@@ -107,6 +107,27 @@ export function modal({ title, body, wide = false, actions = [], onClose }) {
   return { el: bg, close };
 }
 
+/** Shows an HTML document served by the API (e.g. a printable invoice) in a modal. */
+export async function showDocument(path, title) {
+  const res = await fetch(`/api${path}`, { credentials: 'same-origin' });
+  const text = await res.text();
+  if (!res.ok) throw new Error('Document indisponible');
+  modal({ title, wide: true, body: html`<iframe class="doc-frame" title="${title}" srcdoc="${text}"></iframe>` });
+}
+
+/** Downloads a file served by the API. */
+export async function download(path, filename) {
+  const res = await fetch(`/api${path}`, { credentials: 'same-origin' });
+  if (!res.ok) throw new Error('Téléchargement impossible');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(await res.blob());
+  a.download = filename;
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+}
+
 export function confirmDialog(message, label = 'Confirmer', cls = 'primary') {
   return new Promise((resolve) => {
     modal({ title: 'Confirmation', body: html`<p>${message}</p>`, onClose: () => resolve(false), actions: [

@@ -1,4 +1,4 @@
-import { html, str, raw, api, on, $, $$, money, fdate, L, tag, opts, qs, modal, attempt, confirmDialog, fields, readForm, today, toast } from '../ui.js';
+import { html, str, raw, api, on, $, $$, money, fdate, L, tag, opts, qs, modal, attempt, confirmDialog, fields, readForm, today, toast, showDocument } from '../ui.js';
 import { topbar } from '../app.js';
 import { ownerStatementDialog } from './owners.js';
 
@@ -47,7 +47,7 @@ export default async function invoicesView(el, { query, me, go }) {
     ];
     const actions = [];
     if (id && draft) actions.push({ label: 'Supprimer', cls: 'danger', onClick: async () => { if (!(await confirmDialog('Supprimer ce brouillon ?', 'Supprimer', 'danger'))) return false; await api.del(`/invoices/${id}`); load(); } });
-    if (id) actions.push({ label: '🖨️ Imprimer / PDF', keepOpen: true, onClick: () => { window.open(`/api/invoices/${id}/print`, '_blank'); } });
+    if (id) actions.push({ label: '🖨️ Imprimer / PDF', keepOpen: true, onClick: () => attempt(() => showDocument(`/invoices/${id}/print`, inv.number ? `Facture ${inv.number}` : 'Aperçu de la facture')) });
     if (inv.status === 'issued' || inv.status === 'paid') actions.push({ label: '✉️ Envoyer', keepOpen: true, onClick: async () => { const r = await attempt(() => api.post(`/invoices/${id}/email`)); toast(r.status === 'sent' ? 'Facture envoyée' : r.info); } });
     if (inv.status === 'issued') actions.push({ label: '💶 Marquer payée', cls: 'primary', onClick: async () => { await attempt(() => api.post(`/invoices/${id}/pay`), 'Facture payée'); load(); } });
     if (inv.status === 'issued' || inv.status === 'paid') actions.push({ label: 'Annuler la facture', cls: 'danger', onClick: async () => { if (!(await confirmDialog('Annuler cette facture ? (elle reste numérotée, pensez à émettre un avoir si besoin)', 'Annuler la facture', 'danger'))) return false; await api.post(`/invoices/${id}/cancel`); load(); } });
