@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS properties (
   ical_url TEXT,
   ical_token TEXT,
   ical_last_sync TEXT,
-  color TEXT DEFAULT '#0e7490',
+  color TEXT DEFAULT '#5fa090',
   active INTEGER NOT NULL DEFAULT 1,
   created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
 );

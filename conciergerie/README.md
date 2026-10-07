@@ -1,4 +1,8 @@
-# 🌴 Kaz Conciergerie – SaaS de gestion de conciergerie
+<p align="center"><img src="public/img/logo-256.png" width="180" alt="Sakura Palm Conciergerie"></p>
+
+# Sakura Palm Conciergerie – SaaS de gestion de conciergerie
+
+*« Le geste avant la demande. » – おもてなし – Sud & Ouest de La Réunion*
 
 Application web complète pour piloter une conciergerie de locations saisonnières à La Réunion :
 logements, calendrier, accueil des voyageurs, interventions terrain, pointage, facturation et
@@ -7,7 +11,25 @@ messagerie voyageurs avec messages automatiques.
 Multi-conciergeries (chaque compte a son propre espace, totalement cloisonné), multi-utilisateurs
 (administrateur, gestionnaire, agent de terrain), utilisable sur ordinateur et smartphone.
 
+![Connexion](docs/captures/login.png)
+
 ![Tableau de bord](docs/captures/dashboard.png)
+
+## Charte graphique
+
+Logo et couleurs repris du visuel officiel (`docs/brand/sakura-palm-charte.png`). Le logo détouré
+est dans `public/img/` (`logo.png` 512 px, `logo-256.png`, `emblem.png`, `favicon.png`).
+
+| Couleur | Code | Usage |
+|---|---|---|
+| Vert palme | `#2C3A1E` | Titres, boutons, menu |
+| Or | `#C49E5C` (foncé `#9E783E`) | Filets, cadres, accents |
+| Rose sakura | `#E9B9C7` (clair `#FBEEF1`) | Badges, mises en avant, focus |
+| Rose « Conciergerie » | `#A9504A` | Accents texte |
+| Lagon | `#5FA090` | Couleur logement par défaut |
+| Crème | `#F6F0E7` | Fond |
+
+Polices : *Cormorant Garamond* (titres) et *Cinzel* (capitales), via Google Fonts.
 
 ## Fonctionnalités
 
@@ -64,8 +86,8 @@ et un *mot de passe d'application*.
 ## Mise en production
 
 ```bash
-docker build -t kaz-conciergerie .
-docker run -d -p 3000:3000 -v kaz-data:/data -e COOKIE_SECURE=true kaz-conciergerie
+docker build -t sakura-palm-conciergerie .
+docker run -d -p 3000:3000 -v sakura-data:/data -e COOKIE_SECURE=true sakura-palm-conciergerie
 ```
 
 Placez l'application derrière un proxy HTTPS (Caddy, Nginx, ou un hébergeur type Render / Railway /
@@ -117,3 +139,4 @@ renvoyé par `/api/auth/login`), ce qui permet de brancher une app mobile ou des
 | ![Calendrier](docs/captures/calendar.png) | ![Réservation](docs/captures/booking.png) |
 | ![Messagerie](docs/captures/messages.png) | ![Interventions](docs/captures/interventions.png) |
 | ![Relevé propriétaire](docs/captures/modal-invoice.png) | ![Vue agent mobile](docs/captures/agent.png) |
+| ![Facture imprimable](docs/captures/facture.png) | |

@@ -16,17 +16,17 @@ function invoiceHtml(org, invoice, lines, totals) {
   return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>${esc(title)}</title>
 <style>
 body{font-family:Arial,Helvetica,sans-serif;color:#1f2937;margin:0;padding:40px;font-size:13px}
-.top{display:flex;justify-content:space-between;gap:40px}.org h1{margin:0 0 6px;font-size:22px;color:#0e7490}
+.top{display:flex;justify-content:space-between;gap:40px}.org h1{margin:0 0 6px;font-size:24px;color:#2c3a1e;font-family:Georgia,serif}.org img{width:96px;height:96px;border-radius:50%;margin-bottom:8px}
 .box{border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;min-width:260px}
 h2{font-size:20px;margin:32px 0 4px}table{width:100%;border-collapse:collapse;margin-top:20px}
-th{background:#0e7490;color:#fff;text-align:left;padding:8px}td{padding:8px;border-bottom:1px solid #e5e7eb;vertical-align:top}
+th{background:#2c3a1e;color:#fff;text-align:left;padding:8px}td{padding:8px;border-bottom:1px solid #e5e7eb;vertical-align:top}
 .r{text-align:right;white-space:nowrap}.tot{margin-left:auto;width:320px;margin-top:16px}.tot td{border:none;padding:4px 8px}
-.tot tr.g td{font-weight:bold;font-size:16px;border-top:2px solid #0e7490}.muted{color:#6b7280}.foot{margin-top:40px;font-size:11px;color:#6b7280;border-top:1px solid #e5e7eb;padding-top:10px}
+.tot tr.g td{font-weight:bold;font-size:16px;border-top:2px solid #c49e5c}.muted{color:#6b7280}.foot{margin-top:40px;font-size:11px;color:#6b7280;border-top:1px solid #e5e7eb;padding-top:10px}
 .draft{color:#b91c1c;font-weight:bold}.paid{color:#15803d;font-weight:bold}
 @media print{body{padding:0}.noprint{display:none}}
 </style></head><body>
 <div class="noprint" style="text-align:right;margin-bottom:20px"><button onclick="print()" style="padding:8px 16px;font-size:14px;cursor:pointer">🖨️ Imprimer / PDF</button></div>
-<div class="top"><div class="org"><h1>${esc(org.name)}</h1>
+<div class="top"><div class="org"><img src="/img/logo-256.png" alt=""><h1>${esc(org.name)}</h1>
 <div>${esc(org.address || '').replace(/\n/g, '<br>')}</div><div>${esc(org.phone || '')} ${org.email ? '– ' + esc(org.email) : ''}</div>
 ${org.siret ? `<div class="muted">SIRET ${esc(org.siret)}${org.legal_form ? ' – ' + esc(org.legal_form) : ''}</div>` : ''}
 ${org.vat_number ? `<div class="muted">TVA intracom. ${esc(org.vat_number)}</div>` : ''}</div>

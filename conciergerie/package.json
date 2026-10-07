@@ -1,5 +1,5 @@
 {
-  "name": "kaz-conciergerie",
+  "name": "sakura-palm-conciergerie",
   "version": "1.0.0",
   "description": "SaaS de gestion de conciergerie : logements, calendrier, accueil, interventions, pointage, facturation et messagerie voyageurs (La Réunion)",
   "main": "src/server.js",

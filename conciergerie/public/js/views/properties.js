@@ -11,7 +11,7 @@ export default async function propertiesView(el) {
         { name: 'name', label: 'Nom', required: true },
         { name: 'type', label: 'Type', type: 'select', options: ['Appartement', 'Studio', 'Maison', 'Villa', 'Case créole', 'Gîte', 'Bungalow', 'Chambre d\'hôtes'].map((x) => [x, x]), default: 'Appartement' },
         { name: 'owner_id', label: 'Propriétaire', type: 'select', options: [['', '— Aucun —'], ...owners.map((o) => [o.id, o.name])] },
-        { name: 'color', label: 'Couleur (calendrier)', type: 'color', default: '#0e7490' },
+        { name: 'color', label: 'Couleur (calendrier)', type: 'color', default: '#5fa090' },
         { name: 'address', label: 'Adresse', full: true },
         { name: 'city', label: 'Commune', placeholder: 'Saint-Gilles-les-Bains' },
         { name: 'capacity', label: 'Capacité (pers.)', type: 'number', default: 2 },

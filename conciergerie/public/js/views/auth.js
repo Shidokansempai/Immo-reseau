@@ -2,8 +2,11 @@ import { html, str, api, $, readForm, toast } from '../ui.js';
 
 export function renderAuth(root, signup, onDone) {
   root.innerHTML = str(html`<div class="auth"><div class="card">
-    <h1>🌴 Kaz Conciergerie</h1>
-    <p class="muted" style="margin-top:0">${signup ? 'Créez l\'espace de votre conciergerie' : 'Gestion de conciergerie & locations saisonnières'}</p>
+    <img class="brand-logo" src="/img/logo.png" alt="Sakura Palm Conciergerie">
+    <p class="tagline">Le geste avant la demande.</p>
+    <div class="omotenashi">おもてなし</div>
+    <p class="region">Sud &amp; Ouest de La Réunion</p>
+    ${signup ? html`<p class="muted" style="margin:14px 0 0">Créez l'espace de votre conciergerie</p>` : ''}
     <form id="f" style="display:grid;gap:12px;margin-top:18px">
       ${signup ? html`
         <label class="f">Nom de la conciergerie<input name="org_name" required placeholder="Ma Conciergerie 974"></label>

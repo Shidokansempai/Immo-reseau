@@ -61,10 +61,10 @@ function layout() {
   const nav = items.filter((n, i) => !n.sep || (items[i + 1] && !items[i + 1].sep));
   return html`<div class="layout">
     <aside class="side" id="side">
-      <div class="logo">🌴<div>${org.name}<small>Conciergerie · La Réunion</small></div></div>
+      <div class="logo"><img src="/img/logo-256.png" alt="${org.name}"><small>Le geste avant la demande.</small></div>
       <nav class="nav">${nav.map((n) => (n.sep ? html`<div class="sep">${n.sep}</div>`
         : html`<a href="#${n.path}" data-path="${n.path}"><span>${n.icon}</span>${n.label}${n.badge ? html`<span class="badge" data-badge="${n.badge}" hidden></span>` : ''}</a>`))}</nav>
-      <div class="user-box">${user.name}<br><span style="color:#8fc3cf">${L.role[user.role]}</span><br>
+      <div class="user-box">${user.name}<br><span style="color:var(--gold)">${L.role[user.role]}</span><br>
         <button class="sm" data-logout>Se déconnecter</button></div>
     </aside>
     <main class="main" id="view"></main>

@@ -65,13 +65,13 @@ function stamp(d = new Date()) {
 /** Builds an .ics feed for a property. */
 function build({ property, bookings, orgName }) {
   const lines = [
-    'BEGIN:VCALENDAR', 'VERSION:2.0', `PRODID:-//${escape(orgName || 'Conciergerie')}//Kaz Conciergerie//FR`,
+    'BEGIN:VCALENDAR', 'VERSION:2.0', `PRODID:-//${escape(orgName || 'Conciergerie')}//Sakura Palm Conciergerie//FR`,
     'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', `X-WR-CALNAME:${escape(property.name)}`,
   ];
   for (const b of bookings) {
     lines.push(
       'BEGIN:VEVENT',
-      `UID:kaz-${b.id}@conciergerie`,
+      `UID:sakurapalm-${b.id}@conciergerie`,
       `DTSTAMP:${stamp()}`,
       `DTSTART;VALUE=DATE:${b.checkin_date.replace(/-/g, '')}`,
       `DTEND;VALUE=DATE:${b.checkout_date.replace(/-/g, '')}`,

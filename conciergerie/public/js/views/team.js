@@ -10,7 +10,7 @@ export default async function teamView(el) {
       { name: 'role', label: 'Rôle', type: 'select', options: opts(L.role), default: 'agent', help: 'Agent : accès mobile à ses interventions et au pointage uniquement' },
       { name: 'phone', label: 'Téléphone', type: 'tel' },
       { name: 'hourly_rate', label: 'Taux horaire (€)', type: 'money', default: 0 },
-      { name: 'color', label: 'Couleur', type: 'color', default: '#0e7490' },
+      { name: 'color', label: 'Couleur', type: 'color', default: '#c49e5c' },
       { name: 'password', label: u.id ? 'Nouveau mot de passe (optionnel)' : 'Mot de passe', type: 'password', required: !u.id },
       ...(u.id ? [{ name: 'active', label: 'Compte actif', type: 'checkbox' }] : []),
     ],

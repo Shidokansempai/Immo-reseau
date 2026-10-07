@@ -27,7 +27,7 @@ async function sendDueMessages(db, now = new Date()) {
 /** Imports the reservations of an external iCal feed (Airbnb, Booking...). */
 async function syncPropertyCalendar(db, property, fetchImpl = fetch) {
   if (!property.ical_url) return { created: 0, updated: 0, cancelled: 0 };
-  const res = await fetchImpl(property.ical_url, { headers: { 'User-Agent': 'KazConciergerie/1.0' } });
+  const res = await fetchImpl(property.ical_url, { headers: { 'User-Agent': 'SakuraPalmConciergerie/1.0' } });
   if (!res.ok) throw new Error(`Calendrier inaccessible (HTTP ${res.status})`);
   const events = ical.parse(await res.text());
   const source = ical.detectSource(property.ical_url);

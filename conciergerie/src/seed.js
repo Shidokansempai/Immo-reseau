@@ -15,14 +15,14 @@ function seed(db, now = new Date()) {
   }
   const t = today('+04:00', now);
   const orgId = db.insert('organizations', {
-    name: 'Kaz Conciergerie 974', legal_form: 'SAS', siret: '123 456 789 00012', address: '25 rue du Général de Gaulle\n97430 Le Tampon',
-    email: 'contact@kaz-conciergerie.re', phone: '0262 00 00 00', iban: 'FR76 0000 0000 0000 0000 0000 000', vat_rate: 8.5,
-    invoice_footer: 'Kaz Conciergerie 974 – SAS au capital de 1 000 € – RCS Saint-Pierre',
+    name: 'Sakura Palm Conciergerie', legal_form: 'SAS', siret: '123 456 789 00012', address: '25 rue du Général de Gaulle\n97430 Le Tampon',
+    email: 'contact@sakurapalm-conciergerie.re', phone: '0262 00 00 00', iban: 'FR76 0000 0000 0000 0000 0000 000', vat_rate: 8.5,
+    invoice_footer: 'Sakura Palm Conciergerie by Guestadom – Sud & Ouest de La Réunion – « Le geste avant la demande. »',
   });
   createDefaultTemplates(db, orgId);
 
   const pw = hashPassword('demo1234');
-  const admin = db.insert('users', { org_id: orgId, name: 'Jules (Admin)', email: 'admin@demo.re', password_hash: pw, role: 'admin', color: '#0e7490' });
+  const admin = db.insert('users', { org_id: orgId, name: 'Jules (Admin)', email: 'admin@demo.re', password_hash: pw, role: 'admin', color: '#c49e5c' });
   db.insert('users', { org_id: orgId, name: 'Sandrine Hoarau', email: 'manager@demo.re', password_hash: pw, role: 'manager', phone: '0692 11 22 33', color: '#7c3aed' });
   const a1 = db.insert('users', { org_id: orgId, name: 'Nathalie Grondin', email: 'agent@demo.re', password_hash: pw, role: 'agent', phone: '0692 44 55 66', hourly_rate: 13.5, color: '#db2777' });
   const a2 = db.insert('users', { org_id: orgId, name: 'Kévin Payet', email: 'agent2@demo.re', password_hash: pw, role: 'agent', phone: '0693 77 88 99', hourly_rate: 13, color: '#ea580c' });

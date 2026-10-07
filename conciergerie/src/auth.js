@@ -2,7 +2,7 @@
 const crypto = require('node:crypto');
 
 const SESSION_DAYS = 30;
-const COOKIE = 'kaz_session';
+const COOKIE = 'sp_session';
 
 function hashPassword(password) {
   const salt = crypto.randomBytes(16);

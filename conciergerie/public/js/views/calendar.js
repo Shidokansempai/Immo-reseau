@@ -3,7 +3,7 @@ import { topbar } from '../app.js';
 import { openBookingForm } from './booking.js';
 
 const CELL = 44;
-const SOURCE_COLORS = { airbnb: '#e11d48', booking: '#1d4ed8', abritel: '#7c3aed', direct: '#0e7490', gites_de_france: '#65a30d', ical: '#6b7280' };
+const SOURCE_COLORS = { airbnb: '#e11d48', booking: '#1d4ed8', abritel: '#7c3aed', direct: '#2c3a1e', gites_de_france: '#65a30d', ical: '#6b7280' };
 
 export default async function calendar(el, { go, query }) {
   let from = query.from || addDays(today(), -3);
@@ -38,7 +38,7 @@ export default async function calendar(el, { go, query }) {
         const s = startIn ? idx(b.checkin_date) : (b.checkin_date < from ? 0 : -1);
         const e = endIn ? idx(b.checkout_date) : (b.checkout_date > days[days.length - 1] ? span - 1 : -1);
         if (s < 0 || e < 0) return '';
-        const color = b.status === 'blocked' ? '#9ca3af' : (colorBy === 'source' ? (SOURCE_COLORS[b.source] || '#0e7490') : p.color);
+        const color = b.status === 'blocked' ? '#9ca3af' : (colorBy === 'source' ? (SOURCE_COLORS[b.source] || '#2c3a1e') : p.color);
         const label = b.status === 'blocked' ? 'Indisponible' : guestName(b);
         return html`<div class="cal-bar ${b.status === 'blocked' ? 'blocked' : ''}" data-booking="${b.id}" title="${label} – ${b.checkin_date} → ${b.checkout_date}"
           style="grid-row:${row};grid-column:${s + 2} / ${e + 3};background:${color};align-self:start;margin-top:6px;height:30px;
