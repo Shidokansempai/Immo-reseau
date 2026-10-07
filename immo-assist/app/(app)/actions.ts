@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/lib/tenant";
 import { db } from "@/lib/db";
 import { estimateValue, type MarketData } from "@/lib/valuation";
-import { getDvfMarket } from "@/lib/dvf";
+import { getDvfMarket, probeDvf } from "@/lib/dvf";
 
 /** Garde d'écriture : garantit que l'entité appartient bien au tenant courant. */
 async function ctx() {
@@ -219,6 +219,13 @@ export async function toggleReminder(id: string) {
   if (!r) return;
   await db.reminderRule.update({ where: { id }, data: { enabled: !r.enabled } });
   revalidatePath("/automatisations");
+}
+
+// ─── DVF : test de connexion (Paramètres) ───────────────────────────────────
+export async function testDvf(city: string) {
+  await ctx();
+  const probe = await probeDvf(city || "Le Tampon");
+  return probe;
 }
 
 // ─── Notifications ───────────────────────────────────────────────────────────

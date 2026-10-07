@@ -5,6 +5,8 @@ import { requireAuth, currentOrg } from "@/lib/tenant";
 import { db } from "@/lib/db";
 import { PageHeader, Card, Badge } from "@/components/ui";
 import { PLAN_LABEL, ROLE_LABEL } from "@/lib/format";
+import { dvfProvider } from "@/lib/dvf";
+import DvfTester from "./DvfTester";
 
 export const dynamic = "force-dynamic";
 
@@ -94,6 +96,8 @@ export default async function ParametresPage() {
             {integrations.map((i) => {
               const meta = INTEGRATIONS[i.key];
               if (!meta) return null;
+              const dvfLive = i.key === "dvf" && dvfProvider() !== "none";
+              const connected = i.enabled || dvfLive;
               return (
                 <Card key={i.id} className="py-4">
                   <div className="flex items-start justify-between gap-3">
@@ -101,11 +105,15 @@ export default async function ParametresPage() {
                       <div className="font-semibold text-sm">{meta.label}</div>
                       <div className="text-xs text-gray-400">{meta.desc}</div>
                     </div>
-                    <Badge tone={i.enabled ? "green" : "gray"}>{i.enabled ? "Connecté" : "À connecter"}</Badge>
+                    <Badge tone={connected ? "green" : "gray"}>{connected ? "Connecté" : "À connecter"}</Badge>
                   </div>
-                  <button className="btn-ghost mt-3 w-full text-xs" disabled>
-                    {i.enabled ? "Gérer" : "Renseigner la clé (variables d'environnement)"}
-                  </button>
+                  {i.key === "dvf" ? (
+                    <DvfTester />
+                  ) : (
+                    <button className="btn-ghost mt-3 w-full text-xs" disabled>
+                      {i.enabled ? "Gérer" : "Renseigner la clé (variables d'environnement)"}
+                    </button>
+                  )}
                 </Card>
               );
             })}
