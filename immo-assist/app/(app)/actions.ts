@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { requireAuth } from "@/lib/tenant";
 import { db } from "@/lib/db";
-import { estimateValue } from "@/lib/valuation";
+import { estimateValue, type MarketData } from "@/lib/valuation";
+import { getDvfMarket } from "@/lib/dvf";
 
 /** Garde d'écriture : garantit que l'entité appartient bien au tenant courant. */
 async function ctx() {
@@ -167,7 +168,25 @@ export async function createValuation(formData: FormData) {
     dpe: String(formData.get("dpe") || "") || null,
     features: String(formData.get("features") || "") || null,
   };
-  const result = estimateValue(input);
+  // Données de marché DVF réelles (ou échantillon de repli) pour la commune.
+  const dvf = await getDvfMarket(input.city, { propertyType: input.propertyType, livingArea: input.livingArea });
+  const market: MarketData | null = dvf
+    ? {
+        source: dvf.source,
+        pricePerSqmMedian: dvf.pricePerSqmMedian,
+        count: dvf.count,
+        comparables: dvf.comparables.map((t) => ({
+          label: `${t.type}${t.rooms ? ` ${t.rooms}p` : ""} ${t.area} m²${t.address ? ` — ${t.address}` : ""}`,
+          city: input.city ?? dvf.commune,
+          area: t.area,
+          price: t.price,
+          pricePerSqm: t.pricePerSqm,
+          soldAt: t.date || "récent",
+        })),
+      }
+    : null;
+
+  const result = estimateValue(input, market);
   const v = await db.valuation.create({
     data: {
       organizationId: s.organizationId,

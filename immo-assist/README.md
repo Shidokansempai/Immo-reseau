@@ -103,11 +103,22 @@ Idempotent, exécuté au chargement du dashboard et des tâches : matérialise l
 relances dues en tâches et les échéances de mandats en notifications. En
 production, également branchable sur un cron / une file d'attente.
 
-### Avis de valeur (`lib/valuation.ts`)
-Grille de prix/m² calibrée sur le marché réunionnais (Le Tampon, Saint-Pierre,
-Petite-Île, Saint-Joseph…), pondérée par l'état, le DPE, le terrain et les
-prestations. Produit fourchette, €/m², comparables, analyse de secteur et
-arguments. **Architecture prête pour DVF / DPE / cadastre réels.**
+### Avis de valeur (`lib/valuation.ts` + `lib/dvf.ts`)
+Trois sources de prix/m², dans l'ordre :
+1. **DVF réel** — quand `DVF_API_URL` est configuré et joignable, `lib/dvf.ts`
+   résout le code INSEE de la commune, interroge l'API DVF (parsing tolérant
+   des formats cquest / Etalab / backends tabulaires, timeout 8 s), filtre par
+   type de bien, exclut les aberrations et calcule le **prix/m² médian** (+ Q1/Q3)
+   et des **comparables réels** (adresse, surface, date, €/m²).
+2. **Échantillon DVF de démonstration** — repli hors ligne, explicitement
+   étiqueté comme tel (jamais présenté comme des ventes réelles).
+3. **Grille marché locale** calibrée sur le Sud réunionnais.
+
+Sur ce prix/m² de base, le moteur applique une pondération (état, DPE, terrain,
+prestations) pour le bien précis, puis produit fourchette, €/m², comparables,
+analyse de secteur, arguments — et **affiche la source utilisée** sur le rapport
+PDF. Résultat mis en cache 30 min par commune/type. Configuration dans
+`.env.example` (section DVF). Clé optionnelle envoyée en en-tête, côté serveur.
 
 ### Assistant IA (`lib/ai.ts`)
 - **Sans clé** : moteur local déterministe qui répond aux questions courantes

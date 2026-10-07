@@ -60,6 +60,17 @@ export default async function ReportPage({ params }: { params: { id: string } })
               </div>
             </div>
             <p className="mt-2 text-center text-sm text-gray-500">Soit environ <strong>{eur(v.pricePerSqm)}/m²</strong></p>
+            {analysis?.source && (
+              <p className="mt-2 text-center">
+                <span className={`chip ${analysis.source === "dvf_live" ? "bg-emerald-50 text-emerald-700" : analysis.source === "dvf_sample" ? "bg-blue-50 text-blue-700" : "bg-gray-100 text-gray-600"}`}>
+                  {analysis.source === "dvf_live"
+                    ? `Source : DVF — ${analysis.marketCount} transactions réelles`
+                    : analysis.source === "dvf_sample"
+                    ? `Source : DVF — échantillon de démonstration (${analysis.marketCount} transactions)`
+                    : "Source : grille marché locale"}
+                </span>
+              </p>
+            )}
           </section>
 
           {/* Caractéristiques */}

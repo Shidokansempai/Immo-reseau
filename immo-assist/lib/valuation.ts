@@ -1,8 +1,10 @@
 // Moteur d'avis de valeur (section 11).
-// Sans API externe connectée, on utilise une grille de prix/m² de référence
-// pour le marché réunionnais + une pondération selon l'état, le DPE et les
-// prestations. L'architecture est prête à exploiter DVF / DPE / cadastre dès
-// que les clés sont renseignées (voir lib/integrations.ts → getMarketData()).
+// Deux sources de prix/m² de référence :
+//  1. DVF réel (transactions Etalab) via lib/dvf.ts quand l'API est joignable ;
+//     on utilise alors le prix/m² MÉDIAN du secteur et des comparables réels.
+//  2. À défaut, une grille de prix/m² calibrée sur le marché réunionnais.
+// Dans les deux cas, on applique une pondération selon l'état, le DPE, le
+// terrain et les prestations pour affiner la valeur du bien précis.
 
 export type ValuationInput = {
   city?: string | null;
@@ -25,6 +27,16 @@ export type ValuationOutput = {
   comparables: Comparable[];
   areaAnalysis: string;
   arguments: string[];
+  source: "dvf_live" | "dvf_sample" | "local";
+  marketCount: number; // nb de transactions DVF ayant servi (0 si grille locale)
+};
+
+// Données de marché (issues de DVF) injectables dans l'estimation.
+export type MarketData = {
+  source: "dvf_live" | "dvf_sample";
+  pricePerSqmMedian: number;
+  count: number;
+  comparables: Comparable[];
 };
 
 export type Comparable = {
@@ -68,8 +80,10 @@ function basePrice(city?: string | null): number {
   return DEFAULT_PRICE_PER_SQM;
 }
 
-export function estimateValue(input: ValuationInput): ValuationOutput {
-  const base = basePrice(input.city);
+export function estimateValue(input: ValuationInput, market?: MarketData | null): ValuationOutput {
+  // Base = prix/m² médian DVF réel si disponible, sinon grille marché locale.
+  const base = market ? market.pricePerSqmMedian : basePrice(input.city);
+  const source: ValuationOutput["source"] = market ? market.source : "local";
   const adjustments: { label: string; pct: number }[] = [];
 
   // État du bien
@@ -102,18 +116,26 @@ export function estimateValue(input: ValuationInput): ValuationOutput {
   const priceLow = Math.round((priceMid * 0.93) / 1000) * 1000;
   const priceHigh = Math.round((priceMid * 1.07) / 1000) * 1000;
 
-  // Comparables synthétiques (remplacés par DVF réel une fois connecté)
   const city = input.city || "secteur";
-  const comparables: Comparable[] = area
-    ? [
-        mkComparable(city, Math.round(area * 0.92), pricePerSqm * 0.97, "il y a 2 mois"),
-        mkComparable(city, Math.round(area * 1.05), pricePerSqm * 1.03, "il y a 4 mois"),
-        mkComparable(city, Math.round(area * 0.98), pricePerSqm * 0.99, "il y a 5 mois"),
-      ]
-    : [];
+  // Comparables : réels (DVF) si disponibles, sinon synthétiques sur la base.
+  const comparables: Comparable[] =
+    market && market.comparables.length
+      ? market.comparables
+      : area
+      ? [
+          mkComparable(city, Math.round(area * 0.92), pricePerSqm * 0.97, "il y a 2 mois"),
+          mkComparable(city, Math.round(area * 1.05), pricePerSqm * 1.03, "il y a 4 mois"),
+          mkComparable(city, Math.round(area * 0.98), pricePerSqm * 0.99, "il y a 5 mois"),
+        ]
+      : [];
 
   const args: string[] = [];
-  args.push(`Prix de marché observé à ${city} : ~${base.toLocaleString("fr-FR")} €/m² pour ce type de bien.`);
+  if (market) {
+    const label = market.source === "dvf_live" ? "transactions DVF réelles" : "transactions DVF (échantillon démo)";
+    args.push(`Prix/m² médian établi sur ${market.count} ${label} à ${city} : ${base.toLocaleString("fr-FR")} €/m².`);
+  } else {
+    args.push(`Prix de marché observé à ${city} : ~${base.toLocaleString("fr-FR")} €/m² pour ce type de bien.`);
+  }
   if (totalAdj > 0) args.push(`Les atouts du bien justifient une valorisation supérieure (+${totalAdj}%).`);
   if (totalAdj < 0) args.push(`Certains points (${adjustments.filter(a => a.pct < 0).map(a => a.label).join(", ")}) pèsent sur la valeur (${totalAdj}%).`);
   args.push(`Fourchette resserrée autour de ${priceMid.toLocaleString("fr-FR")} € pour une mise en vente réaliste et une vente rapide.`);
@@ -127,9 +149,20 @@ export function estimateValue(input: ValuationInput): ValuationOutput {
     basePricePerSqm: base,
     adjustments,
     comparables,
-    areaAnalysis: areaAnalysis(city, base),
+    areaAnalysis: market ? dvfAreaAnalysis(city, base, market) : areaAnalysis(city, base),
     arguments: args,
+    source,
+    marketCount: market ? market.count : 0,
   };
+}
+
+function dvfAreaAnalysis(city: string, base: number, market: MarketData): string {
+  const kind = market.source === "dvf_live" ? "issues des données publiques DVF" : "issues d'un échantillon de démonstration DVF";
+  return (
+    `Analyse fondée sur ${market.count} transaction(s) comparables ${kind} à ${city}, ` +
+    `soit un prix/m² médian de ${base.toLocaleString("fr-FR")} €. ` +
+    `Ce repère objectif sécurise le positionnement du bien face au vendeur comme à l'acquéreur.`
+  );
 }
 
 function mkComparable(city: string, area: number, ppsqm: number, soldAt: string): Comparable {

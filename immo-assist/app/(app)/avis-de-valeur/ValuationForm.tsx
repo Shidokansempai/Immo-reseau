@@ -79,7 +79,9 @@ export default function ValuationForm() {
         <Calculator size={16} /> {pending ? "Calcul…" : "Calculer l'avis de valeur"}
       </button>
       <p className="text-xs text-gray-400">
-        Moteur local calibré sur le marché réunionnais. Branchez DVF / DPE / cadastre (Paramètres → Intégrations) pour des comparables réels.
+        L'estimation s'appuie sur les transactions DVF du secteur (prix/m² médian + comparables réels)
+        quand l'API DVF est configurée, sinon sur un échantillon de démonstration puis la grille marché locale.
+        La source est indiquée sur le rapport.
       </p>
     </form>
   );
