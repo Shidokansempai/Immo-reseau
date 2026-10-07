@@ -11,21 +11,30 @@ déclenche le reste.**
 
 ---
 
-## ⚡ Démarrage rapide
+## 🚀 Mettre en ligne (SaaS hébergé)
+
+Pour une **URL publique** où te connecter : voir **[DEPLOY.md](./DEPLOY.md)**
+(Vercel + Neon Postgres, gratuit, ~5 min, sans code). Après déploiement, les
+tables sont créées automatiquement et les données de démo se chargent via
+`/api/admin/seed?secret=…`.
+
+## ⚡ Démarrage local
+
+Base PostgreSQL via Docker (recommandé) :
 
 ```bash
 cd immo-assist
-cp .env.example .env          # ajuste AUTH_SECRET en production
+cp .env.example .env           # URLs Postgres locales déjà pré-remplies
+docker compose up -d           # démarre PostgreSQL
 npm install
-npm run setup                 # prisma generate + db push + seed démo
-npm run dev                   # http://localhost:3000
+npm run setup                  # prisma generate + db push + seed démo
+npm run dev                    # http://localhost:3000
 ```
 
-Build / production :
+Sans Docker : renseigne `DATABASE_URL` / `DIRECT_URL` dans `.env` avec une base
+Postgres existante (ex. une base Neon gratuite), puis `npm run setup && npm run dev`.
 
-```bash
-npm run build && npm run start
-```
+Build / production : `npm run build && npm run start`.
 
 ### Comptes de démonstration
 
@@ -44,7 +53,7 @@ stricte des données entre comptes.
 
 - **Next.js 14** (App Router, React Server Components, Server Actions)
 - **TypeScript** strict
-- **Prisma** ORM — **SQLite** en dev (zéro install), **PostgreSQL-ready** en prod
+- **Prisma** ORM — **PostgreSQL** (Neon / Vercel Postgres en prod, Docker en local)
 - **Tailwind CSS** — design premium, responsive mobile/desktop
 - **Auth maison** : bcrypt (hash) + JWT httpOnly (`jose`)
 - **Recharts** pour les graphiques
@@ -152,7 +161,7 @@ visible dans Paramètres → Intégrations.
 immo-assist/
 ├── prisma/
 │   ├── schema.prisma        # modèle de données complet (multi-tenant)
-│   └── seed.ts              # données de démo réalistes (Sud Réunion)
+│   └── seed.ts              # runner CLI (logique dans lib/seed-demo.ts)
 ├── lib/
 │   ├── db.ts                # client Prisma (singleton)
 │   ├── auth.ts              # sessions, login, inscription, baseline tenant
@@ -180,7 +189,9 @@ paiements Stripe, statistiques avancées, portail vendeur, application mobile.
 
 ## ⚠️ Notes
 
-- `AUTH_SECRET` **doit** être changé en production (`openssl rand -base64 32`).
-- La base SQLite (`prisma/dev.db`) est régénérable via `npm run db:reset`.
-- Pour PostgreSQL : changer `provider` + `DATABASE_URL` dans `prisma/schema.prisma`
-  et `.env`, puis `npm run db:push`.
+- `AUTH_SECRET` et `SEED_SECRET` **doivent** être changés en production
+  (`openssl rand -base64 32`).
+- Réamorcer les données de démo : `npm run db:reset` (local) ou
+  `/api/admin/seed?secret=…&force=1` (hébergé).
+- Migrations versionnées en prod : remplacer `prisma db push` par
+  `prisma migrate deploy` (+ dossier `prisma/migrations`).

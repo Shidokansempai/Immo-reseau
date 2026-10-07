@@ -4,17 +4,20 @@
 // entre tenants. Toutes les requêtes applicatives passent par des helpers
 // (lib/tenant.ts) qui injectent ce filtre — aucune donnée ne fuit entre comptes.
 //
-// SQLite en dev (zéro install). Les "enums" sont des String documentées pour
-// rester portable vers PostgreSQL en production (il suffit de changer le
-// provider et l'URL ; les String deviennent de vrais enums si souhaité).
+// PostgreSQL (SaaS hébergé & dev). Les "enums" sont des String documentées —
+// portables et faciles à faire évoluer.
+//   - DATABASE_URL : connexion applicative (pooled en serverless, ex. Neon/Vercel)
+//   - DIRECT_URL   : connexion directe pour les migrations / db push
+// En local, les deux peuvent pointer vers la même instance (docker-compose).
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ─── Tenant & abonnement ─────────────────────────────────────────────────────
