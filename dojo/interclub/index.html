@@ -238,6 +238,41 @@ textarea{resize:vertical;min-height:70px}
 .prog span{font:600 13px var(--f-label);letter-spacing:.03em}
 .p-foot{text-align:center;color:var(--muted);font:600 13px var(--f-label);letter-spacing:.14em;text-transform:uppercase}
 
+/* Poules */
+.pools{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,520px),1fr));gap:16px}
+.pool{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;align-content:start;min-width:0}
+.pool.done{border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
+.pool-head{display:flex;justify-content:space-between;gap:10px;align-items:start;flex-wrap:wrap}
+.pool-head h3{font:26px/1 var(--f-display);text-transform:uppercase}
+.prog-bar{height:6px;border-radius:99px;background:var(--sunk);overflow:hidden}
+.prog-bar i{display:block;height:100%;background:var(--ok)}
+.stand-wrap{overflow-x:auto}
+table.stand{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.stand th{font:600 11px var(--f-label);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;padding:4px 6px;border-bottom:1px solid var(--line)}
+.stand th:nth-child(2){text-align:left}
+.stand td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:center;font:600 15px var(--f-label)}
+.stand td.who{text-align:left;min-width:150px}
+.stand td.who div{display:flex;align-items:center;gap:8px}
+.stand td.who b{font:600 15px var(--f-body);display:block;line-height:1.15}
+.stand td.who small{color:var(--muted);font:600 11px var(--f-label);letter-spacing:.05em;text-transform:uppercase}
+.stand td.pts{font:20px var(--f-display);color:var(--fg)}
+.rank{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;font:16px var(--f-display);background:var(--sunk);color:var(--muted)}
+.rank.r1{background:#E3B23C;color:#1B181E}.rank.r2{background:#BFC4CC;color:#1B181E}.rank.r3{background:#C77B3B;color:#1B181E}
+.pool-bouts{display:grid;gap:4px;margin:0;padding:0;list-style:none}
+.pool-bouts li{display:grid;grid-template-columns:44px 52px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:14px;padding:5px 8px;border-radius:6px;background:var(--sunk)}
+.pool-bouts li .n{font:600 13px var(--f-label);color:var(--muted)}
+.pool-bouts li .vsl{min-width:0;overflow-wrap:anywhere}
+.pool-bouts li .vsl em{font-style:normal;color:var(--aka);font-weight:600}.pool-bouts li .vsl i{font-style:normal;color:var(--ao);font-weight:600}
+.pool-bouts li .vsl .w{text-decoration:underline;text-decoration-color:var(--ok);text-decoration-thickness:2px}
+.member-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;max-height:320px;overflow-y:auto;padding:2px}
+.member-list .check{font-size:14px}
+.member-list .check small{color:var(--muted);display:block;font-size:12px}
+.hint{font-size:13px;color:var(--muted);margin:0}
+.p-pools{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px}
+.p-pools div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:4px;background:var(--surface)}
+.p-pools strong{font:18px var(--f-display);text-transform:uppercase}
+.p-pools span{display:flex;justify-content:space-between;gap:8px;font:600 14px var(--f-label);letter-spacing:.03em}
+
 /* Settings */
 .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .form-grid .full{grid-column:1/-1}
@@ -267,6 +302,8 @@ body.ro [data-w]{display:none!important}
   .filters .q{grid-column:1/-1}
 }
 @media (max-width:600px){
+  .pool-bouts li{grid-template-columns:40px minmax(0,1fr) auto}
+  .pool-bouts li .t{display:none}
   .countdown{margin-left:0}
   .bout{grid-template-columns:minmax(0,1fr)}
   .b-num{grid-auto-flow:column;justify-content:start;gap:8px;padding:6px 14px;border-right:0;border-bottom:1px solid var(--line)}
@@ -297,6 +334,7 @@ body.ro [data-w]{display:none!important}
       <button role="tab" data-tab="dash" aria-selected="true">Tableau de bord</button>
       <button role="tab" data-tab="fighters" aria-selected="false">Combattants</button>
       <button role="tab" data-tab="card" aria-selected="false">Fight card</button>
+      <button role="tab" data-tab="pools" aria-selected="false">Poules</button>
       <button role="tab" data-tab="poster" aria-selected="false">Affiche</button>
       <button role="tab" data-tab="settings" aria-selected="false">Réglages</button>
     </nav>
@@ -308,6 +346,7 @@ body.ro [data-w]{display:none!important}
   <section class="panel" id="p-dash"><p class="muted">Chargement des inscriptions…</p></section>
   <section class="panel" id="p-fighters" hidden></section>
   <section class="panel" id="p-card" hidden></section>
+  <section class="panel" id="p-pools" hidden></section>
   <section class="panel" id="p-poster" hidden></section>
   <section class="panel" id="p-settings" hidden></section>
 </main>
@@ -361,10 +400,10 @@ function weightCat(w,list){for(const l of list)if(w<=l)return"-"+l+" kg";return"
 let toastT;function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,2600)}
 
 /* ---------- État ---------- */
-const S={fighters:{},bouts:{},event:{...EVENT_DEFAULT},mode:"loading",canWrite:true,tab:"dash",
+const S={fighters:{},bouts:{},pools:{},event:{...EVENT_DEFAULT},mode:"loading",canWrite:true,tab:"dash",
   f:{q:"",disc:"",sex:"",club:"",status:""},showSugg:false,downloads:null};
 try{const t=localStorage.getItem("ic-tab");if(t)S.tab=t}catch(e){}
-const h=(location.hash||"").slice(1);if(["dash","fighters","card","poster","settings"].includes(h))S.tab=h;
+const h=(location.hash||"").slice(1);if(["dash","fighters","card","pools","poster","settings"].includes(h))S.tab=h;
 
 function derive(f){
   const age=ageAt(f.naissance,S.event.date),cat=ageCat(age)||(WEIGHTS[f.catAge]?f.catAge:null),sex=f.sexe==="F"?"F":"M";
@@ -386,9 +425,9 @@ function runningOrder(){
 }
 function boutsOf(id){return Object.values(S.bouts).filter(b=>b.aka===id||b.ao===id)}
 function boutInfo(b){
-  const r=S.fighters[b.aka],l=S.fighters[b.ao],warn=[];let cat="";
+  const r=S.fighters[b.aka]||slotFighter(b.akaLabel),l=S.fighters[b.ao]||slotFighter(b.aoLabel),warn=[];let cat="";
   const dr=r&&derive(r),dl=l&&derive(l);
-  const open=(f,lab)=>!f&&!/^(vainqueur|perdant)/i.test(lab||"");
+  const open=(f,lab)=>!f&&!/^(vainqueur|perdant|\d+\s*(er|re|e|ème|eme)?\s)/i.test(lab||"");
   if(open(r,b.akaLabel)||open(l,b.aoLabel))warn.push("Adversaire à désigner");
   if(dr&&dl){
     const tol=num(S.event.tolerance)??3;
@@ -406,6 +445,74 @@ function boutInfo(b){
   return{r,l,dr,dl,warn,cat,rn:r?fname(r):(b.akaLabel||"À désigner"),ln:l?fname(l):(b.aoLabel||"À désigner")};
 }
 
+/* ---------- Poules ---------- */
+const EARLY=["KO","Ippon","Wazari ×2","Soumission","Abandon","Arrêt de l'arbitre","Disqualification"];
+const normTxt=t=>String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim();
+const poolBouts=p=>Object.values(S.bouts).filter(b=>b.poolId===p.id).sort((x,y)=>(x.order||0)-(y.order||0));
+const poolName=p=>p.name||p.categorie||"Poule";
+function slotFighter(lab,depth=0){
+  if(!lab||depth>8)return null;
+  let m=lab.match(/^(vainqueur|perdant)\s*(?:du\s+combat\s*)?#?\s*(\d+)$/i);
+  if(m){const b=runningOrder()[+m[2]-1];if(!b||b.status!=="termine"||!b.winner||b.winner==="nul")return null;
+    const side=/^v/i.test(m[1])?b.winner:(b.winner==="aka"?"ao":"aka");
+    return S.fighters[b[side]]||slotFighter(b[side+"Label"],depth+1)}
+  m=lab.match(/^(\d+)\s*(?:er|re|e|ème|eme)?\s+(?:de\s+(?:la\s+)?)?(.+)$/i);
+  if(m){const q=Object.values(S.pools).find(p=>normTxt(poolName(p))===normTxt(m[2]));if(!q)return null;
+    const st=standings(q);if(!st.complete)return null;const row=st.rows[+m[1]-1];return row&&!row.tie?S.fighters[row.id]:null}
+  return null;
+}
+function standings(p){
+  const W=num(S.event.ptsWin)??3,D=num(S.event.ptsDraw)??1,L=num(S.event.ptsLoss)??0;
+  const ids=(p.members||[]).filter(id=>S.fighters[id]),bs=poolBouts(p);
+  const done=bs.filter(b=>b.status==="termine"&&b.winner&&b.aka&&b.ao);
+  const row={};ids.forEach(id=>row[id]={id,j:0,v:0,n:0,d:0,pts:0,avl:0,tie:false});
+  for(const b of done){const a=row[b.aka],o=row[b.ao];if(!a||!o)continue;a.j++;o.j++;
+    if(b.winner==="nul"){a.n++;o.n++;a.pts+=D;o.pts+=D}
+    else{const w=b.winner==="aka"?a:o,l=w===a?o:a;w.v++;l.d++;w.pts+=W;l.pts+=L;if(EARLY.includes(b.method))w.avl++}}
+  const wt=x=>derive(S.fighters[x.id]).w??999;
+  const rows=Object.values(row).sort((x,y)=>y.pts-x.pts),out=[];
+  for(let i=0;i<rows.length;){let j=i;while(j<rows.length&&rows[j].pts===rows[i].pts)j++;const g=rows.slice(i,j);
+    if(g.length>1){const set=new Set(g.map(r=>r.id)),mini={};g.forEach(r=>mini[r.id]=0);
+      for(const b of done)if(set.has(b.aka)&&set.has(b.ao)){if(b.winner==="nul"){mini[b.aka]+=D;mini[b.ao]+=D}else mini[b.winner==="aka"?b.aka:b.ao]+=W}
+      g.sort((x,y)=>mini[y.id]-mini[x.id]||y.avl-x.avl||wt(x)-wt(y));
+      for(let k=1;k<g.length;k++){const x=g[k-1],y=g[k];if(mini[x.id]===mini[y.id]&&x.avl===y.avl&&wt(x)===wt(y))x.tie=y.tie=true}}
+    out.push(...g);i=j}
+  const need=ids.length*(ids.length-1)/2;
+  return{rows:out,played:done.length,total:Math.max(bs.length,need),complete:ids.length>1&&done.length>=need&&bs.every(b=>b.status==="termine")};
+}
+function rrOrder(n){
+  const T={2:[[0,1]],3:[[0,1],[0,2],[1,2]],4:[[0,1],[2,3],[0,2],[1,3],[0,3],[1,2]],5:[[0,1],[2,3],[4,0],[1,2],[3,4],[0,2],[1,3],[2,4],[0,3],[1,4]]};
+  if(T[n])return T[n];
+  const ids=[...Array(n).keys()];if(n%2)ids.push(-1);const m=ids.length,out=[];
+  for(let r=0;r<m-1;r++){for(let i=0;i<m/2;i++){const a=ids[i],b=ids[m-1-i];if(a>=0&&b>=0)out.push([a,b])}ids.splice(1,0,ids.pop())}
+  return out;
+}
+const toMin=t=>{const m=String(t||"").match(/^(\d{1,2})\s*[h:]\s*(\d{0,2})$/i);return m?(+m[1])*60+(+(m[2]||0)):null};
+const fromMin=x=>String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0");
+function missingPairs(p){
+  const ids=(p.members||[]).filter(id=>S.fighters[id]),bs=poolBouts(p);
+  const has=(x,y)=>bs.some(b=>(b.aka===x&&b.ao===y)||(b.aka===y&&b.ao===x));
+  return rrOrder(ids.length).map(([i,j])=>[ids[i],ids[j]]).filter(([x,y])=>!has(x,y));
+}
+async function genPoolBouts(p){
+  const pairs=missingPairs(p);let maxO=Math.max(0,...Object.values(S.bouts).map(x=>x.order||0));
+  const t0=toMin(p.start),step=num(p.step)||4;let n=0;
+  for(const [x,y] of pairs){const minor=derive(S.fighters[x]).minor||derive(S.fighters[y]).minor;
+    const b={id:uid(),poolId:p.id,aka:x,ao:y,akaLabel:"",aoLabel:"",discipline:p.discipline||"shidokan",section:p.section||"Jeunes",phase:"Poule",
+      categorie:poolName(p),format:p.format||DISC[p.discipline||"shidokan"].fmt[minor?"jeune":"adulte"],aire:p.aire||1,title:"",
+      status:"prevu",winner:"",method:"",round:"",order:++maxO,heure:t0!=null?fromMin(t0+n*step):""};
+    if(await B.saveBout(b))n++}
+  return n;
+}
+async function interleavePools(p,q){
+  const A=poolBouts(p),Q=poolBouts(q);if(!A.length||!Q.length)return 0;
+  const all=[...A,...Q].sort((x,y)=>(x.order||0)-(y.order||0)),slots=all.map(b=>({order:b.order,heure:b.heure||"",section:b.section}));
+  const merged=[];for(let i=0;i<Math.max(A.length,Q.length);i++){if(A[i])merged.push(A[i]);if(Q[i])merged.push(Q[i])}
+  let n=0;for(let k=0;k<merged.length;k++){const b=merged[k],sl=slots[k];
+    if(b.order!==sl.order||(b.heure||"")!==sl.heure||b.section!==sl.section){await B.saveBout({...b,order:sl.order,heure:sl.heure,section:sl.section});n++}}
+  return n;
+}
+
 /* ---------- Stockage : base partagée (db) ou local ---------- */
 const LS="interclub-25-10";
 const B={
@@ -414,6 +521,8 @@ const B={
   async saveBout(b){return this.put("bouts",b)},
   async delFighter(id){return this.del("fighters",id)},
   async delBout(id){return this.del("bouts",id)},
+  async savePool(p){return this.put("pools",p)},
+  async delPool(id){return this.del("pools",id)},
   async saveEvent(e){
     if(this.db){try{await this.db.doc("config/event").set(clean(e))}catch(err){return fail(err)}}
     else{S.event={...EVENT_DEFAULT,...e};persist();render()}return true;
@@ -421,11 +530,11 @@ const B={
   async put(col,o){
     o=clean(o);
     if(this.db){try{await this.db.collection(col).doc(o.id).set(o)}catch(err){return fail(err)}}
-    else{(col==="fighters"?S.fighters:S.bouts)[o.id]=o;persist();render()}return true;
+    else{S[col][o.id]=o;persist();render()}return true;
   },
   async del(col,id){
     if(this.db){try{await this.db.collection(col).doc(id).delete()}catch(err){return fail(err)}}
-    else{delete (col==="fighters"?S.fighters:S.bouts)[id];persist();render()}return true;
+    else{delete S[col][id];persist();render()}return true;
   }
 };
 function fail(err){
@@ -434,18 +543,19 @@ function fail(err){
   else toast("Enregistrement impossible. Réessayez dans un instant.");
   return false;
 }
-function persist(){try{localStorage.setItem(LS,JSON.stringify({event:S.event,fighters:S.fighters,bouts:S.bouts}))}catch(e){}}
+function persist(){try{localStorage.setItem(LS,JSON.stringify({event:S.event,fighters:S.fighters,bouts:S.bouts,pools:S.pools}))}catch(e){}}
 function startLocal(){
   S.mode="local";
-  try{const d=JSON.parse(localStorage.getItem(LS)||"null");if(d){S.event={...EVENT_DEFAULT,...d.event};S.fighters=d.fighters||{};S.bouts=d.bouts||{}}}catch(e){}
+  try{const d=JSON.parse(localStorage.getItem(LS)||"null");if(d){S.event={...EVENT_DEFAULT,...d.event};S.fighters=d.fighters||{};S.bouts=d.bouts||{};S.pools=d.pools||{}}}catch(e){}
   const bn=$("#banner");bn.hidden=false;bn.innerHTML="<b>Mode local</b> · les données restent dans ce navigateur. Exportez-les depuis Réglages pour les sauvegarder.";
   render();
 }
 function startDb(db){
-  B.db=db;S.mode="db";let got=0;const ready=()=>{if(++got>=3)S.loaded=true;render()};
+  B.db=db;S.mode="db";let got=0;const ready=()=>{if(++got>=4)S.loaded=true;render()};
   const onErr=e=>{if(e&&e.code==="revoked"){S.canWrite=false;document.body.classList.add("ro")}toast("Connexion à la base interrompue. Rechargez la page.")};
   db.collection("fighters").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]={...d.data(),id:d.id});S.fighters=o;ready()},onErr);
   db.collection("bouts").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]={...d.data(),id:d.id});S.bouts=o;ready()},onErr);
+  db.collection("pools").onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]={...d.data(),id:d.id});S.pools=o;ready()},onErr);
   db.doc("config/event").onSnapshot(s=>{S.event={...EVENT_DEFAULT,...(s.exists?s.data():{})};ready()},onErr);
 }
 async function boot(){
@@ -467,8 +577,8 @@ function render(){
   const today=new Date();today.setHours(0,0,0,0);const days=Math.round((new Date(e.date+"T00:00:00")-today)/864e5);
   $("#h-count").innerHTML=isNaN(days)?"":days>0?`<strong>J-${days}</strong> avant le gong`:days===0?"<strong>Jour J</strong> Ossu !":"<strong>Terminé</strong>";
   $$("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===S.tab)));
-  for(const t of ["dash","fighters","card","poster","settings"])$("#p-"+t).hidden=t!==S.tab;
-  ({dash:rDash,fighters:rFighters,card:rCard,poster:rPoster,settings:rSettings})[S.tab]();
+  for(const t of ["dash","fighters","card","pools","poster","settings"])$("#p-"+t).hidden=t!==S.tab;
+  ({dash:rDash,fighters:rFighters,card:rCard,pools:rPools,poster:rPoster,settings:rSettings})[S.tab]();
 }
 const loadingNote=()=>S.mode==="loading"||(S.mode==="db"&&!S.loaded);
 
@@ -596,7 +706,7 @@ function boutRow(b,n,sec){
   return `<article class="bout ${st}">
     <div class="b-num"><span>${b.heure?esc(b.heure):"Combat"}</span><strong>${String(n).padStart(2,"0")}</strong><span>Aire ${esc(b.aire||1)}</span></div>
     <div class="b-body">
-      <div class="b-meta">${b.title?`<span class="title">${esc(b.title)}</span>`:""}<span class="chip d-${b.discipline}">${esc(DISC[b.discipline]?.label||"")}</span><span class="chip">${esc(i.cat||"—")}</span>${b.phase?`<span class="chip">${esc(b.phase)}</span>`:""}<span class="chip">${esc(b.format||"")}</span>
+      <div class="b-meta">${b.title?`<span class="title">${esc(b.title)}</span>`:""}${b.poolId&&S.pools[b.poolId]?`<span class="chip ok">${esc(poolName(S.pools[b.poolId]))}</span>`:""}<span class="chip d-${b.discipline}">${esc(DISC[b.discipline]?.label||"")}</span><span class="chip">${esc(i.cat||"—")}</span>${b.phase?`<span class="chip">${esc(b.phase)}</span>`:""}<span class="chip">${esc(b.format||"")}</span>
         ${st==="encours"?'<span class="chip live">En cours</span>':st==="termine"?'<span class="chip ok">Terminé</span>':""}${i.r?.exemple?'<span class="chip ex">Exemple</span>':""}</div>
       <div class="corners">
         <div class="corner aka ${i.r?cls("aka"):"tbd"}">${avatar(i.r,"sm")}<div class="ctext"><b>${esc(i.rn)}</b><small>${i.r?esc((i.r.club||"")+" · "+kg(i.dr.w)):"Coin rouge"}</small></div></div>
@@ -682,8 +792,78 @@ function rPoster(){
           <div class="l ${done&&b.winner==="aka"?"w":""}"><b style="color:var(--aka)">${esc(i.rn)}</b><small>${esc(i.r?.club||"")}</small></div><span class="c">VS</span>
           <div class="r ${done&&b.winner==="ao"?"w":""}"><b style="color:var(--ao)">${esc(i.ln)}</b><small>${esc(i.l?.club||"")}</small></div>
           <div class="meta"><span class="chip d-${b.discipline}">${esc(DISC[b.discipline]?.label||"")}</span><span class="chip">${esc(i.cat)}</span>${b.phase?`<span class="chip">${esc(b.phase)}</span>`:""}${b.status==="encours"?'<span class="chip live">En cours</span>':""}${done?`<span class="chip ok">${b.winner==="nul"?"Nul":esc(b.method||"Terminé")}</span>`:""}</div></div>`}).join("")}</div>`}).join("")}
+    ${Object.keys(S.pools).length?`<div class="p-sec"><h3>Classements des poules</h3><div class="p-pools">${Object.values(S.pools).map(q=>{const st=standings(q);
+      return `<div><strong>${esc(poolName(q))}</strong>${st.rows.map((r,i)=>`<span><span>${i+1}. ${esc(fname(S.fighters[r.id]))}</span><span class="num">${r.pts} pts</span></span>`).join("")}<small class="muted">${st.complete?"Terminée":st.played+"/"+st.total+" combats"}</small></div>`}).join("")}</div></div>`:""}
     <div class="p-foot">Organisé par ${esc(e.orga||"")} · Ossu</div>
   </div>`;
+}
+
+function rPools(){
+  const p=$("#p-pools");
+  if(loadingNote()){p.innerHTML=`<p class="muted">Chargement des poules…</p>`;return}
+  const pools=Object.values(S.pools).sort((a,b)=>(poolBouts(a)[0]?.order??999)-(poolBouts(b)[0]?.order??999)||poolName(a).localeCompare(poolName(b),"fr"));
+  const W=num(S.event.ptsWin)??3,D=num(S.event.ptsDraw)??1,L=num(S.event.ptsLoss)??0;
+  p.innerHTML=`
+  <div class="panel-head"><div><h2>Poules</h2><p>Chacun rencontre tous les autres · victoire ${W} pts · nul ${D} · défaite ${L} · départage : confrontation directe, victoires avant la limite, le plus léger</p></div>
+    <div class="actions" data-w><button class="btn primary" data-act="new-pool">+ Créer une poule</button></div></div>
+  ${pools.length?`<div class="pools">${pools.map(poolCard).join("")}</div>`:`<div class="empty"><span class="label">Aucune poule</span><h3>Faites tourner tout le monde</h3>
+    <p>Choisissez 3 à 5 combattants d'une même catégorie. L'application crée tous les combats dans un ordre qui laisse souffler, puis calcule le classement à chaque résultat.</p>
+    <div class="actions" data-w><button class="btn primary" data-act="new-pool">Créer une poule</button></div></div>`}`;
+}
+function poolCard(q){
+  const st=standings(q),bs=poolBouts(q),order=runningOrder(),miss=missingPairs(q).length,others=Object.values(S.pools).filter(o=>o.id!==q.id);
+  const state=st.complete?'<span class="chip ok">Terminée</span>':bs.some(b=>b.status==="encours")?'<span class="chip live">En cours</span>':st.played?'<span class="chip warn">En cours</span>':'<span class="chip">À venir</span>';
+  const nm=poolName(q);
+  return `<article class="pool ${st.complete?"done":""}">
+    <div class="pool-head"><div><h3>${esc(nm)}</h3><div class="chips" style="margin-top:6px"><span class="chip d-${q.discipline}">${esc(DISC[q.discipline]?.label||"")}</span><span class="chip">${esc(q.section||"")}</span>${state}</div></div>
+      <span class="label num">${st.played}/${st.total} combats</span></div>
+    <div class="prog-bar"><i style="width:${st.total?st.played/st.total*100:0}%"></i></div>
+    <div class="stand-wrap"><table class="stand"><thead><tr><th>#</th><th>Combattant</th><th>Pts</th><th>J</th><th>V</th><th>N</th><th>D</th><th title="Victoires avant la limite">AL</th></tr></thead><tbody>
+    ${st.rows.map((r,i)=>{const f=S.fighters[r.id];return `<tr><td><span class="rank ${st.played?"r"+(i+1):""}">${i+1}</span></td>
+      <td class="who"><div>${avatar(f,"sm")}<span><b>${esc(fname(f))}</b><small>${esc(f.club||"")}</small></span>${r.tie&&st.complete?'<span class="chip warn">Barrage</span>':""}</div></td>
+      <td class="pts">${r.pts}</td><td>${r.j}</td><td>${r.v}</td><td>${r.n}</td><td>${r.d}</td><td>${r.avl}</td></tr>`}).join("")}
+    </tbody></table></div>
+    ${bs.length?`<ul class="pool-bouts">${bs.map(b=>{const i=boutInfo(b),n=order.indexOf(b)+1,done=b.status==="termine";
+      return `<li><span class="n">#${String(n).padStart(2,"0")}</span><span class="n t">${esc(b.heure||"")}</span>
+        <span class="vsl"><em class="${done&&b.winner==="aka"?"w":""}">${esc(i.rn)}</em> <span class="muted">vs</span> <i class="${done&&b.winner==="ao"?"w":""}">${esc(i.ln)}</i></span>
+        <span>${done?`<span class="chip ok">${b.winner==="nul"?"Nul":esc(b.method||"Fini")}</span>`:b.status==="encours"?'<span class="chip live">En cours</span>':`<button class="btn sm" data-act="edit-bout" data-id="${b.id}" data-finish="1" data-w>Résultat</button>`}</span></li>`}).join("")}</ul>`:""}
+    ${miss?`<p class="hint" style="color:var(--warn)">${miss} combat${miss>1?"s":""} de la poule pas encore créé${miss>1?"s":""}.</p>`:""}
+    <p class="hint">Pour une finale, écrivez « 1er ${esc(nm)} » ou « 2e ${esc(nm)} » dans le coin à désigner : le nom s'affiche dès que la poule est terminée.</p>
+    <div class="actions" data-w>
+      <button class="btn sm" data-act="edit-pool" data-id="${q.id}">Modifier</button>
+      ${miss?`<button class="btn sm primary" data-act="gen-pool" data-id="${q.id}">Créer les ${miss} combat${miss>1?"s":""}</button>`:""}
+      ${others.length&&bs.length?`<select id="il-${q.id}" style="width:auto">${others.map(o=>`<option value="${o.id}">${esc(poolName(o))}</option>`).join("")}</select><button class="btn sm" data-act="interleave" data-id="${q.id}">Alterner les combats</button>`:""}
+    </div>
+  </article>`;
+}
+function poolForm(q){
+  const isNew=!q;q=q||{id:uid(),name:"",discipline:"shidokan",section:"Jeunes",members:[],step:4,aire:1};
+  const fs=fighters(),sel=new Set(q.members||[]);
+  openModal(`<form id="pf" data-id="${q.id}" data-new="${isNew?1:0}">
+  <div class="sheet-head"><h3>${isNew?"Nouvelle poule":esc(poolName(q))}</h3><button type="button" class="btn ghost sm" data-act="close">Fermer</button></div>
+  <div class="sheet-body">
+    <div class="grp"><span class="label">Poule</span><div class="g3">
+      <label class="field"><span>Nom (unique)</span><input type="text" id="pf-name" value="${esc(q.name)}" placeholder="Poussins, Poule A…" required></label>
+      <label class="field"><span>Discipline</span><select id="pf-discipline">${Object.entries(DISC).map(([k,v])=>`<option value="${k}" ${q.discipline===k?"selected":""}>${v.label}</option>`).join("")}</select></label>
+      <label class="field"><span>Partie de la journée</span><select id="pf-section">${SECTIONS.map(x=>`<option ${q.section===x?"selected":""}>${x}</option>`).join("")}</select></label>
+      <label class="field"><span>Format</span><input type="text" id="pf-format" value="${esc(q.format)}" placeholder="auto selon l'âge"></label>
+      <label class="field"><span>Heure du 1er combat</span><input type="text" id="pf-start" value="${esc(q.start)}" placeholder="10:20"></label>
+      <label class="field"><span>Minutes entre 2 combats</span><input type="number" min="1" id="pf-step" value="${esc(q.step??4)}"></label>
+    </div></div>
+    <div class="grp"><span class="label">Combattants <span id="pf-count"></span></span>
+      <div class="g2"><input type="search" id="pf-q" placeholder="Filtrer par nom, club, catégorie…"><label class="check"><input type="checkbox" id="pf-only" checked>Seulement les inscrits dans la discipline</label></div>
+      <div class="member-list" id="pf-list">${fs.map(f=>`<label class="check" data-disc="${esc((f.disciplines||[]).join(" "))}" data-q="${esc(normTxt(fname(f)+" "+(f.club||"")+" "+derive(f).label))}"><input type="checkbox" name="pm" value="${f.id}" ${sel.has(f.id)?"checked":""}><span>${esc(fname(f))}<small>${esc(derive(f).label)} · ${esc(f.club||"")}</small></span></label>`).join("")}</div>
+      <p class="hint">3 à 5 combattants par poule. Au-delà, faites 2 poules puis demi-finales et finale.</p>
+    </div>
+    ${isNew?`<label class="check"><input type="checkbox" id="pf-gen" checked>Créer tous les combats de la poule maintenant</label>`:""}
+  </div>
+  <div class="sheet-foot">${isNew?"<span></span>":`<button type="button" class="btn danger" data-act="del-pool" data-id="${q.id}">Supprimer</button>`}
+    <div class="actions"><button type="button" class="btn" data-act="close">Annuler</button><button type="submit" class="btn primary" data-w>${isNew?"Créer la poule":"Enregistrer"}</button></div></div>
+  </form>`);
+  const filt=()=>{const t=normTxt($("#pf-q").value),only=$("#pf-only").checked,d=$("#pf-discipline").value;
+    $$("#pf-list label").forEach(l=>{const c=l.querySelector("input").checked;l.hidden=!c&&((t&&!l.dataset.q.includes(t))||(only&&!l.dataset.disc.split(" ").includes(d)))});
+    const n=$$("#pf-list input:checked").length;$("#pf-count").textContent=`· ${n} sélectionné${n>1?"s":""} · ${n*(n-1)/2} combat${n*(n-1)/2>1?"s":""}`};
+  $("#pf").addEventListener("input",filt);$("#pf").addEventListener("change",filt);filt();
 }
 
 function programme(){
@@ -702,6 +882,7 @@ function rSettings(){
     <label class="field full"><span>Lieu</span><input type="text" id="ev-lieu" value="${esc(e.lieu)}"></label>
     <label class="field full"><span>Organisation</span><input type="text" id="ev-orga" value="${esc(e.orga)}"></label>
     <label class="field"><span>Tolérance de poids (kg)</span><input type="number" min="0" step="0.5" id="ev-tol" value="${esc(e.tolerance)}"></label>
+    <label class="field"><span>Points victoire / nul / défaite</span><span style="display:flex;gap:6px"><input type="number" id="ev-pw" value="${esc(e.ptsWin??3)}" aria-label="Points victoire"><input type="number" id="ev-pd" value="${esc(e.ptsDraw??1)}" aria-label="Points nul"><input type="number" id="ev-pl" value="${esc(e.ptsLoss??0)}" aria-label="Points défaite"></span></label>
     <label class="field"><span>Horaires</span><input type="text" id="ev-horaires" value="${esc(e.horaires)}" placeholder="9h – 15h"></label>
     <label class="field full"><span>Programme (une étape par ligne)</span><textarea id="ev-programme" rows="6" placeholder="9h00 Accueil &amp; pesée">${esc(e.programme)}</textarea></label>
   </div><div data-w><button class="btn primary" type="submit">Enregistrer</button></div></form>
@@ -807,13 +988,15 @@ function boutForm(b,finish){
       <label class="field"><span>Phase</span><input type="text" id="bf-phase" list="phases" value="${esc(b.phase)}" placeholder="Poule, Demi 1, Finale…"><datalist id="phases">${["Poule","Combat unique","Quart 1","Quart 2","Quart 3","Quart 4","Demi 1","Demi 2","Barrage","Petite finale","Finale","Exhibition"].map(x=>`<option value="${x}">`).join("")}</datalist></label>
       <label class="field"><span>Catégorie affichée</span><input type="text" id="bf-categorie" value="${esc(b.categorie)}" placeholder="calculée si vide"></label>
       <label class="field"><span>Affiche</span><select id="bf-title">${TITLES.map(t=>`<option value="${t}" ${b.title===t?"selected":""}>${t||"Combat standard"}</option>`).join("")}</select></label>
+      <label class="field"><span>Poule</span><select id="bf-pool"><option value="">Aucune</option>${Object.values(S.pools).map(q=>`<option value="${q.id}" ${b.poolId===q.id?"selected":""}>${esc(poolName(q))}</option>`).join("")}</select></label>
       <label class="field"><span>Statut</span><select id="bf-status"><option value="prevu" ${b.status==="prevu"?"selected":""}>Prévu</option><option value="encours" ${b.status==="encours"?"selected":""}>En cours</option><option value="termine" ${b.status==="termine"||finish?"selected":""}>Terminé</option></select></label>
     </div></div>
     <div class="grp"><span class="label">Coins</span><div class="g2">
       <label class="field"><span style="color:var(--aka)">Coin rouge · Aka</span><select id="bf-aka">${opt(b.aka)}</select></label>
       <label class="field"><span style="color:var(--ao)">Coin bleu · Ao</span><select id="bf-ao">${opt(b.ao)}</select></label>
-      <label class="field"><span>Si à désigner (rouge)</span><input type="text" id="bf-akaLabel" value="${esc(b.akaLabel)}" placeholder="Vainqueur 31, Fixé à la pesée…"></label>
-      <label class="field"><span>Si à désigner (bleu)</span><input type="text" id="bf-aoLabel" value="${esc(b.aoLabel)}" placeholder="Vainqueur 32…"></label></div>
+      <label class="field"><span>Si à désigner (rouge)</span><input type="text" id="bf-akaLabel" list="slots" value="${esc(b.akaLabel)}" placeholder="Vainqueur 31, Fixé à la pesée…"></label>
+      <label class="field"><span>Si à désigner (bleu)</span><input type="text" id="bf-aoLabel" list="slots" value="${esc(b.aoLabel)}" placeholder="Vainqueur 32…"></label>
+      <datalist id="slots">${Object.values(S.pools).flatMap(q=>["1er","2e","3e"].map(r=>`<option value="${r} ${esc(poolName(q))}">`)).join("")}</datalist></div>
       <div class="chips" id="bf-warn"></div></div>
     <div class="grp"><span class="label">Résultat</span><div class="g3">
       <label class="field"><span>Vainqueur</span><select id="bf-winner"><option value="">—</option><option value="aka" ${b.winner==="aka"?"selected":""}>Coin rouge</option><option value="ao" ${b.winner==="ao"?"selected":""}>Coin bleu</option><option value="nul" ${b.winner==="nul"?"selected":""}>Match nul</option></select></label>
@@ -831,7 +1014,7 @@ function boutForm(b,finish){
 function readBout(base){
   const v=id=>$("#bf-"+id).value;
   return{...base,discipline:v("discipline"),format:v("format"),aire:v("aire"),section:v("section"),title:v("title"),status:v("status"),
-    heure:v("heure").trim(),phase:v("phase").trim(),categorie:v("categorie").trim(),akaLabel:v("akaLabel").trim(),aoLabel:v("aoLabel").trim(),aka:v("aka"),ao:v("ao"),winner:v("winner"),method:v("method"),round:v("round"),order:base.order??(Math.max(0,...Object.values(S.bouts).map(x=>x.order||0))+1)};
+    poolId:v("pool"),heure:v("heure").trim(),phase:v("phase").trim(),categorie:v("categorie").trim(),akaLabel:v("akaLabel").trim(),aoLabel:v("aoLabel").trim(),aka:v("aka"),ao:v("ao"),winner:v("winner"),method:v("method"),round:v("round"),order:base.order??(Math.max(0,...Object.values(S.bouts).map(x=>x.order||0))+1)};
 }
 
 /* ---------- Exemple ---------- */
@@ -887,7 +1070,7 @@ document.addEventListener("click",async ev=>{
   if(a==="edit-fighter")return fighterForm(S.fighters[id]);
   if(a==="fullscreen"){const p=$("#poster");try{document.fullscreenElement?await document.exitFullscreen():await p.requestFullscreen()}catch(e){toast("Plein écran indisponible ici.")}return}
   if(a==="copy-card")return copyText(cardText());
-  if(a==="export-json")return offerFile("interclub-25-octobre.json",JSON.stringify({event:S.event,fighters:S.fighters,bouts:S.bouts},null,2));
+  if(a==="export-json")return offerFile("interclub-25-octobre.json",JSON.stringify({event:S.event,fighters:S.fighters,bouts:S.bouts,pools:S.pools},null,2));
   if(a==="export-csv")return offerFile("pesee-interclub.csv","﻿"+toCsv());
   if(!S.canWrite)return;
   if(a==="new-fighter")return fighterForm(null);
@@ -904,7 +1087,14 @@ document.addEventListener("click",async ev=>{
     await B.saveBout({...b,order:oo});await B.saveBout({...o,order:ob});return}
   if(a==="del-fighter"){if(!confirmBtn(el,"Confirmer la suppression"))return;
     for(const b of boutsOf(id))await B.saveBout({...b,aka:b.aka===id?"":b.aka,ao:b.ao===id?"":b.ao});
+    for(const q of Object.values(S.pools))if((q.members||[]).includes(id))await B.savePool({...q,members:q.members.filter(m=>m!==id)});
     await B.delFighter(id);closeModal();toast("Fiche supprimée.");return}
+  if(a==="new-pool")return poolForm(null);
+  if(a==="edit-pool")return poolForm(S.pools[id]);
+  if(a==="gen-pool"){el.disabled=true;const n=await genPoolBouts(S.pools[id]);if(n){S.everWrote=true;toast(`${n} combat${n>1?"s":""} ajouté${n>1?"s":""} à la fight card.`)}return}
+  if(a==="interleave"){const q=S.pools[$("#il-"+id).value];if(!q)return;el.disabled=true;await interleavePools(S.pools[id],q);S.everWrote=true;toast(`Combats de ${poolName(S.pools[id])} et ${poolName(q)} alternés.`);return}
+  if(a==="del-pool"){if(!confirmBtn(el,"Confirmer (les combats restent)"))return;for(const b of poolBouts(S.pools[id]))await B.saveBout({...b,poolId:""});
+    await B.delPool(id);closeModal();toast("Poule supprimée. Ses combats restent sur la fight card.");return}
   if(a==="del-bout"){if(!confirmBtn(el,"Confirmer la suppression"))return;await B.delBout(id);closeModal();toast("Combat retiré de la carte.");return}
   if(a==="load-demo"){el.disabled=true;const fs=demoData();for(const f of fs)await B.saveFighter(f);
     const by=Object.fromEntries(fs.map(f=>[f.id,f]));const g=(p,n)=>fs.find(f=>f.prenom===p&&f.nom===n);
@@ -930,6 +1120,7 @@ document.addEventListener("change",async e=>{
     if(d.event)await B.saveEvent({...S.event,...d.event});
     for(const f of Object.values(d.fighters||{}))if(f&&f.id&&await B.saveFighter(f))n++;
     for(const b of Object.values(d.bouts||{}))if(b&&b.id&&await B.saveBout(b))n++;
+    for(const q of Object.values(d.pools||{}))if(q&&q.id&&await B.savePool(q))n++;
     toast(`${n} élément${n>1?"s":""} importé${n>1?"s":""}.`)}catch(x){toast("Fichier illisible : choisissez un export JSON de l'interclub.")}
   e.target.value="";
 });
@@ -942,8 +1133,16 @@ document.addEventListener("submit",async e=>{
     if(x.aka&&x.aka===x.ao)return toast("Choisissez deux combattants différents.");
     if(x.winner&&x.status!=="termine")x.status="termine";
     if(await B.saveBout(x)){S.everWrote=true;closeModal();toast(f.dataset.new==="1"?"Combat ajouté à la carte.":"Combat enregistré.")}}
+  if(f.id==="pf"){const v=k=>$("#pf-"+k).value.trim();const members=$$("#pf-list input:checked").map(i=>i.value);
+    const name=v("name");if(!name)return toast("Donnez un nom à la poule.");
+    if(Object.values(S.pools).some(q=>q.id!==f.dataset.id&&normTxt(poolName(q))===normTxt(name)))return toast("Une autre poule porte déjà ce nom.");
+    if(members.length<2)return toast("Choisissez au moins 2 combattants.");
+    const q={...(S.pools[f.dataset.id]||{}),id:f.dataset.id,name,categorie:name,discipline:v("discipline"),section:v("section"),format:v("format"),start:v("start"),step:num(v("step"))||4,members};
+    const gen=$("#pf-gen")?.checked;
+    if(await B.savePool(q)){S.everWrote=true;closeModal();let n=0;if(gen)n=await genPoolBouts(q);
+      toast(gen?`Poule créée : ${n} combat${n>1?"s":""} ajouté${n>1?"s":""}.`:"Poule enregistrée.");if(members.length>5)toast("Plus de 5 combattants : pensez à couper en 2 poules.")}}
   if(f.id==="ev-form"){const v=id=>$("#ev-"+id).value.trim();
-    if(await B.saveEvent({...S.event,name:v("name")||EVENT_DEFAULT.name,date:v("date")||EVENT_DEFAULT.date,lieu:v("lieu"),orga:v("orga"),horaires:v("horaires"),programme:$("#ev-programme").value,aires:num(v("aires"))||1,tolerance:num(v("tol"))??3})){S.everWrote=true;toast("Événement enregistré.")}}
+    if(await B.saveEvent({...S.event,name:v("name")||EVENT_DEFAULT.name,date:v("date")||EVENT_DEFAULT.date,lieu:v("lieu"),orga:v("orga"),horaires:v("horaires"),programme:$("#ev-programme").value,aires:num(v("aires"))||1,tolerance:num(v("tol"))??3,ptsWin:num(v("pw"))??3,ptsDraw:num(v("pd"))??1,ptsLoss:num(v("pl"))??0})){S.everWrote=true;toast("Événement enregistré.")}}
 });
 boot();
 </script>
