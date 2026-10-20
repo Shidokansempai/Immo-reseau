@@ -134,11 +134,11 @@ def photo(key, lines, px=0.5, py=0.5, small=None, zoom=1.0):
 def sc_hook(t, d):
     img = full(P["facade"], t, d, 0.55, 0.45, drift=0.1)
     sc, al = pop_in(t, 0.0)
-    tk_text(img, "435 000 €", 150, TEXT_Y - 120, WHITE, al, sc, stroke=12)
+    tk_text(img, "DEVINE LE PRIX", 120, TEXT_Y - 120, WHITE, al, sc, stroke=12)
     sc, al = pop_in(t, BEAT)
-    tk_text(img, "À LA RÉUNION", 76, TEXT_Y + 40, DARK, al, sc, box=GREEN)
+    tk_text(img, "DE CETTE MAISON", 76, TEXT_Y + 40, DARK, al, sc, box=GREEN)
     sc, al = pop_in(t, 2 * BEAT)
-    tk_text(img, "VOILÀ CE QUE T'AS", 66, TEXT_Y + 175, WHITE, al, sc, stroke=9)
+    tk_text(img, "À LA RÉUNION", 66, TEXT_Y + 175, WHITE, al, sc, stroke=9)
     flash(img, t, strength=0.8)
     return img
 
@@ -160,13 +160,13 @@ def sc_cinq(t, d):
 
 
 def sc_suspense(t, d):
-    """Carte de suspense avant le prix (pendant la montée musicale)."""
+    """Carte de suspense avant la révélation (pendant la montée musicale)."""
     img = full(P["facade"], t, d, 0.5, 0.3, drift=0.15, shake=False).filter(ImageFilter.GaussianBlur(12))
     img.alpha_composite(Image.new("RGBA", (W, H), DARK + (190,)))
     sc, al = pop_in(t, 0.0)
-    tk_text(img, "ET LE PRIX ?", 120, TEXT_Y - 60, WHITE, al, sc)
+    tk_text(img, "TON ESTIMATION ?", 110, TEXT_Y - 60, WHITE, al, sc)
     sc, al = pop_in(t, BEAT)
-    tk_text(img, "DEVINE EN COMMENTAIRE", 62, TEXT_Y + 100, DARK, al, sc, box=GREEN)
+    tk_text(img, "EN COMMENTAIRE", 70, TEXT_Y + 100, DARK, al, sc, box=GREEN)
     # compte à rebours 3-2-1 sur les derniers temps
     for k, s in enumerate(["3", "2", "1"]):
         st = d - (3 - k) * BEAT * 0.5
@@ -177,15 +177,18 @@ def sc_suspense(t, d):
     return img
 
 
-def sc_prix(t, d):
+def sc_reveal(t, d):
+    """Révélation sans prix : le prix se donne en message privé."""
     img = full(P["facade"], t, d, 0.4, 0.6, drift=0.12, shake=False).filter(ImageFilter.GaussianBlur(5))
     img.alpha_composite(Image.new("RGBA", (W, H), DARK + (150,)))
     sc, al = pop_in(t, 0.0, 0.18)
     tk_text(img, "EXCLU IMMO RÉSEAU", 52, TEXT_Y - 190, DARK, al, sc, box=GREEN)
     sc, al = pop_in(t, BEAT, 0.18)
-    tk_text(img, "435 000 €", 170, TEXT_Y, WHITE, al, sc, stroke=12)
-    sc, al = pop_in(t, BEAT * 2)
-    tk_text(img, "HAI · RIVIÈRE SAINT-LOUIS", 44, TEXT_Y + 150, WHITE, al, sc, stroke=6,
+    tk_text(img, "LE PRIX ?", 170, TEXT_Y - 10, WHITE, al, sc, stroke=12)
+    sc, al = pop_in(t, BEAT * 1.5)
+    tk_text(img, "RÉPONSE EN DM", 80, TEXT_Y + 160, DARK, al, sc, box=GREEN)
+    sc, al = pop_in(t, BEAT * 2.5)
+    tk_text(img, "RIVIÈRE SAINT-LOUIS · LA RÉUNION", 44, TEXT_Y + 290, WHITE, al, sc, stroke=6,
             weight="ExtraBold")
     flash(img, t, strength=0.9, dur=0.2)
     return img
@@ -240,7 +243,7 @@ SCENES = [
     (photo("facade", [("JACUZZI", 96, "w"), ("ENCASTRÉ", 96, "box")], px=0.5, py=0.8), 3),
     (photo("facade", [("SOUS LES", 90, "w"), ("PALMIERS", 96, "box")], px=0.5, py=0.15, zoom=1.08), 2),
     (sc_suspense, 4),
-    (sc_prix, 4),
+    (sc_reveal, 4),
     (sc_outro, 8),
 ]
 
