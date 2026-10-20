@@ -43,3 +43,27 @@ Vidéo : `reel-feminines-inspirent.mp4` (1080x1920, 26 s). Script : `generate_re
 - **Collab Instagram** : invite les pratiquantes en collaboratrices du post (avec leur accord) — le reel apparaît aussi sur leur profil.
 - **Épingle** le reel en haut du profil pendant la campagne de rentrée.
 - **Droit à l'image** : la vidéo montre des mineures. Vérifie l'autorisation écrite des parents avant publication.
+
+---
+
+# Story 15 s — `story-15s-feminines.mp4`
+
+## Légende (Instagram / Facebook)
+> « Le karaté, c'est pour les garçons ? »
+>
+> Elles ont répondu. Pas avec des mots. Avec des coups de pied. 🥋🔥
+>
+> Ados, adultes : même tatami, même sueur, même respect.
+> Et au bord du tatami, les petits regardent. Ils apprennent qu'ici, personne ne choisit à ta place jusqu'où tu peux aller.
+>
+> Filles, mamans, sœurs : le seul combat perdu d'avance, c'est celui qu'on ne commence pas.
+> 👉 Réponds « ESSAI » et on t'envoie les horaires du cours d'essai.
+>
+> Fighter Academy Karaté · Shidokan — Le Tampon 974
+> Sensei Fabrice & Sempai Jules. Osu !
+
+## Légende TikTok (courte)
+> On m'a demandé si le karaté c'était pour les garçons. Voilà la réponse 👊🏽 Commente « ESSAI » 🥋 #974
+
+## Hashtags
+`#karate #shidokan #kickboxing #mma #sportfeminin #femmesquicombattent #girlpower #lareunion #974 #letampon #sudreunion #artsmartiaux #selfdefense #reunionisland`
