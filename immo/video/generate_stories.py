@@ -121,7 +121,7 @@ def s4(P):
     text(img, "HAI", F_SANS, 44, W / 2, 600, SOFT, tracking=10, weight="SemiBold")
     bar(img, W / 2, 660, 300, 6, GREEN)
     feats = ["5 chambres à l'étage", "Séjour lumineux, escalier suspendu", "Cuisine équipée",
-             "Salles d'eau en pierre naturelle", "Jardin arboré, bassin, parking"]
+             "Salles d'eau en pierre naturelle", "Jacuzzi encastré, jardin arboré"]
     for k, s in enumerate(feats):
         y = 750 + k * 78
         f = g.font(F_SANS, 40, "SemiBold")

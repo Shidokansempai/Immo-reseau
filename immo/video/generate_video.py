@@ -253,7 +253,7 @@ def sc_prix(t, d):
     text(img, "HAI", F_SANS, 48, W / 2, 960, SOFT, a1, tracking=10, weight="SemiBold")
     bar(img, W / 2, 1030, 360 * ease_out(prog(t, 0.7, 0.6)), 6, GREEN)
     a2 = ease_out(prog(t, 0.9, 0.6))
-    text(img, "5 chambres  ·  jardin arboré  ·  bassin", F_SANS, 40, W / 2, 1110, WHITE, a2,
+    text(img, "5 chambres  ·  jardin  ·  jacuzzi encastré", F_SANS, 40, W / 2, 1110, WHITE, a2,
          weight="Medium")
     a3 = ease_out(prog(t, 1.6, 0.7))
     text(img, "Elle ne restera pas longtemps.", F_SCRIPT, 66, W / 2, 1250, GREEN, a3,
@@ -311,8 +311,8 @@ SCENES = [
                  z0=1.0, z1=1.08, px0=0.3, px1=0.7), 3.0),
     (photo_scene("08-douche-italienne", "DOUCHE À L'ITALIENNE", "Esprit spa",
                  "Double pommeau · Vue sur les mornes", z0=1.08, z1=1.0, px0=0.5, px1=0.5), 3.0),
-    (photo_scene("__facade", "L'EXTÉRIEUR", "Jardin arboré & bassin",
-                 "Terrasse · Stationnement privatif", script="Plus qu'un bien, un art de vivre.",
+    (photo_scene("__facade", "L'EXTÉRIEUR", "Jacuzzi encastré",
+                 "Jardin arboré · Terrasse · Parking privatif", script="Plus qu'un bien, un art de vivre.",
                  z0=1.0, z1=1.12, px0=0.5, px1=0.5, py=0.75), 3.6),
     (sc_prix, 3.8),
     (sc_outro, 4.5),

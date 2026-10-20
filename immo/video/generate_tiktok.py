@@ -215,7 +215,7 @@ SCENES = [
     (sc_cinq, 3),
     (photo("07-salle-eau", [("PIERRE", 96, "w"), ("NATURELLE", 96, "box")], px=0.55), 2),
     (photo("08-douche-italienne", [("DOUCHE", 96, "w"), ("DE SPA", 96, "box")], px=0.5), 3),
-    (photo("facade", [("JARDIN", 96, "w"), ("+ BASSIN", 96, "box")], px=0.5, py=0.8), 3),
+    (photo("facade", [("JACUZZI", 96, "w"), ("ENCASTRÉ", 96, "box")], px=0.5, py=0.8), 3),
     (sc_prix, 4),
     (sc_outro, 6),
 ]
