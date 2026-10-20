@@ -1,8 +1,7 @@
-"""Story 15 s — « Les petits regardent » + annonce du Shidokan Challenge 974.
+"""Story 15 s — « Nos féminines inspirent nos plus petits ».
 
-Version courte du reel « nos féminines inspirent nos plus petites »,
-qui se termine sur l'affiche du Shidokan Challenge 974 (dimanche 25 octobre 2026).
-Format 1080x1920. Texte placé hors des zones masquées par l'interface story
+Version courte du reel `generate_reel_feminines.py`, avec un appel à l'action
+pensé pour la story (« Réponds ESSAI à cette story »). Format 1080x1920. Texte placé hors des zones masquées par l'interface story
 (~250 px en haut et en bas).
 
 Usage :  python3 generate_story_15s.py            (vidéo)
@@ -23,8 +22,7 @@ from generate_reel_feminines import (F_ANTON, F_BEBAS, GOLD, RED, WHITE, W, H, F
                                      font, grade, prog, stext)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "story-15s-feminines-challenge.mp4")
-CH = os.path.join(HERE, "photos", "challenge")
+OUT = os.path.join(HERE, "story-15s-feminines.mp4")
 
 # (début, fin, photo, zoom départ, zoom fin, fx, fy, texte)
 SHOTS = [
@@ -34,15 +32,11 @@ SHOTS = [
     (5.5, 6.7, "06-adulte-face.jpg", 1.05, 1.18, 0.45, 0.45, "MÊME TATAMI."),
     (6.7, 7.8, "08-salle.jpg", 1.00, 1.30, 0.52, 0.62, "PENDANT CE TEMPS…"),
 ]
-GROUP = (7.8, 10.2)
-ANNONCE = (10.2, 11.9)
-POSTER = (11.9, 15.0)
-DURATION = POSTER[1]
-CUTS = [s[0] for s in SHOTS] + [GROUP[0], ANNONCE[0], POSTER[0]]
+GROUP = (7.8, 10.6)
+CTA = (10.6, 15.0)
+DURATION = CTA[1]
+CUTS = [s[0] for s in SHOTS] + [GROUP[0], CTA[0]]
 
-AFFICHE = Image.open(os.path.join(CH, "affiche-challenge-story.png")).convert("RGB")
-AFFICHE_BG = grade(cover(AFFICHE, 1.2, 0.5, 0.5).filter(ImageFilter.GaussianBlur(25)), dark=0.5)
-LOGO = Image.open(os.path.join(CH, "logo-shidokan-reunion.png")).convert("RGBA")
 
 
 def scene_hook(img, t):
@@ -92,31 +86,24 @@ def scene_group(img, t):
     boxtext(img, "DEMAIN, C'EST EUX.", font(F_ANTON, 104), W / 2, by + bh + 130, prog(t, a + 1.2, 0.45))
 
 
-def scene_annonce(img, t):
-    a, _ = ANNONCE
-    img.alpha_composite(AFFICHE_BG)
-    # logo qui tombe et rebondit
-    k = ease_back(prog(t, a, 0.45))
-    size = int(380 * (0.4 + 0.6 * k))
-    if size > 10:
-        lg = LOGO.resize((size, size * LOGO.height // LOGO.width), Image.LANCZOS)
-        img.alpha_composite(lg, (int(W / 2 - lg.width / 2), int(560 - lg.height / 2)))
-    k2 = ease_back(prog(t, a + 0.35, 0.35))
-    stext(img, "DIMANCHE", font(F_ANTON, 130), W / 2, 900, WHITE, alpha=clamp(k2), scale=1 + 0.4 * (1 - k2))
-    boxtext(img, "25 OCTOBRE", font(F_ANTON, 120), W / 2, 1070, prog(t, a + 0.6, 0.4))
-    k3 = ease_out(prog(t, a + 0.9, 0.35))
-    stext(img, "VIENS VIVRE LE SHIDOKAN CHALLENGE 974", font(F_BEBAS, 72), W / 2, 1240, GOLD, alpha=k3, stroke=4)
-
-
-def scene_poster(img, t):
-    a, b = POSTER
-    img.alpha_composite(AFFICHE_BG)
-    # l'affiche arrive en grand puis se pose doucement (dézoom)
-    z = 1.18 - 0.18 * ease_out(prog(t, a, b - a))
-    pw = int(W * 0.86 * z)
-    ph = int(pw * AFFICHE.height / AFFICHE.width)
-    poster = AFFICHE.resize((pw, ph), Image.BICUBIC).convert("RGBA")
-    img.alpha_composite(poster, (int(W / 2 - pw / 2), int(H / 2 - ph / 2)))
+def scene_cta(img, t):
+    a, _ = CTA
+    img.alpha_composite(Image.new("RGBA", (W, H), (10, 8, 9, 255)))
+    glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(glow).ellipse((W / 2 - 520, 380, W / 2 + 520, 1400), fill=(120, 10, 18, 140))
+    img.alpha_composite(glow.filter(ImageFilter.GaussianBlur(120)))
+    for i, s in enumerate(["FILLES", "MAMANS", "SŒURS"]):
+        k = ease_back(prog(t, a + 0.1 + i * 0.25, 0.35))
+        stext(img, s, font(F_ANTON, 140), W / 2, 450 + i * 170, WHITE if i != 1 else GOLD,
+              alpha=clamp(k), scale=1 + 0.4 * (1 - k), stroke=0)
+    k = ease_out(prog(t, a + 0.9, 0.4))
+    stext(img, "LE TATAMI VOUS ATTEND.", font(F_BEBAS, 104), W / 2, 990, WHITE, alpha=k, stroke=0)
+    boxtext(img, "RÉPONDS « ESSAI »", font(F_ANTON, 96), W / 2, 1170, prog(t, a + 1.3, 0.45))
+    k = ease_out(prog(t, a + 1.6, 0.4))
+    stext(img, "À CETTE STORY", font(F_ANTON, 80), W / 2, 1310, WHITE, alpha=k, stroke=0)
+    k = ease_out(prog(t, a + 2.1, 0.5))
+    stext(img, "FIGHTER ACADEMY KARATÉ · LE TAMPON", font(F_BEBAS, 60), W / 2, 1480, GOLD, alpha=k, stroke=0)
+    stext(img, "@SHIDOKAN_REUNION", font(F_BEBAS, 60), W / 2, 1550, WHITE, alpha=k, stroke=0)
 
 
 def frame(t):
@@ -127,12 +114,10 @@ def frame(t):
         for s in SHOTS:
             if s[0] <= t < s[1]:
                 scene_shot(img, t, s)
-    elif t < ANNONCE[0]:
+    elif t < CTA[0]:
         scene_group(img, t)
-    elif t < POSTER[0]:
-        scene_annonce(img, t)
     else:
-        scene_poster(img, t)
+        scene_cta(img, t)
     for c in CUTS:
         if 0 <= t - c < 0.09:
             img.alpha_composite(Image.new("RGBA", (W, H), (255, 255, 255, int(110 * (1 - (t - c) / 0.09)))))
@@ -219,7 +204,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "--preview":
         pdir = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, "_preview")
         os.makedirs(pdir, exist_ok=True)
-        for ts in [0.5, 2.3, 3.6, 5.0, 6.0, 7.3, 9.8, 11.5, 14.5]:
+        for ts in [0.5, 2.3, 3.6, 5.0, 6.0, 7.3, 9.8, 12.0, 14.5]:
             frame(ts).save(os.path.join(pdir, f"s_{ts:05.1f}.png"))
         print("preview ->", pdir)
     else:
