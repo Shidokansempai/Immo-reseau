@@ -315,6 +315,36 @@ body.ro [data-w]{display:none!important}
   .sugg-row{grid-template-columns:minmax(0,1fr)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- Couche « moderne » ---------- */
+:root{--r:16px;--glass:linear-gradient(180deg,color-mix(in srgb,var(--surface) 92%,#fff 3%),color-mix(in srgb,var(--surface) 80%,var(--bg)));--lift:0 1px 0 #ffffff0d inset,0 18px 40px -22px #000c}
+header.top{background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(16px) saturate(1.3)}
+nav.tabs{gap:6px;padding-bottom:10px}
+nav.tabs button{border:1px solid transparent;border-radius:999px;padding:8px 16px;font-size:14px}
+nav.tabs button:hover{background:#ffffff0a}
+nav.tabs button[aria-selected="true"]{background:var(--gold-soft);border-color:color-mix(in srgb,var(--gold) 45%,transparent);color:var(--gold)}
+.panel-head h2{font-size:36px;background:linear-gradient(90deg,var(--fg),color-mix(in srgb,var(--fg) 70%,var(--gold)));-webkit-background-clip:text;background-clip:text;color:transparent}
+.kpi,.box,.bout,.fiche,.pool,.empty{background:var(--glass);border-color:color-mix(in srgb,var(--line) 75%,transparent);box-shadow:var(--lift)}
+.kpi{position:relative;overflow:hidden;padding:18px 18px 16px}
+.kpi::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--aka),var(--gold))}
+.kpi strong{font-size:44px}
+.bout{transition:transform .15s,border-color .15s}
+.bout:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--gold) 35%,var(--line))}
+.btn{border-radius:12px;transition:transform .12s,box-shadow .12s,background .15s,border-color .15s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px -10px #000b}
+.btn.primary{background:linear-gradient(135deg,var(--aka),color-mix(in srgb,var(--aka) 70%,#ff7a3d));border-color:transparent;box-shadow:0 8px 22px -12px var(--aka)}
+.btn.blue{background:linear-gradient(135deg,var(--ao),color-mix(in srgb,var(--ao) 70%,#7dd3fc));border-color:transparent}
+input[type=text],input[type=number],input[type=date],input[type=search],input[type=tel],select,textarea{border-radius:12px;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.check{border-radius:12px}
+.chip{backdrop-filter:blur(4px)}
+section.panel:not([hidden]){animation:rise .25s ease-out}
+@keyframes rise{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+.gen-table td{text-align:left;font:500 14px var(--f-body);white-space:nowrap}
+.gen-table td b{font:600 15px var(--f-body)}
+.gen-table th{text-align:left}
+.studio-prev{display:grid;justify-items:center;gap:8px}
+.studio-prev img{max-height:560px;width:auto;max-width:100%;border-radius:14px;box-shadow:var(--lift);border:1px solid var(--line)}
 </style>
 
 <header class="top">
@@ -329,6 +359,7 @@ body.ro [data-w]{display:none!important}
       <button role="tab" data-tab="fighters" aria-selected="false">Combattants</button>
       <button role="tab" data-tab="card" aria-selected="false">Fight card</button>
       <button role="tab" data-tab="pools" aria-selected="false">Poules</button>
+      <button role="tab" data-tab="gen" aria-selected="false">Générateur</button>
       <button role="tab" data-tab="poster" aria-selected="false">Affiche</button>
       <button role="tab" data-tab="settings" aria-selected="false">Réglages</button>
     </nav>
@@ -341,6 +372,7 @@ body.ro [data-w]{display:none!important}
   <section class="panel" id="p-fighters" hidden></section>
   <section class="panel" id="p-card" hidden></section>
   <section class="panel" id="p-pools" hidden></section>
+  <section class="panel" id="p-gen" hidden></section>
   <section class="panel" id="p-poster" hidden></section>
   <section class="panel" id="p-settings" hidden></section>
 </main>
@@ -399,7 +431,7 @@ let toastT;function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;
 const S={fighters:{},bouts:{},pools:{},event:{...EVENT_DEFAULT},mode:"loading",canWrite:true,tab:"dash",
   f:{q:"",disc:"",sex:"",club:"",status:""},showSugg:false,downloads:null};
 try{const t=localStorage.getItem("ic-tab");if(t)S.tab=t}catch(e){}
-const h=(location.hash||"").slice(1);if(["dash","fighters","card","pools","poster","settings"].includes(h))S.tab=h;
+const h=(location.hash||"").slice(1);if(["dash","fighters","card","pools","gen","poster","settings"].includes(h))S.tab=h;
 
 function derive(f){
   const age=ageAt(f.naissance,S.event.date),cat=ageCat(age)||(WEIGHTS[f.catAge]?f.catAge:null),sex=f.sexe==="F"?"F":"M";
@@ -575,8 +607,8 @@ function render(){
   const today=new Date();today.setHours(0,0,0,0);const days=Math.round((new Date(e.date+"T00:00:00")-today)/864e5);
   $("#h-count").innerHTML=isNaN(days)?"":days>0?`<strong>J-${days}</strong> avant le gong`:days===0?"<strong>Jour J</strong> Ossu !":"<strong>Terminé</strong>";
   $$("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===S.tab)));
-  for(const t of ["dash","fighters","card","pools","poster","settings"])$("#p-"+t).hidden=t!==S.tab;
-  ({dash:rDash,fighters:rFighters,card:rCard,pools:rPools,poster:rPoster,settings:rSettings})[S.tab]();
+  for(const t of ["dash","fighters","card","pools","gen","poster","settings"])$("#p-"+t).hidden=t!==S.tab;
+  ({dash:rDash,fighters:rFighters,card:rCard,pools:rPools,gen:rGen,poster:rPoster,settings:rSettings})[S.tab]();
 }
 const loadingNote=()=>S.mode==="loading"||(S.mode==="db"&&!S.loaded);
 
@@ -713,7 +745,7 @@ function boutRow(b,n,sec){
     <div class="b-num"><span>${b.heure?esc(b.heure):"Combat"}</span><strong>${String(n).padStart(2,"0")}</strong><span class="aire-tag a${esc(b.aire||1)}">Aire ${esc(b.aire||1)}</span></div>
     <div class="b-body">
       <div class="b-meta">${b.title?`<span class="title">${esc(b.title)}</span>`:""}${b.poolId&&S.pools[b.poolId]?`<span class="chip ok">${esc(poolName(S.pools[b.poolId]))}</span>`:""}<span class="chip d-${b.discipline}">${esc(DISC[b.discipline]?.label||"")}</span><span class="chip">${esc(i.cat||"—")}</span>${b.phase?`<span class="chip">${esc(b.phase)}</span>`:""}<span class="chip">${esc(b.format||"")}</span>
-        ${st==="encours"?'<span class="chip live">En cours</span>':st==="termine"?'<span class="chip ok">Terminé</span>':""}${i.r?.exemple?'<span class="chip ex">Exemple</span>':""}</div>
+        ${b.note?`<span class="chip warn">${esc(b.note)}</span>`:""}${st==="encours"?'<span class="chip live">En cours</span>':st==="termine"?'<span class="chip ok">Terminé</span>':""}${i.r?.exemple?'<span class="chip ex">Exemple</span>':""}</div>
       <div class="corners">
         <div class="corner aka ${i.r?cls("aka"):"tbd"}">${avatar(i.r,"sm")}<div class="ctext"><b>${esc(i.rn)}</b><small>${i.r?esc((i.r.club||"")+" · "+kg(i.dr.w)):"Coin rouge"}</small></div></div>
         <div class="vs">VS</div>
@@ -785,6 +817,7 @@ function rPoster(){
   p.innerHTML=`
   <div class="panel-head"><div><h2>Affiche</h2><p>À projeter le jour J : les résultats et le combat en cours se mettent à jour en direct.</p></div>
     <div class="actions"><button class="btn" data-act="fullscreen">Plein écran</button><button class="btn" data-act="copy-card">Copier pour les réseaux</button></div></div>
+  ${studioBox()}
   <div class="poster" id="poster">
     <div class="p-head"><img class="p-logo" src="${LOGO}" alt="Logo"><div><span class="kicker">${esc(e.orga||"")} présente</span><h2>${nameHtml(e.name||"Interclub")}</h2>
       <span class="when">${isNaN(d)?esc(e.date):esc(d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}))}</span><span class="where">${esc(e.lieu||"")}${e.horaires?" · "+esc(e.horaires):""}</span></div></div>
@@ -871,6 +904,198 @@ function poolForm(q){
     $$("#pf-list label").forEach(l=>{const c=l.querySelector("input").checked;l.hidden=!c&&((t&&!l.dataset.q.includes(t))||(only&&!l.dataset.disc.split(" ").includes(d)))});
     const n=$$("#pf-list input:checked").length;$("#pf-count").textContent=`· ${n} sélectionné${n>1?"s":""} · ${n*(n-1)/2} combat${n*(n-1)/2>1?"s":""}`};
   $("#pf").addEventListener("input",filt);$("#pf").addEventListener("change",filt);filt();
+}
+
+/* ---------- Générateur automatique de combats ---------- */
+const GEN_DEFAULT={tolKid:3,tolAdult:5,ageGap:2,girls:true,second:true,unknown:true,startKid:"09:20",startAdult:"13:15",stepKid:4,stepAdult:5};
+S.gen={...GEN_DEFAULT};S.genRes=null;
+const kgS=w=>w.toLocaleString("fr-FR",{maximumFractionDigits:1});
+function estW(f){const d=derive(f);if(d.w!=null)return{w:d.w,est:false};const m=String(f.catPoids||"").match(/(\d+(?:[.,]\d+)?)/);return m?{w:parseFloat(m[1].replace(",",".")),est:true}:null}
+function readGen(){const g={...S.gen},v=id=>$("#gen-"+id);if(!v("tolKid"))return g;
+  g.tolKid=num(v("tolKid").value)??3;g.tolAdult=num(v("tolAdult").value)??5;g.ageGap=num(v("ageGap").value)??2;
+  g.girls=v("girls").checked;g.second=v("second").checked;g.unknown=v("unknown").checked;
+  g.startKid=v("startKid").value.trim()||"09:20";g.startAdult=v("startAdult").value.trim()||"13:15";
+  g.stepKid=num(v("stepKid").value)||4;g.stepAdult=num(v("stepAdult").value)||5;return g}
+function schedGen(L,start,step,nA){
+  const slot=[],aire=[],rem=L.map((_,i)=>i),fx=i=>[L[i].aka,L[i].ao];let t=0;
+  while(rem.length&&t<600){const used=new Set(),prev=new Set();L.forEach((b,i)=>{if(slot[i]===t-1)fx(i).forEach(x=>prev.add(x))});const pick=[];
+    for(const i of rem){if(pick.length>=nA)break;if(fx(i).some(x=>used.has(x)||prev.has(x)))continue;pick.push(i);fx(i).forEach(x=>used.add(x))}
+    pick.forEach((i,k)=>{slot[i]=t;aire[i]=k+1;rem.splice(rem.indexOf(i),1)});t++}
+  return L.map((b,i)=>({...b,heure:fromMin(start+slot[i]*step),aire:aire[i]}));
+}
+function genCard(g){
+  const P=fighters().map(f=>({f,d:derive(f),e:estW(f),disc:(f.disciplines||[]).length?f.disciplines:["shidokan"]})),C=[];
+  for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const a=P[i],b=P[j];
+    if(!a.e||!b.e)continue;const est=a.e.est||b.e.est;if(est&&!g.unknown)continue;
+    if(a.d.minor!==b.d.minor)continue;
+    if(a.d.sex!==b.d.sex&&(g.girls||!a.d.minor))continue;
+    let ad=0;
+    if(a.d.minor){if(a.d.age!=null&&b.d.age!=null)ad=Math.abs(a.d.age-b.d.age);
+      else{const ia=AGE_CATS.findIndex(c=>c[2]===a.d.cat),ib=AGE_CATS.findIndex(c=>c[2]===b.d.cat);if(ia<0||ib<0)continue;ad=Math.abs(ia-ib)*2}
+      if(ad>g.ageGap)continue}
+    const disc=a.disc.find(x=>b.disc.includes(x));if(!disc)continue;
+    const dw=Math.abs(a.e.w-b.e.w);if(dw>(a.d.minor?g.tolKid:g.tolAdult))continue;
+    const same=!!a.f.club&&a.f.club===b.f.club;
+    C.push({a,b,disc,dw,ad,same,est,cost:dw*3+ad*1.5+(same?2:0)+(disc!==a.disc[0]||disc!==b.disc[0]?1:0)+(est?1:0)})}
+  C.sort((x,y)=>x.cost-y.cost);
+  const cnt={},seen=new Set(),pairs=[],key=c=>c.a.f.id+"|"+c.b.f.id;
+  for(const c of C){if(cnt[c.a.f.id]||cnt[c.b.f.id])continue;cnt[c.a.f.id]=cnt[c.b.f.id]=1;pairs.push(c);seen.add(key(c))}
+  if(g.second)for(const c of C){const x=cnt[c.a.f.id]||0,y=cnt[c.b.f.id]||0;if(seen.has(key(c))||!((x===0&&y===1)||(x===1&&y===0)))continue;
+    cnt[c.a.f.id]=x+1;cnt[c.b.f.id]=y+1;pairs.push(c);seen.add(key(c))}
+  const mk=c=>{const kid=c.a.d.minor,ws=[c.a.e.w,c.b.e.w].sort((x,y)=>x-y),wl=ws[0]===ws[1]?kgS(ws[0])+" kg":`${kgS(ws[0])}-${kgS(ws[1])} kg`;
+    const cat=kid?(c.a.d.cat===c.b.d.cat?c.a.d.cat:`${c.a.d.cat}/${c.b.d.cat}`):"Seniors",sx=c.a.d.sex==="F"?(kid?"filles":"femmes"):(kid?"garçons":"hommes");
+    const ci=AGE_CATS.findIndex(x=>x[2]===c.a.d.cat);
+    return{aka:c.a.f.id,ao:c.b.f.id,discipline:c.disc,section:kid?"Jeunes":"Carte principale",categorie:`${cat} ${sx} ${wl}`,phase:"Combat unique",
+      format:DISC[c.disc].fmt[kid?"jeune":"adulte"],note:c.est?"Poids à confirmer à la pesée":"",title:"",dw:c.dw,same:c.same,kid,sort:[ci,c.a.d.sex==="F"?0:1,ws[0]]}};
+  const all=pairs.map(mk),by=(x,y)=>x.sort[0]-y.sort[0]||x.sort[1]-y.sort[1]||x.sort[2]-y.sort[2];
+  const kids=all.filter(b=>b.kid).sort(by),ads=all.filter(b=>!b.kid).sort((x,y)=>x.sort[2]-y.sort[2]);
+  if(ads.length)ads[ads.length-1].title="Combat vedette";if(ads.length>1)ads[ads.length-2].title="Co-vedette";
+  ads.sort((x,y)=>(x.title?1:0)-(y.title?1:0)||(x.title==="Combat vedette")-(y.title==="Combat vedette"));
+  const nA=Math.max(1,num(S.event.aires)||1);
+  const sk=schedGen(kids,toMin(g.startKid)??560,g.stepKid,nA),adsN=ads.filter(b=>!b.title),adsT=ads.filter(b=>b.title);
+  const sa0=schedGen(adsN,toMin(g.startAdult)??795,g.stepAdult,nA),nextT=sa0.length?Math.max(...sa0.map(b=>toMin(b.heure)))+g.stepAdult:(toMin(g.startAdult)??795);
+  const sa=[...sa0,...schedGen(adsT,nextT,g.stepAdult,nA)];
+  const bouts=[...sk.sort((x,y)=>toMin(x.heure)-toMin(y.heure)||x.aire-y.aire),...sa.sort((x,y)=>toMin(x.heure)-toMin(y.heure)||x.aire-y.aire)].map((b,i)=>({...b,num:i+1,order:i+1}));
+  const unmatched=P.filter(p=>!cnt[p.f.id]).map(p=>({f:p.f,why:p.e?"aucun adversaire dans les règles":"poids manquant"}));
+  return{bouts,unmatched,placed:Object.keys(cnt).length,total:P.length,same:bouts.filter(b=>b.same).length,avg:bouts.length?bouts.reduce((s2,b)=>s2+b.dw,0)/bouts.length:0,g};
+}
+function rGen(){
+  const p=$("#p-gen");
+  if(loadingNote()){p.innerHTML=`<p class="muted">Chargement…</p>`;return}
+  const g=S.gen,R2=S.genRes,nb=Object.keys(S.bouts).length,np=Object.keys(S.pools).length;
+  const row=b=>{const r=S.fighters[b.aka],l=S.fighters[b.ao],tol=b.kid?R2.g.tolKid:R2.g.tolAdult;
+    return `<tr><td class="num">${b.num}</td><td class="num">${esc(b.heure)}</td><td><span class="aire-tag a${b.aire}">A${b.aire}</span></td><td>${esc(b.categorie)}${b.title?` <span class="chip" style="color:var(--gold)">${esc(b.title)}</span>`:""}</td>
+      <td><b style="color:var(--aka)">${esc(fname(r))}</b><small class="muted"> ${esc(clubCode(r.club))}</small></td><td><b style="color:var(--ao)">${esc(fname(l))}</b><small class="muted"> ${esc(clubCode(l.club))}</small></td>
+      <td><span class="chip ${b.dw<=tol/2?"ok":"warn"}">Δ ${kgS(b.dw)} kg</span>${b.note?' <span class="chip warn">à peser</span>':""}${b.same?' <span class="chip">même club</span>':""}</td><td><span class="chip d-${b.discipline}">${esc(DISC[b.discipline]?.label||"")}</span></td></tr>`};
+  p.innerHTML=`
+  <div class="panel-head"><div><h2>Générateur de combats</h2><p>Vide la fight card et recrée tous les combats à partir des fiches : poids, catégorie d'âge, sexe et discipline. Les clubs différents passent en priorité.</p></div></div>
+  <form class="box" id="gen-form"><h3>Règles d'appariement</h3>
+    <div class="g4">
+      <label class="field"><span>Écart max enfants (kg)</span><input type="number" step="0.5" min="0" id="gen-tolKid" value="${g.tolKid}"></label>
+      <label class="field"><span>Écart max adultes (kg)</span><input type="number" step="0.5" min="0" id="gen-tolAdult" value="${g.tolAdult}"></label>
+      <label class="field"><span>Écart d'âge max enfants (ans)</span><input type="number" min="0" id="gen-ageGap" value="${g.ageGap}"></label>
+      <label class="field"><span>Aires de combat</span><input type="number" disabled value="${Math.max(1,num(S.event.aires)||1)}" title="Se règle dans l'onglet Réglages"></label>
+      <label class="field"><span>Début enfants</span><input type="text" id="gen-startKid" value="${esc(g.startKid)}"></label>
+      <label class="field"><span>Minutes par créneau enfants</span><input type="number" min="1" id="gen-stepKid" value="${g.stepKid}"></label>
+      <label class="field"><span>Début adultes</span><input type="text" id="gen-startAdult" value="${esc(g.startAdult)}"></label>
+      <label class="field"><span>Minutes par créneau adultes</span><input type="number" min="1" id="gen-stepAdult" value="${g.stepAdult}"></label>
+    </div>
+    <div class="chips">
+      <label class="check"><input type="checkbox" id="gen-girls" ${g.girls?"checked":""}>Filles entre elles uniquement</label>
+      <label class="check"><input type="checkbox" id="gen-second" ${g.second?"checked":""}>2e combat pour les combattants restés seuls</label>
+      <label class="check"><input type="checkbox" id="gen-unknown" ${g.unknown?"checked":""}>Utiliser la catégorie de poids si le poids manque (à peser)</label>
+    </div>
+    <p class="hint">Jamais d'enfant contre un adulte. Même discipline obligatoire (karaté, boxing, MMA…). Chaque combattant a au moins un créneau de repos entre deux combats.</p>
+    <div class="actions"><button class="btn primary" type="submit">Calculer la proposition</button>
+      <button class="btn danger" type="button" data-act="gen-clear" data-w>Vider la fight card (${nb} combats${np?`, ${np} poules`:""})</button></div>
+  </form>
+  ${R2?`<div class="kpis">
+      <div class="kpi"><span class="label">Combats proposés</span><strong>${R2.bouts.length}</strong><small>${R2.bouts.filter(b=>b.kid).length} enfants · ${R2.bouts.filter(b=>!b.kid).length} adultes</small></div>
+      <div class="kpi"><span class="label">Combattants placés</span><strong>${R2.placed}<small style="font-size:18px">/${R2.total}</small></strong><small>${R2.unmatched.length} sans adversaire</small></div>
+      <div class="kpi"><span class="label">Écart moyen</span><strong>${kgS(R2.avg)} kg</strong><small>max ${kgS(Math.max(0,...R2.bouts.map(b=>b.dw)))} kg</small></div>
+      <div class="kpi"><span class="label">Même club</span><strong>${R2.same}</strong><small>combats entre coéquipiers</small></div>
+    </div>
+    <div class="box"><div class="pool-head"><h3>Proposition</h3><div class="actions" data-w><button class="btn primary" data-act="gen-apply">Remplacer la fight card par ces ${R2.bouts.length} combats</button></div></div>
+      <div class="stand-wrap"><table class="stand gen-table"><thead><tr><th>N°</th><th>Heure</th><th>Aire</th><th>Catégorie</th><th>Rouge</th><th>Bleu</th><th>Écart</th><th>Discipline</th></tr></thead><tbody>${R2.bouts.map(row).join("")}</tbody></table></div>
+      ${R2.unmatched.length?`<h3>Sans adversaire (${R2.unmatched.length})</h3><div class="chips">${R2.unmatched.map(u=>`<span class="chip warn">${esc(fname(u.f))} · ${esc(derive(u.f).label)} · ${esc(u.why)}</span>`).join("")}</div>`:""}
+    </div>`:`<div class="empty"><span class="label">Aucune proposition</span><h3>Réglez les règles puis calculez</h3><p>La proposition s'affiche ici. Rien n'est modifié tant que vous ne cliquez pas sur « Remplacer la fight card ».</p></div>`}`;
+}
+async function applyGen(res){
+  const old=Object.values(S.bouts),oldP=Object.values(S.pools);let n=0;
+  for(const b of res.bouts){const o={...b,id:"g-"+uid(),akaLabel:"",aoLabel:"",status:"prevu",winner:"",method:"",round:"",poolId:""};
+    for(const k of ["dw","same","kid","sort"])delete o[k];if(await B.saveBout(o))n++}
+  for(const b of old)await B.delBout(b.id);for(const q of oldP)await B.delPool(q.id);return n;
+}
+async function clearCard(){for(const b of Object.values(S.bouts))await B.delBout(b.id);for(const q of Object.values(S.pools))await B.delPool(q.id)}
+function arm(el,label){if(el.dataset.armed==="1")return true;el.dataset.armed="1";el.dataset.orig=el.textContent;el.classList.add("armed");el.textContent=label;
+  setTimeout(()=>{if(el.isConnected){el.dataset.armed="";el.classList.remove("armed");el.textContent=el.dataset.orig}},5000);return false}
+
+/* ---------- Studio : images pour les réseaux ---------- */
+S.studio={fmt:"post",badge:"Entrée gratuite",img:null,blob:null};
+function clubCode(c){const w=String(c||"").split(/\s+/).filter(Boolean);return(w.length>=3?w.map(x=>x[0]).join(""):(w[0]||"").slice(0,3)).toUpperCase()}
+function studioBox(){const st=S.studio;
+  return `<div class="box studio"><div class="pool-head"><div><h3>Créer une image pour les réseaux</h3><p class="hint">Calculée à partir des données actuelles : nombre de combattants et de combats, clubs, date, lieu, horaires.</p></div></div>
+    <div class="g4">
+      <label class="field"><span>Format</span><select id="st-fmt">${[["post","Annonce · post 4:5"],["story","Annonce · story 9:16"],["ordre","Ordre des combats · 9:16"]].map(([k,l])=>`<option value="${k}" ${st.fmt===k?"selected":""}>${l}</option>`).join("")}</select></label>
+      <label class="field"><span>Macaron (vide = aucun)</span><input type="text" id="st-badge" value="${esc(st.badge)}" maxlength="24"></label>
+      <div class="field" style="align-self:end"><button class="btn primary" type="button" data-act="st-gen">Générer l'image</button></div>
+      <div class="field" style="align-self:end">${st.img?`<button class="btn" type="button" data-act="st-dl">Télécharger le PNG</button>`:""}</div>
+    </div>
+    ${st.img?`<div class="studio-prev"><img src="${st.img}" alt="Aperçu de l'image générée"><p class="hint">Si le téléchargement ne s'ouvre pas, faites un appui long (mobile) ou un clic droit sur l'image pour l'enregistrer.</p></div>`:""}
+  </div>`}
+function fitText(x,t,maxW){t=String(t||"");if(x.measureText(t).width<=maxW)return t;while(t.length>1&&x.measureText(t+"…").width>maxW)t=t.slice(0,-1);return t+"…"}
+function rrect(x,X,Y,W,H,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+W,Y,X+W,Y+H,r);x.arcTo(X+W,Y+H,X,Y+H,r);x.arcTo(X,Y+H,X,Y,r);x.arcTo(X,Y,X+W,Y,r);x.closePath()}
+async function drawPoster(fmt,badge){
+  await Promise.all(["400 100px Anton, Impact, 'Arial Narrow', sans-serif","700 40px 'Barlow Condensed'","600 30px 'Barlow Condensed'","600 30px Barlow"].map(f=>document.fonts.load(f).catch(()=>{})));
+  const logo=new Image();logo.src=LOGO;try{await logo.decode()}catch(e){}
+  const W=1080,H=fmt==="post"?1350:1920,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
+  const NAVY="#0B1440",RED="#E0283A",GOLD="#F5C518",WHITE="#F5F2EA",MUTED="#AEB6DA",PAD=72;
+  let g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#0F1C58");g.addColorStop(1,"#070E2C");x.fillStyle=g;x.fillRect(0,0,W,H);
+  g=x.createRadialGradient(0,0,0,0,0,760);g.addColorStop(0,"rgba(224,40,58,.38)");g.addColorStop(1,"rgba(224,40,58,0)");x.fillStyle=g;x.fillRect(0,0,W,H);
+  g=x.createRadialGradient(W,H,0,W,H,900);g.addColorStop(0,"rgba(245,197,24,.2)");g.addColorStop(1,"rgba(245,197,24,0)");x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.strokeStyle="rgba(255,255,255,.035)";x.lineWidth=2;for(let k=-H;k<W;k+=26){x.beginPath();x.moveTo(k,0);x.lineTo(k+H,H);x.stroke()}
+  const e=S.event,order=runningOrder(),used=new Set(order.flatMap(b=>[b.aka,b.ao]).filter(id=>S.fighters[id]));
+  const clubs=[...new Set([...used].map(id=>S.fighters[id].club).filter(Boolean))];
+  const discs=[...new Set(order.map(b=>DISC[b.discipline]?.label).filter(Boolean))];
+  const d=new Date(e.date+"T09:00:00"),day=isNaN(d)?"":d.toLocaleDateString("fr-FR",{weekday:"long"}),dm=isNaN(d)?e.date:d.toLocaleDateString("fr-FR",{day:"numeric",month:"long"});
+  const m=String(e.name||"Interclub").match(/^(.*?)\s+(\d+)$/),words=(m?m[1]:e.name||"Interclub").toUpperCase().split(/\s+/),numTail=m?m[2]:"";
+  const small=fmt==="ordre",LS=small?150:210,top=small?70:90;
+  // logo
+  x.save();rrect(x,PAD,top,LS,LS,18);x.fillStyle="#fff";x.fill();x.lineWidth=7;x.strokeStyle=RED;x.stroke();x.clip();if(logo.naturalWidth)x.drawImage(logo,PAD,top,LS,LS);x.restore();
+  // titre
+  const tx=PAD+LS+36,tw=W-tx-PAD;x.textBaseline="alphabetic";
+  x.fillStyle=MUTED;x.font="600 26px 'Barlow Condensed'";x.letterSpacing="7px";x.fillText(fitText(x,((e.orga||"")+" présente").toUpperCase(),tw),tx,top+26);x.letterSpacing="0px";
+  let fs=small?78:112;x.font=`400 ${fs}px Anton, Impact, 'Arial Narrow', sans-serif`;while(words.some(w2=>x.measureText(w2).width>tw)&&fs>40){fs-=4;x.font=`400 ${fs}px Anton, Impact, 'Arial Narrow', sans-serif`}
+  let y=top+26+fs*0.95;x.fillStyle=WHITE;for(const w2 of words){x.fillText(w2,tx,y);y+=fs*0.92}
+  if(numTail){x.fillStyle=RED;x.font=`400 ${Math.round(fs*1.25)}px Anton, Impact, 'Arial Narrow', sans-serif`;x.fillText(numTail,tx,y+fs*0.25);y+=fs*0.25+12}
+  const sticker=(cx,cy,R0)=>{if(!badge)return;x.save();x.translate(cx,cy);x.rotate(-0.17);
+    x.beginPath();x.arc(0,0,R0+12,0,7);x.fillStyle=NAVY;x.fill();x.beginPath();x.arc(0,0,R0+16,0,7);x.lineWidth=5;x.strokeStyle=GOLD;x.stroke();
+    x.beginPath();x.arc(0,0,R0,0,7);x.fillStyle=GOLD;x.fill();x.fillStyle=NAVY;x.textAlign="center";
+    const bw=badge.toUpperCase().split(/\s+/);let bf=bw.length>2?40:52;x.font=`400 ${bf}px Anton, Impact, 'Arial Narrow', sans-serif`;while(bw.some(w2=>x.measureText(w2).width>R0*1.7)&&bf>22){bf-=2;x.font=`400 ${bf}px Anton, Impact, 'Arial Narrow', sans-serif`}
+    bw.slice(0,3).forEach((w2,i)=>x.fillText(w2,0,(i-(Math.min(bw.length,3)-1)/2)*bf*0.95+bf*0.35));x.restore();x.textAlign="left"};
+  y=Math.max(y,top+LS)+ (small?26:40);
+  if(!small)sticker(W-PAD-110,y-118,96);
+  // filet
+  x.fillStyle=RED;x.fillRect(PAD,y,(W-2*PAD)*0.62,8);x.fillStyle=GOLD;x.fillRect(PAD+(W-2*PAD)*0.62,y,(W-2*PAD)*0.38,8);y+=8+(small?24:44);
+  const band=(Y,Hh)=>{rrect(x,PAD,Y,W-2*PAD,Hh,16);x.fillStyle=RED;x.fill();x.fillStyle=WHITE;x.font="400 50px Anton, Impact, 'Arial Narrow', sans-serif";
+    x.fillText(day.toUpperCase(),PAD+30,Y+Hh/2-6);x.fillText(dm.toUpperCase(),PAD+30,Y+Hh/2+48);
+    const parts=String(e.lieu||"").split("·").map(t=>t.trim()).filter(Boolean),l1=parts[0]||"",l2=[parts.slice(1).join(" · "),e.horaires||""].filter(Boolean).join(" · ");
+    x.textAlign="right";x.font="600 36px 'Barlow Condensed'";x.fillText(fitText(x,l1.toUpperCase(),560),W-PAD-30,Y+Hh/2-4);x.fillText(fitText(x,l2.toUpperCase(),560),W-PAD-30,Y+Hh/2+40);x.textAlign="left"};
+  if(!small){
+    // stats
+    x.font="600 30px 'Barlow Condensed'";const pills=clubs.map(cn=>({cn,code:clubCode(cn),w:Math.min(W-2*PAD,x.measureText(cn.toUpperCase()).width+110)}));let line=[],lines=[],lw=0;
+    for(const pl of pills){if(lw+pl.w>W-2*PAD&&line.length){lines.push(line);line=[];lw=0}line.push(pl);lw+=pl.w+14}if(line.length)lines.push(line);
+    const bandTop=H-PAD-150-60,progH=fmt==="story"?Math.ceil(Math.min(6,String(e.programme||"").split("\n").filter(l=>l.trim()).length)/3)*136+30:0;
+    const bw2=(W-2*PAD-28)/2,bh=Math.max(190,Math.min(fmt==="post"?300:380,bandTop-y-(fmt==="post"?40:60)-40-lines.length*66-progH-30));
+    [[used.size,"COMBATTANTS",GOLD],[order.length,"COMBATS",WHITE]].forEach(([n,l,col],i)=>{const X=PAD+i*(bw2+28);rrect(x,X,y,bw2,bh,22);x.fillStyle="rgba(8,16,47,.65)";x.fill();x.lineWidth=6;x.strokeStyle=col;x.stroke();
+      x.textAlign="center";x.fillStyle=col;x.font=`400 ${Math.max(70,bh-100)}px Anton, Impact, 'Arial Narrow', sans-serif`;x.fillText(String(n),X+bw2/2,y+bh-84);x.fillStyle=WHITE;x.font="600 44px 'Barlow Condensed'";x.letterSpacing="6px";x.fillText(l,X+bw2/2,y+bh-26);x.letterSpacing="0px";x.textAlign="left"});
+    y+=bh+(fmt==="post"?40:60);
+    x.textAlign="center";x.fillStyle=GOLD;x.font="600 34px 'Barlow Condensed'";x.letterSpacing="4px";x.fillText(fitText(x,discs.join(" · ").toUpperCase(),W-2*PAD),W/2,y);x.letterSpacing="0px";y+=40;
+    // clubs
+    for(const ln of lines){let X=(W-ln.reduce((s2,pl)=>s2+pl.w+14,-14))/2;for(const pl of ln){rrect(x,X,y,pl.w,52,10);x.fillStyle="#141F55";x.fill();x.strokeStyle="#2A367A";x.lineWidth=2;x.stroke();
+      rrect(x,X+10,y+9,70,34,6);x.fillStyle=GOLD;x.fill();x.fillStyle=NAVY;x.textAlign="center";x.font="700 26px 'Barlow Condensed'";x.fillText(pl.code,X+45,y+35);
+      x.fillStyle=WHITE;x.textAlign="left";x.font="600 30px 'Barlow Condensed'";x.fillText(fitText(x,pl.cn.toUpperCase(),pl.w-104),X+92,y+37);X+=pl.w+14}y+=66}
+    x.textAlign="left";
+    if(fmt==="story"){const items=String(e.programme||"").split("\n").map(l=>l.trim()).filter(Boolean).map(l=>{const mm=l.match(/^(\d{1,2}\s*[h:]\s*\d{0,2})\s*[-–·:]?\s*(.*)$/i);return mm?[mm[1].replace(/\s/g,""),mm[2]]:["",l]}).slice(0,6);
+      if(items.length){y+=30;const cols=3,cw=(W-2*PAD-2*16)/cols,ch=120;items.forEach((it,i)=>{const X=PAD+(i%cols)*(cw+16),Y=y+Math.floor(i/cols)*(ch+16);rrect(x,X,Y,cw,ch,14);x.fillStyle="#141F55";x.fill();
+        x.fillStyle=i%3===2?GOLD:RED;x.fillRect(X,Y,cw,6);x.textAlign="center";x.fillStyle=GOLD;x.font="400 46px Anton, Impact, 'Arial Narrow', sans-serif";x.fillText(it[0],X+cw/2,Y+60);x.fillStyle=WHITE;x.font="600 26px 'Barlow Condensed'";x.fillText(fitText(x,it[1].toUpperCase(),cw-20),X+cw/2,Y+98)});
+        x.textAlign="left";y+=Math.ceil(items.length/cols)*(ch+16)}}
+    const bh2=150,by=H-PAD-bh2-60;band(by,bh2);
+    x.fillStyle=MUTED;x.font="600 30px 'Barlow Condensed'";x.letterSpacing="6px";x.fillText(`${clubs.length} CLUBS · ${Math.max(1,num(e.aires)||1)} AIRES`,PAD,H-PAD+4);x.textAlign="right";x.fillStyle=GOLD;x.fillText("OSU !",W-PAD,H-PAD+4);x.textAlign="left";x.letterSpacing="0px";
+  }else{
+    y+=10;x.fillStyle=WHITE;x.font="600 34px 'Barlow Condensed'";x.fillText(fitText(x,`${day} ${dm} · ${e.lieu||""} · ${e.horaires||""}`.toUpperCase(),W-2*PAD),PAD,y);y+=30;
+    const footer=70,avail=H-y-footer-PAD,n=order.length,two=n>30,cols=two?2:1,per=Math.ceil(n/cols),rh=Math.min(78,avail/Math.max(1,per)),cw=(W-2*PAD-(cols-1)*24)/cols;
+    order.forEach((b,i)=>{const col=Math.floor(i/per),r=i%per,X=PAD+col*(cw+24),Y=y+r*rh,inf=boutInfo(b);
+      rrect(x,X,Y+3,cw,rh-6,10);x.fillStyle=r%2?"rgba(20,31,85,.55)":"rgba(20,31,85,.9)";x.fill();
+      const fsz=Math.max(15,Math.min(28,rh*0.36));x.fillStyle=GOLD;x.font=`400 ${fsz+4}px Anton, Impact, 'Arial Narrow', sans-serif`;x.fillText((b.heure||"").replace(":","h"),X+12,Y+rh*0.62);
+      const ax=X+12+fsz*3.1;rrect(x,ax,Y+rh*0.25,fsz*1.5,rh*0.5,6);x.fillStyle=String(b.aire)==="2"?"#3F7BF0":RED;x.fill();x.fillStyle="#fff";x.textAlign="center";x.font=`700 ${fsz*0.8}px 'Barlow Condensed'`;x.fillText("A"+(b.aire||1),ax+fsz*0.75,Y+rh*0.6);x.textAlign="left";
+      const nx=ax+fsz*1.5+14,nw=(X+cw-12-nx-44)/2;x.font=`700 ${fsz}px 'Barlow Condensed'`;
+      x.fillStyle="#FF6B7A";x.fillText(fitText(x,inf.rn.toUpperCase(),nw),nx,Y+rh*(rh>56?0.48:0.62));x.fillStyle=MUTED;x.textAlign="center";x.fillText("VS",nx+nw+22,Y+rh*(rh>56?0.48:0.62));x.textAlign="left";
+      x.fillStyle="#7FA8FF";x.fillText(fitText(x,inf.ln.toUpperCase(),nw),nx+nw+44,Y+rh*(rh>56?0.48:0.62));
+      if(rh>56){x.fillStyle=MUTED;x.font=`600 ${fsz*0.7}px 'Barlow Condensed'`;x.fillText(fitText(x,(b.categorie||inf.cat||"").toUpperCase()+" · "+(DISC[b.discipline]?.label||"").toUpperCase(),cw-(nx-X)-12),nx,Y+rh*0.82)}});
+    x.fillStyle=MUTED;x.font="600 28px 'Barlow Condensed'";x.letterSpacing="6px";x.fillText(`${n} COMBATS · ${used.size} COMBATTANTS`,PAD,H-PAD+4);x.textAlign="right";x.fillStyle=GOLD;x.fillText("OSU !",W-PAD,H-PAD+4);x.textAlign="left";x.letterSpacing="0px";
+  }
+  const blob=await new Promise(r=>c.toBlob(r,"image/png"));return{url:c.toDataURL("image/png"),blob};
 }
 
 function programme(){
@@ -1078,6 +1303,11 @@ document.addEventListener("click",async ev=>{
   if(a==="fullscreen"){const p=$("#poster");try{document.fullscreenElement?await document.exitFullscreen():await p.requestFullscreen()}catch(e){toast("Plein écran indisponible ici.")}return}
   if(a==="copy-card")return copyText(cardText());
   if(a==="aire-f"){S.aireF=el.dataset.a;return render()}
+  if(a==="st-gen"){S.studio.fmt=$("#st-fmt").value;S.studio.badge=$("#st-badge").value.trim();el.disabled=true;el.textContent="Génération…";
+    try{const r=await drawPoster(S.studio.fmt,S.studio.badge);S.studio.img=r.url;S.studio.blob=r.blob;render();toast("Image prête.")}catch(x){toast("Impossible de générer l'image ici.");el.disabled=false}return}
+  if(a==="st-dl"){const st=S.studio,name=`shidokan-challenge-${st.fmt}.png`;
+    if(S.downloads&&st.blob){try{await S.downloads.save({filename:name,data:st.blob});toast("Image enregistrée.")}catch(x){if(!(x&&x.code==="declined"))toast("Téléchargement refusé : faites un appui long sur l'image pour l'enregistrer.")}}
+    else toast("Faites un appui long ou un clic droit sur l'image pour l'enregistrer.");return}
   if(a==="export-json")return offerFile("interclub-25-octobre.json",JSON.stringify({event:S.event,fighters:S.fighters,bouts:S.bouts,pools:S.pools},null,2));
   if(a==="export-csv")return offerFile("pesee-interclub.csv","﻿"+toCsv());
   if(!S.canWrite)return;
@@ -1101,6 +1331,9 @@ document.addEventListener("click",async ev=>{
   if(a==="edit-pool")return poolForm(S.pools[id]);
   if(a==="gen-pool"){el.disabled=true;const n=await genPoolBouts(S.pools[id]);if(n){S.everWrote=true;toast(`${n} combat${n>1?"s":""} ajouté${n>1?"s":""} à la fight card.`)}return}
   if(a==="interleave"){const q=S.pools[$("#il-"+id).value];if(!q)return;el.disabled=true;await interleavePools(S.pools[id],q);S.everWrote=true;toast(`Combats de ${poolName(S.pools[id])} et ${poolName(q)} alternés.`);return}
+  if(a==="gen-apply"){if(!S.genRes)return;if(!arm(el,`Confirmer : remplacer ${Object.keys(S.bouts).length} combats par ${S.genRes.bouts.length}`))return;
+    el.disabled=true;el.textContent="Remplacement en cours…";const n=await applyGen(S.genRes);S.everWrote=true;S.genRes=null;S.tab="card";render();toast(`Fight card remplacée : ${n} combats.`);return}
+  if(a==="gen-clear"){if(!arm(el,"Confirmer : tout supprimer"))return;el.disabled=true;await clearCard();S.everWrote=true;render();toast("Fight card vidée.");return}
   if(a==="del-pool"){if(!confirmBtn(el,"Confirmer (les combats restent)"))return;for(const b of poolBouts(S.pools[id]))await B.saveBout({...b,poolId:""});
     await B.delPool(id);closeModal();toast("Poule supprimée. Ses combats restent sur la fight card.");return}
   if(a==="del-bout"){if(!confirmBtn(el,"Confirmer la suppression"))return;await B.delBout(id);closeModal();toast("Combat retiré de la carte.");return}
@@ -1149,6 +1382,7 @@ document.addEventListener("submit",async e=>{
     const gen=$("#pf-gen")?.checked;
     if(await B.savePool(q)){S.everWrote=true;closeModal();let n=0;if(gen)n=await genPoolBouts(q);
       toast(gen?`Poule créée : ${n} combat${n>1?"s":""} ajouté${n>1?"s":""}.`:"Poule enregistrée.");if(members.length>5)toast("Plus de 5 combattants : pensez à couper en 2 poules.")}}
+  if(f.id==="gen-form"){S.gen=readGen();S.genRes=genCard(S.gen);render();return}
   if(f.id==="ev-form"){const v=id=>$("#ev-"+id).value.trim();
     if(await B.saveEvent({...S.event,name:v("name")||EVENT_DEFAULT.name,date:v("date")||EVENT_DEFAULT.date,lieu:v("lieu"),orga:v("orga"),horaires:v("horaires"),programme:$("#ev-programme").value,aires:num(v("aires"))||1,tolerance:num(v("tol"))??3,ptsWin:num(v("pw"))??3,ptsDraw:num(v("pd"))??1,ptsLoss:num(v("pl"))??0})){S.everWrote=true;toast("Événement enregistré.")}}
 });
