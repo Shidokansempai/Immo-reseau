@@ -1,6 +1,6 @@
 """Version TikTok « nerveuse » — Exclusivité La Rivière Saint-Louis.
 
-~18 s, 1080x1920, plein écran, coupes calées sur le tempo (128 BPM),
+~25 s, 1080x1920, plein écran, coupes calées sur le tempo (128 BPM),
 zooms « punch », flashs, gros textes façon TikTok et bande-son house
 synthétisée (libre de droits).
 
@@ -62,10 +62,10 @@ def pop_in(t, start=0.0, dur=0.14):
 
 
 # ---------------------------------------------------------------- image
-def full(src, t, d, px=0.5, py=0.5, drift=0.06, shake=True):
+def full(src, t, d, px=0.5, py=0.5, drift=0.06, shake=True, base=1.0):
     """Plein écran : zoom « punch » à l'entrée puis lente dérive, petit tremblement."""
     punch = 0.16 * (1 - ease_out(prog(t, 0, 0.28)))
-    z = 1.0 + punch + drift * clamp(t / d)
+    z = base + punch + drift * clamp(t / d)
     sw, sh = src.size
     tgt = W / H
     if sw / sh > tgt:
@@ -112,10 +112,10 @@ P = {}
 
 
 # ---------------------------------------------------------------- scènes
-def photo(key, lines, px=0.5, py=0.5, small=None):
+def photo(key, lines, px=0.5, py=0.5, small=None, zoom=1.0):
     """Scène photo + 1 ou 2 lignes de texte qui « poppent »."""
     def f(t, d):
-        img = full(P[key], t, d, px, py)
+        img = full(P[key], t, d, px, py, base=zoom)
         for k, (s, size, style) in enumerate(lines):
             sc, al = pop_in(t, 0.04 + 0.16 * k)
             y = TEXT_Y + k * (size + 30) - (len(lines) - 1) * 50
@@ -156,6 +156,24 @@ def sc_cinq(t, d):
     sc, al = pop_in(t, BEAT * 1.5)
     tk_text(img, "À L'ÉTAGE", 70, TEXT_Y + 340, DARK, al, sc, box=GREEN)
     flash(img, t, strength=0.7)
+    return img
+
+
+def sc_suspense(t, d):
+    """Carte de suspense avant le prix (pendant la montée musicale)."""
+    img = full(P["facade"], t, d, 0.5, 0.3, drift=0.15, shake=False).filter(ImageFilter.GaussianBlur(12))
+    img.alpha_composite(Image.new("RGBA", (W, H), DARK + (190,)))
+    sc, al = pop_in(t, 0.0)
+    tk_text(img, "ET LE PRIX ?", 120, TEXT_Y - 60, WHITE, al, sc)
+    sc, al = pop_in(t, BEAT)
+    tk_text(img, "DEVINE EN COMMENTAIRE", 62, TEXT_Y + 100, DARK, al, sc, box=GREEN)
+    # compte à rebours 3-2-1 sur les derniers temps
+    for k, s in enumerate(["3", "2", "1"]):
+        st = d - (3 - k) * BEAT * 0.5
+        if st <= t < st + BEAT * 0.5:
+            sc, al = pop_in(t, st, 0.1)
+            tk_text(img, s, 240, TEXT_Y + 360, GREEN, al, sc, stroke=12)
+    flash(img, t, strength=0.6)
     return img
 
 
@@ -206,18 +224,24 @@ def sc_outro(t, d):
 # (fonction, durée en temps)
 SCENES = [
     (sc_hook, 4),
-    (photo("02-sejour", [("CET ESCALIER ?!", 92, "w")], px=0.2), 3),
+    (photo("02-sejour", [("CET ESCALIER ?!", 92, "w")], px=0.2), 4),
+    (photo("02-sejour", [("SALON", 96, "w"), ("XXL", 110, "box")], px=0.95, zoom=1.05), 2),
     (photo("06-cuisine", [("CUISINE", 96, "w"), ("DE CHEF", 96, "box")], px=0.45), 3),
+    (photo("06-cuisine", [("OUVERTE SUR", 84, "w"), ("LE JARDIN", 96, "box")], px=1.0, zoom=1.05), 2),
     (photo("04-suite-parentale", [("RÉVEIL", 92, "w"), ("VUE MONTAGNE", 84, "box")], px=0.3,
            small="chambre 1/5"), 3),
+    (photo("04-suite-parentale", [("DOUCHE", 96, "w"), ("DANS LA SUITE", 84, "box")], px=1.0,
+           zoom=1.05), 2),
     (photo("05-chambre-fleurie", [("CHAMBRE 2", 92, "w")], px=0.5), 2),
     (photo("03-chambre-bureau", [("CHAMBRE 3", 92, "w")], px=0.6), 2),
-    (sc_cinq, 3),
+    (sc_cinq, 4),
     (photo("07-salle-eau", [("PIERRE", 96, "w"), ("NATURELLE", 96, "box")], px=0.55), 2),
     (photo("08-douche-italienne", [("DOUCHE", 96, "w"), ("DE SPA", 96, "box")], px=0.5), 3),
     (photo("facade", [("JACUZZI", 96, "w"), ("ENCASTRÉ", 96, "box")], px=0.5, py=0.8), 3),
+    (photo("facade", [("SOUS LES", 90, "w"), ("PALMIERS", 96, "box")], px=0.5, py=0.15, zoom=1.08), 2),
+    (sc_suspense, 4),
     (sc_prix, 4),
-    (sc_outro, 6),
+    (sc_outro, 8),
 ]
 
 
