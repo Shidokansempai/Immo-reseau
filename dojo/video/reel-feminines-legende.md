@@ -9,8 +9,8 @@ Vidéo : `reel-feminines-inspirent.mp4` (1080x1920, 26 s). Script : `generate_re
 | 2,4 s | High kick | VOICI NOTRE RÉPONSE. |
 | 4,6–10 s | Ado puis adulte | ADOS. / ELLE NE RECULE PAS. / ADULTES. |
 | 10–15,4 s | Face aux gars | PUISSANCE. / MÊME TATAMI. / MÊME RESPECT. |
-| 15,4 s | Salle | ET PENDANT CE TEMPS… |
-| 17,6 s | Photo de groupe, zoom sur la petite en kimono | LES PETITES REGARDENT. / DEMAIN, C'EST ELLES. |
+| 15,4 s | Salle | PENDANT CE TEMPS… |
+| 17,6 s | Photo de groupe, zoom sur la petite en kimono | LES PETITS REGARDENT. / DEMAIN, C'EST EUX. |
 | 21,8 s | Écran final | FILLES · MAMANS · SŒURS — LE TATAMI VOUS ATTEND — COMMENTE « ESSAI » |
 
 ## Légende Instagram
@@ -19,7 +19,7 @@ Vidéo : `reel-feminines-inspirent.mp4` (1080x1920, 26 s). Script : `generate_re
 > On ne répond pas avec des mots. On répond sur le tatami. 🥋🔥
 >
 > Nos ados. Nos adultes. Même tatami, même sueur, même respect que les gars.
-> Et pendant qu'elles s'entraînent, il y a des petites qui les regardent… et qui se disent : « Moi aussi. »
+> Et pendant qu'elles s'entraînent, il y a des petits qui les regardent… et qui se disent : « Moi aussi. »
 >
 > C'est ça, la vraie victoire. Pas une médaille. Un exemple.
 >

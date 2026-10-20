@@ -145,7 +145,7 @@ CAPTIONS = {
     "07-adulte-genou.jpg": "PUISSANCE.",
     "06-adulte-face.jpg": "MÊME TATAMI.",
     "05-adulte-garde.jpg": "MÊME RESPECT.",
-    "08-salle.jpg": "ET PENDANT CE TEMPS…",
+    "08-salle.jpg": "PENDANT CE TEMPS…",
 }
 
 PHOTOS = {s[2]: load(s[2]) for s in SHOTS}
@@ -208,9 +208,9 @@ def scene_group(img, t):
     d = ImageDraw.Draw(img)
     d.rectangle(((W - bw) / 2, by, (W + bw) / 2, by + bh), outline=GOLD + (255,), width=5)
     k1 = ease_back(prog(t, a + 0.15, 0.4))
-    stext(img, "LES PETITES", font(F_ANTON, 130), W / 2, by - 220, WHITE, alpha=clamp(k1), scale=1 + 0.3 * (1 - k1))
+    stext(img, "LES PETITS", font(F_ANTON, 130), W / 2, by - 220, WHITE, alpha=clamp(k1), scale=1 + 0.3 * (1 - k1))
     stext(img, "REGARDENT.", font(F_ANTON, 130), W / 2, by - 80, WHITE, alpha=clamp(k1), scale=1 + 0.3 * (1 - k1))
-    boxtext(img, "DEMAIN, C'EST ELLES.", font(F_ANTON, 104), W / 2, by + bh + 130, prog(t, a + 2.0, 0.5))
+    boxtext(img, "DEMAIN, C'EST EUX.", font(F_ANTON, 104), W / 2, by + bh + 130, prog(t, a + 2.0, 0.5))
 
 
 def scene_cta(img, t):
