@@ -1,4 +1,4 @@
-"""Reel Instagram / TikTok — Terrain vue mer à Petite-Île (1 896 m²).
+"""Reel Instagram / TikTok — Terrain vue mer à Petite-Île (1 896 m², parcelle AK 1207).
 
 ~25 s, 1080x1920, coupes calées sur le tempo (128 BPM), plan cadastral animé,
 esquisse de maison dessinée sur le terrain, bande-son house synthétisée.
@@ -36,6 +36,15 @@ def load():
     P["terrain"] = Image.open(os.path.join(PH, "terrain.png")).convert("RGB")
     fl = Image.open(os.path.join(PH, "flyer.png")).convert("RGB")
     P["vue"] = fl.crop((360, 585, 941, 1045))
+    # photo « accès et voirie » sans les bandeaux du visuel d'origine
+    P["acces"] = Image.open(os.path.join(PH, "acces-voirie.jpg")).convert("RGB").crop((0, 200, 1229, 1390))
+    # plan cadastral réel, contour vert effacé (il est redessiné en animation)
+    import numpy as np
+    pl = np.array(Image.open(os.path.join(PH, "plan-cadastral.jpg")).convert("RGB")
+                  .crop((44, 473, 1185, 1213))).astype(int)
+    green = (pl[..., 1] > pl[..., 0] + 40) & (pl[..., 1] > pl[..., 2] + 40)
+    pl[green] = 255
+    P["plan"] = Image.fromarray(pl.astype("uint8"))
     P["logo"] = Image.open(os.path.join(PH, "banniere.png")).convert("RGB").crop((575, 10, 1300, 375))
 
 
@@ -115,25 +124,34 @@ def sc_surface(t, d):
     return img
 
 
-def sc_vue(t, d):
-    img = dark_bg(P["vue"], t, d, blur=18, alpha=150)
-    cw = W - 80
-    ch = int(cw * P["vue"].height / P["vue"].width)
-    z = 1.12 - 0.1 * g.ease_io(t / d)
-    src = P["vue"]
-    bw, bh = src.width / z, src.height / z
-    x0, y0 = (src.width - bw) * 0.6, (src.height - bh) * 0.3
-    card = src.resize((cw, ch), Image.BICUBIC, box=(x0, y0, x0 + bw, y0 + bh)).convert("RGBA")
-    m = Image.new("L", (cw, ch), 0)
-    ImageDraw.Draw(m).rounded_rectangle((0, 0, cw - 1, ch - 1), 30, fill=255)
-    card.putalpha(m)
-    a = ease_out(prog(t, 0, 0.3))
-    yy = int(330 + (1 - a) * 80)
-    img.alpha_composite(card, (40, yy))
+def sc_constructible(t, d):
+    img = pan(P["terrain"], t, d, 1.7, 1.6, 0.6, 0.5, px=0.15)
+    sc, al = k.pop_in(t, 0.0)
+    k.tk_text(img, "DONT 948 m²", 130, TY - 60, WHITE, al, sc, stroke=12)
     sc, al = k.pop_in(t, BEAT)
-    k.tk_text(img, "L'OCÉAN", 110, yy + ch + 110, WHITE, al, sc, cx=W / 2)
-    sc, al = k.pop_in(t, BEAT * 1.8)
-    k.tk_text(img, "EN TOILE DE FOND", 64, yy + ch + 240, DARK, al, sc, box=GREEN, cx=W / 2)
+    k.tk_text(img, "CONSTRUCTIBLES", 84, TY + 90, DARK, al, sc, box=GREEN)
+    sc, al = k.pop_in(t, BEAT * 2)
+    k.tk_text(img, "10 m au faîtage · zone UC", 52, TY + 215, WHITE, al, sc, stroke=8)
+    k.flash(img, t)
+    return img
+
+
+def sc_ocean(t, d):
+    img = pan(P["acces"], t, d, 1.3, 1.42, 0.0, 0.04, px=0.4)
+    sc, al = k.pop_in(t, 0.0)
+    k.tk_text(img, "VUE DÉGAGÉE", 110, TY + 380, WHITE, al, sc, stroke=12)
+    sc, al = k.pop_in(t, BEAT)
+    k.tk_text(img, "SUR L'OCÉAN INDIEN", 66, TY + 520, DARK, al, sc, box=GREEN)
+    k.flash(img, t)
+    return img
+
+
+def sc_acces(t, d):
+    img = pan(P["acces"], t, d, 1.5, 1.6, 0.55, 0.6, px=1.0)
+    sc, al = k.pop_in(t, 0.0)
+    k.tk_text(img, "ACCÈS DIRECT", 110, TY - 40, WHITE, al, sc, stroke=12)
+    sc, al = k.pop_in(t, BEAT)
+    k.tk_text(img, "PAR LA VOIRIE", 76, TY + 100, DARK, al, sc, box=GREEN)
     k.flash(img, t)
     return img
 
@@ -141,52 +159,39 @@ def sc_vue(t, d):
 def sc_cadastre(t, d):
     img = dark_bg(P["terrain"], t, d)
     sc, al = k.pop_in(t, 0.0)
-    k.tk_text(img, "LA PARCELLE", 84, 330, WHITE, al, sc, cx=W / 2)
-    # carte « plan »
+    k.tk_text(img, "PARCELLE AK 1207", 76, 330, WHITE, al, sc, cx=W / 2)
     a = ease_out(prog(t, 0.1, 0.35))
-    cx0, cy0, cw, chh = 90, 470, 900, 640
-    lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    dr = ImageDraw.Draw(lay)
-    dr.rounded_rectangle((cx0, cy0 + (1 - a) * 60, cx0 + cw, cy0 + chh + (1 - a) * 60), 28,
-                         fill=(250, 250, 247, int(255 * a)))
-    img.alpha_composite(lay)
+    plan = P["plan"]
+    cw = 940
+    ch = int(cw * plan.height / plan.width)
+    cx0, cy0 = 70, int(480 + (1 - a) * 60)
+    card = plan.resize((cw, ch), Image.LANCZOS).convert("RGBA")
+    m = Image.new("L", (cw, ch), 0)
+    ImageDraw.Draw(m).rounded_rectangle((0, 0, cw - 1, ch - 1), 28, fill=int(255 * a))
+    card.putalpha(m)
+    img.alpha_composite(card, (cx0, cy0))
     if a < 0.99:
         return img
-
-    def P2(x, y):  # coordonnées du croquis (320x225) → carte
-        return (cx0 + 30 + x / 320 * (cw - 60), cy0 + 30 + y / 225 * (chh - 60))
-
+    sx = cw / plan.width
+    pts = [(193, 147), (916, 191), (916, 382), (919, 429), (949, 535), (969, 580), (964, 605),
+           (174, 551)]
+    poly = [(cx0 + x * sx, cy0 + y * sx) for x, y in pts]
     lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     dr = ImageDraw.Draw(lay)
-    grey = (150, 150, 150, 255)
-    for line in [[(60, 0), (60, 225)], [(0, 66), (60, 68)], [(0, 122), (55, 125)],
-                 [(0, 178), (55, 178)], [(140, 165), (140, 225)], [(255, 0), (265, 160), (300, 225)],
-                 [(285, 0), (290, 120), (320, 200)]]:
-        dr.line([P2(*p) for p in line], fill=grey, width=3)
-    f = g.font(F_SANS, 34, "Bold")
-    for lab, (x, y) in [("8", (20, 35)), ("6", (20, 95)), ("4", (20, 150))]:
-        dr.text(P2(x, y), lab, font=f, fill=(60, 60, 60, 255), anchor="mm")
-    # flèche nord
-    nx, ny = P2(300, 30)
-    dr.polygon([(nx, ny - 30), (nx - 14, ny + 10), (nx, ny), (nx + 14, ny + 10)], fill=(30, 30, 30, 255))
-    dr.text((nx, ny - 50), "N", font=g.font(F_SANS, 26, "Bold"), fill=(30, 30, 30, 255), anchor="mm")
-    poly = [P2(62, 60), P2(245, 72), P2(245, 128), P2(262, 172), P2(55, 160)]
-    pf = ease_out(prog(t, 0.45, 0.6))
+    pf = ease_out(prog(t, 0.45, 0.7))
     if pf >= 1:
-        fa = 0.25 + 0.12 * math.sin(2 * math.pi * (t - 1.05) / (BEAT * 2))
+        fa = 0.22 + 0.1 * math.sin(2 * math.pi * (t - 1.15) / (BEAT * 2))
         dr.polygon(poly, fill=GREEN + (int(255 * fa),))
-    partial_path(dr, poly, pf, GREEN + (255,), 9)
+    partial_path(dr, poly, pf, (30, 160, 40, 255), 8)
     img.alpha_composite(lay)
-    a2 = ease_out(prog(t, 1.0, 0.3))
-    pcx = sum(p[0] for p in poly) / 5
-    pcy = sum(p[1] for p in poly) / 5
-    g.text(img, "1207", F_SANS, 46, pcx, pcy - 30, (25, 60, 20), alpha=a2, weight="ExtraBold",
+    a2 = ease_out(prog(t, 1.15, 0.3))
+    pcx = sum(p[0] for p in poly) / len(poly)
+    pcy = sum(p[1] for p in poly) / len(poly)
+    g.text(img, SURFACE, F_SANS, 54, pcx, pcy + 45, (25, 70, 20), alpha=a2, weight="ExtraBold",
            shadow=False)
-    g.text(img, SURFACE, F_SANS, 40, pcx, pcy + 25, (25, 60, 20), alpha=a2, weight="SemiBold",
-           shadow=False)
-    sc, al = k.pop_in(t, 1.3)
-    k.tk_text(img, "Plan indicatif · extrait cadastral", 34, cy0 + chh + 80, SOFT, al, sc, stroke=0,
-              weight="Medium", cx=W / 2)
+    sc, al = k.pop_in(t, 1.4)
+    k.tk_text(img, "Petite-Île · zone UC (PLU du 09/06/2023)", 36, cy0 + ch + 80, SOFT, al, sc,
+              stroke=0, weight="Medium", cx=W / 2)
     k.flash(img, t, strength=0.5)
     return img
 
@@ -241,10 +246,10 @@ def sc_atouts(t, d):
     img = dark_bg(P["terrain"], t, d, alpha=205)
     sc, al = k.pop_in(t, 0.0)
     k.tk_text(img, "LES ATOUTS", 90, 380, WHITE, al, sc, cx=W / 2)
-    items = [("Vue mer", "Environnement exceptionnel"),
-             ("Zone UC", "Constructible selon le PLU en vigueur"),
-             ("Quartier résidentiel", "Calme, cadre naturel"),
-             ("Fort potentiel", "Projet de vie ou investissement")]
+    items = [("Vue mer dégagée", "Sur l'océan Indien"),
+             ("948 m² constructibles", "Zone UC · PLU du 09/06/2023"),
+             ("10 m au faîtage", "Hauteur maximale autorisée"),
+             ("Quartier résidentiel", "Accès direct par la voirie")]
     for i, (a, b) in enumerate(items):
         st = BEAT * (0.7 + i * 0.75)
         p = ease_out(prog(t, st, 0.3))
@@ -274,7 +279,7 @@ def sc_prix(t, d):
     sc, al = k.pop_in(t, BEAT, 0.18)
     k.tk_text(img, PRIX, 165, TY - 50, WHITE, al, sc, stroke=12)
     sc, al = k.pop_in(t, BEAT * 1.6)
-    k.tk_text(img, "HAI · honoraires d'agence inclus", 42, TY + 90, WHITE, al, sc, stroke=6,
+    k.tk_text(img, "Honoraires à la charge du vendeur", 42, TY + 90, WHITE, al, sc, stroke=6,
               weight="ExtraBold")
     sc, al = k.pop_in(t, BEAT * 2.6)
     k.tk_text(img, f"soit ≈ {PRIX_M2} €/m² avec vue mer", 54, TY + 220, DARK, al, sc, box=GREEN)
@@ -300,12 +305,12 @@ def sc_outro(t, d):
     puls = 1 + 0.04 * math.sin(2 * math.pi * max(0, t - BEAT * 2) / BEAT)
     k.tk_text(img, "CONTACTEZ-MOI", 80, y + 260, DARK, al, sc * puls, box=GREEN)
     sc, al = k.pop_in(t, BEAT * 2.4)
-    k.tk_text(img, "Visite sur rendez-vous · Écrivez « TERRAIN »", 40, y + 390, WHITE, al, sc, stroke=5,
+    k.tk_text(img, "Jules Fraynal · 06 93 92 66 87", 46, y + 390, WHITE, al, sc, stroke=6,
               weight="ExtraBold")
     sc, al = k.pop_in(t, BEAT * 3.2)
     k.tk_text(img, "L'immobilier qui nous relie.", 54, y + 500, GREEN, al, sc, stroke=0,
               path=F_SCRIPT, weight="Italic")
-    k.tk_text(img, "Constructibilité selon PLU en vigueur · DPE non requis (terrain)", 24, H - 330,
+    k.tk_text(img, "Visite sur rendez-vous · ou écrivez « TERRAIN » en DM", 30, H - 330,
               (170, 180, 175), al, 1.0, stroke=0, weight="Regular")
     k.flash(img, t, strength=0.6)
     return img
@@ -314,7 +319,9 @@ def sc_outro(t, d):
 SCENES = [
     (sc_hook, 6),
     (sc_surface, 6),
-    (sc_vue, 5),
+    (sc_constructible, 5),
+    (sc_ocean, 5),
+    (sc_acces, 4),
     (sc_cadastre, 7),
     (sc_imagine, 9),
     (sc_atouts, 7),
