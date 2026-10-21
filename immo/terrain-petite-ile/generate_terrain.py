@@ -270,7 +270,7 @@ def sc_atouts(t, d):
 def sc_prix(t, d):
     img = dark_bg(P["terrain"], t, d, blur=6, alpha=160)
     sc, al = k.pop_in(t, 0.0, 0.18)
-    k.tk_text(img, "EXCLU IMMO RÉSEAU", 52, TY - 230, DARK, al, sc, box=GREEN)
+    k.tk_text(img, "TERRAIN À VENDRE", 52, TY - 230, DARK, al, sc, box=GREEN)
     sc, al = k.pop_in(t, BEAT, 0.18)
     k.tk_text(img, PRIX, 165, TY - 50, WHITE, al, sc, stroke=12)
     sc, al = k.pop_in(t, BEAT * 1.6)
