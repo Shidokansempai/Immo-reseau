@@ -1,0 +1,69 @@
+<title>Mindmap Shidokan 974</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<style>
+/* Layout : carte mentale horizontale, racine au centre, matin à gauche, après-midi et points ouverts à droite. Identité unique marine/rouge/or. */
+:root{--bg:#0B1440;--surface:#121C4E;--line:#26326E;--fg:#F5F2EA;--muted:#9EA7D0;--aka:#E0283A;--ao:#4A86F2;--gold:#F5C518;--ok:#3FBF7A;--warn:#F2A33A;
+  --f-display:"Anton",Impact,"Arial Narrow",sans-serif;--f-label:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;--f-body:"Barlow",system-ui,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 var(--f-body);
+  background-image:radial-gradient(900px 520px at -8% -12%,#E0283A26,transparent 70%),radial-gradient(760px 560px at 108% -6%,#F5C51817,transparent 70%),repeating-linear-gradient(135deg,#FFFFFF06 0 2px,transparent 2px 26px);background-attachment:fixed}
+.wrap{max-width:2000px;margin:0 auto;padding-inline:16px;padding-block:24px 40px;display:grid;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;border-bottom:4px solid;border-image:linear-gradient(90deg,var(--aka) 0 62%,var(--gold) 62% 100%) 1;padding-bottom:14px}
+h1{margin:0;font:clamp(28px,4vw,44px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
+h1 span{color:var(--aka)}
+header p{margin:6px 0 0;color:var(--muted);font:600 15px var(--f-label);letter-spacing:.06em;text-transform:uppercase}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);font:600 13px var(--f-label);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:#ffffff08}
+.chip i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.stage{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:#08102F99;box-shadow:0 18px 40px -22px #000c}
+svg{display:block;min-width:1100px;width:100%;height:auto}
+svg text{font-family:var(--f-label)}
+.note{color:var(--muted);font-size:13px;margin:0}
+@media (max-width:700px){svg{min-width:1500px}}
+</style>
+<div class="wrap">
+  <header><div><h1>Shidokan Challenge <span>974</span> · fight card</h1><p>Dimanche 25 octobre · Gymnase du 12ème km, Le Tampon · 2 aires</p></div>
+    <div class="legend"><span class="chip"><i style="background:var(--aka)"></i>Coin rouge</span><span class="chip"><i style="background:var(--ao)"></i>Coin bleu</span><span class="chip"><i style="background:var(--ok)"></i>Écart ≤ 1,5 kg</span><span class="chip"><i style="background:var(--warn)"></i>Écart 2 à 5 kg ou à peser</span></div></header>
+  <div class="stage"><svg id="mm" role="img" aria-label="Carte mentale de la fight card"></svg></div>
+  <p class="note">Instantané de la fight card enregistrée dans l'application au 20 octobre 2026. Les numéros de combat, résultats et changements faits ensuite ne s'y reflètent pas.</p>
+</div>
+<script>
+const D={"left": [{"label": "MATIN · ENFANTS", "sub": "9h20 – 10h00 · 19 combats", "color": "#E0283A", "children": [{"label": "Filles", "sub": "7 combats", "leaves": [{"a": "Kiria BOYER", "ac": "FUK", "b": "Camilya BACAR", "bc": "FUK", "t": "09h20", "aire": 1, "cat": "Filles 23-24 kg", "dw": 1.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "Inès ICHARD", "ac": "FUK", "b": "Lucie PAYET", "bc": "MAN", "t": "09h20", "aire": 2, "cat": "Filles 27-30 kg", "dw": 3.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "Elie-Rose THOMAS", "ac": "FUK", "b": "Lily BEGUE", "bc": "MAN", "t": "09h24", "aire": 1, "cat": "Filles 34-35 kg", "dw": 1.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "EVE RIVIERE", "ac": "MAN", "b": "HELENA PAYET", "bc": "MAN", "t": "09h24", "aire": 2, "cat": "Filles minimes 55 kg", "dw": 0.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "Chloé FONTAINE", "ac": "SHO", "b": "Adversaire à définir", "bc": "", "t": "09h28", "aire": 1, "cat": "Cadette 50 kg (boxing)", "dw": null, "open": true, "title": "", "disc": "kick"}, {"a": "Lanah BARDINOT", "ac": "SHO", "b": "Adversaire à définir", "bc": "", "t": "09h28", "aire": 2, "cat": "Cadette 64 kg", "dw": null, "open": true, "title": "", "disc": "shidokan"}, {"a": "Melina FOLIO", "ac": "FAK", "b": "Lily BEGUE", "bc": "MAN", "t": "09h32", "aire": 1, "cat": "Filles 35-38 kg", "dw": 3.0, "open": false, "title": "", "disc": "shidokan"}]}, {"label": "Garçons", "sub": "12 combats", "leaves": [{"a": "Logan PROST", "ac": "FUK", "b": "Raphaël FRAYNAL", "bc": "FAK", "t": "09h32", "aire": 2, "cat": "Garçons 23-24 kg", "dw": 1.1, "open": false, "title": "", "disc": "shidokan"}, {"a": "Antoine RIVIERE", "ac": "MAN", "b": "Basile ABEL", "bc": "FUK", "t": "09h36", "aire": 1, "cat": "Garçons 34-35 kg", "dw": 1.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "HUGO GRONDIN", "ac": "MAN", "b": "Nathan BABEF", "bc": "FUK", "t": "09h36", "aire": 2, "cat": "Garçons 35 kg", "dw": 0.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "Lorentz PAYET", "ac": "FAK", "b": "Mahé PASQUET", "bc": "FUK", "t": "09h40", "aire": 1, "cat": "Garçons 35 kg", "dw": 0.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "NOA ZAMBERNARDI", "ac": "FAK", "b": "AXEL DUHOU", "bc": "FUK", "t": "09h40", "aire": 2, "cat": "Garçons 36,5-37 kg", "dw": 0.5, "open": false, "title": "", "disc": "shidokan"}, {"a": "EDEN BOYER", "ac": "FUK", "b": "Antoine RIVIERE", "bc": "MAN", "t": "09h44", "aire": 1, "cat": "Garçons 34-35 kg", "dw": 1.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "Liam PROST", "ac": "FUK", "b": "DOMNOE COUILLAUD", "bc": "MAN", "t": "09h44", "aire": 2, "cat": "Garçons 38-40 kg", "dw": 2.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "YVAN BOYER", "ac": "MAN", "b": "Benjamin LEGRAND", "bc": "FUK", "t": "09h48", "aire": 1, "cat": "Garçons 40-41,5 kg", "dw": 1.5, "open": false, "title": "", "disc": "shidokan"}, {"a": "Keo ZAMBERNARDI", "ac": "FAK", "b": "NATHAN RIVIERE", "bc": "MAN", "t": "09h48", "aire": 2, "cat": "Minimes garçons 55-56 kg", "dw": 1.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "Pierre RODRIGUE", "ac": "FUK", "b": "ROBIN TURPIN", "bc": "MAN", "t": "09h52", "aire": 1, "cat": "Minimes garçons 57-60 kg", "dw": 3.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "Bilal SALIMA", "ac": "FUK", "b": "Matys LABRUYERE", "bc": "MAN", "t": "09h52", "aire": 2, "cat": "Minimes garçons 62-65 kg", "dw": 3.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "GILLES IDMOND", "ac": "MAN", "b": "Ethan ICAZE", "bc": "FAK", "t": "09h56", "aire": 1, "cat": "Cadet / Junior ~75 kg", "dw": 0.9, "open": false, "title": "", "disc": "shidokan"}]}]}], "right": [{"label": "APRÈS-MIDI · ADULTES", "sub": "13h15 – 13h35 · 7 combats", "color": "#4A86F2", "children": [{"label": "Femmes", "sub": "1 combat", "leaves": [{"a": "Emmanuelle GRUCHET", "ac": "SHO", "b": "Ambre BEAUVOIR", "bc": "SHO", "t": "13h15", "aire": 1, "cat": "Seniors femmes 55-59 kg", "dw": 4.0, "open": false, "title": "", "disc": "shidokan"}]}, {"label": "Hommes", "sub": "6 combats", "leaves": [{"a": "Jean-Marc SERGE", "ac": "SHO", "b": "Mathéo GABRIEL", "bc": "SHO", "t": "13h15", "aire": 2, "cat": "MMA -70 kg", "dw": null, "open": false, "title": "", "disc": "mma"}, {"a": "Mike MIKE", "ac": "FAK", "b": "THEO FONTAINE", "bc": "MAN", "t": "13h20", "aire": 1, "cat": "Shidoboxing 59-60 kg", "dw": null, "open": false, "title": "", "disc": "kick"}, {"a": "Sébastien ELIE", "ac": "FUK", "b": "Guillaume PASQUET", "bc": "FUK", "t": "13h20", "aire": 2, "cat": "Seniors H 78-79 kg", "dw": 1.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "Miguel IBAO", "ac": "SHO", "b": "MATHIAS DIJOUX", "bc": "MAN", "t": "13h25", "aire": 1, "cat": "MMA -80 kg", "dw": null, "open": false, "title": "Co-vedette", "disc": "mma"}, {"a": "Thomas GUICHARD", "ac": "SHO", "b": "Guillaume PAYET", "bc": "FAK", "t": "13h25", "aire": 2, "cat": "Seniors H 83-84 kg", "dw": 1.0, "open": false, "title": "", "disc": "shidokan"}, {"a": "Clément DELMAS", "ac": "FUK", "b": "CEDRIC PAYET", "bc": "MAN", "t": "13h30", "aire": 1, "cat": "Seniors H 98-100 kg", "dw": null, "open": false, "title": "Combat vedette", "disc": "shidokan"}]}]}, {"label": "À RÉGLER", "sub": "avant dimanche", "color": "#F5C518", "children": [{"label": "Sans adversaire", "sub": "3 combattants", "leaves": [{"note": "Ethan BEGUE", "nc": "SHO", "why": "78 kg · aucun adversaire dans les 5 kg"}, {"note": "Salim YOUSSOUF", "nc": "FUK", "why": "106 kg · aucun adversaire dans les 5 kg"}, {"note": "Jonathan BOYER", "nc": "FUK", "why": "66 kg · aucun adversaire dans les 5 kg"}]}, {"label": "Adversaire à trouver", "sub": "exhibitions", "leaves": [{"note": "Chloé FONTAINE", "nc": "SHO", "why": "09h28 · aire 1 · Cadette 50 kg (boxing)"}, {"note": "Lanah BARDINOT", "nc": "SHO", "why": "09h28 · aire 2 · Cadette 64 kg"}]}, {"label": "À peser", "sub": "4 combats", "leaves": [{"note": "Jean-Marc SERGE vs Mathéo GABRIEL", "nc": "", "why": "13h15 · aire 2 · poids exact manquant"}, {"note": "Mike MIKE vs THEO FONTAINE", "nc": "", "why": "13h20 · aire 1 · poids exact manquant"}, {"note": "Miguel IBAO vs MATHIAS DIJOUX", "nc": "", "why": "13h25 · aire 1 · poids exact manquant"}, {"note": "Clément DELMAS vs CEDRIC PAYET", "nc": "", "why": "13h30 · aire 1 · poids exact manquant"}]}]}]};
+const NS="http://www.w3.org/2000/svg",svg=document.getElementById("mm");
+const el=(t,a,p=svg)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
+const txt=(x,y,s,a,p)=>{const t=el("text",{x,y,...a},p);t.textContent=s;return t};
+const W=2000,CX=1000,LH=56,GAP=24,LEAFW=420;
+const C1=250,C2=460,CL=565;
+function measure(side){let h=0;side.forEach(b=>b.children.forEach(g=>{h+=Math.max(1,g.leaves.length)*LH+GAP}));return h+GAP*side.length}
+const H=Math.max(measure(D.left),measure(D.right))+80;svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+const curve=(x1,y1,x2,y2,c,wd)=>{const mx=(x1+x2)/2;el("path",{d:`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`,fill:"none",stroke:c,"stroke-width":wd,"stroke-linecap":"round",opacity:.85})};
+function pill(cx,cy,label,sub,col,w,big){const h=big?64:48;el("rect",{x:cx-w/2,y:cy-h/2,width:w,height:h,rx:h/2,fill:big?col:"#121C4E",stroke:col,"stroke-width":big?0:2.5});
+  txt(cx,cy+(sub?-2:6),label,{"text-anchor":"middle","font-size":big?19:16,"font-weight":700,fill:big&&col==="#F5C518"?"#0B1440":"#F5F2EA","letter-spacing":"1.5"});
+  if(sub)txt(cx,cy+16,sub,{"text-anchor":"middle","font-size":13,"font-weight":600,fill:big?(col==="#F5C518"?"#0B1440":"#FFFFFFD9"):"#9EA7D0"})}
+function leafCard(x,y,lf,col,right){const g=el("g",{});const X=right?x:x-LEAFW;
+  el("rect",{x:X,y:y-LH/2+4,width:LEAFW,height:LH-8,rx:12,fill:"#121C4E",stroke:"#26326E"},g);
+  el("rect",{x:right?X:X+LEAFW-5,y:y-LH/2+4,width:5,height:LH-8,rx:2,fill:col},g);
+  if(lf.note!=null){txt(X+16,y-3,lf.note+(lf.nc?"  ·  "+lf.nc:""),{"font-size":16,"font-weight":700,fill:"#F5F2EA"},g);txt(X+16,y+15,lf.why,{"font-size":13,"font-weight":600,fill:"#9EA7D0"},g);return}
+  const t=el("text",{x:X+16,y:y-3,"font-size":16,"font-weight":700},g);
+  const sp=(s,f,w)=>{const e=document.createElementNS(NS,"tspan");e.textContent=s;e.setAttribute("fill",f);if(w)e.setAttribute("font-weight",w);t.appendChild(e)};
+  sp(lf.a,"#FF6B7A");if(lf.ac)sp(" "+lf.ac,"#9EA7D0","500");sp("  vs  ","#9EA7D0");sp(lf.b,lf.open?"#9EA7D0":"#7FA8FF");if(lf.bc)sp(" "+lf.bc,"#9EA7D0","500");
+  const dcol=lf.dw==null?"#F2A33A":lf.dw<=1.5?"#3FBF7A":"#F2A33A";
+  const m=el("text",{x:X+16,y:y+15,"font-size":13,"font-weight":600,fill:"#9EA7D0"},g);
+  const sm=(s,f)=>{const e=document.createElementNS(NS,"tspan");e.textContent=s;if(f)e.setAttribute("fill",f);m.appendChild(e)};
+  sm(`${lf.t} · aire ${lf.aire} · ${lf.cat}`);if(!lf.open)sm(lf.dw==null?"  · à peser":`  · Δ ${String(lf.dw).replace(".",",")} kg`,dcol);if(lf.title)sm(lf.title==="Combat vedette"?"  ★ vedette":"  ★ co-vedette","#F5C518")}
+function side(branches,right){const s=right?1:-1;let y=40+GAP;const total=measure(branches),y0=(H-total)/2+GAP/2;y=y0;const anchors=[];
+  branches.forEach(br=>{const gs=[];br.children.forEach(gp=>{const n=Math.max(1,gp.leaves.length),gh=n*LH;const ys=[];for(let i=0;i<n;i++)ys.push(y+i*LH+LH/2);
+      gs.push({gp,cy:y+gh/2,ys});y+=gh+GAP});
+    const by=(gs[0].cy+gs[gs.length-1].cy)/2;anchors.push({br,by,gs});y+=GAP});
+  anchors.forEach(({br,by,gs})=>{curve(CX+s*90,H/2,CX+s*(C1-125),by,br.color,6);
+    gs.forEach(({gp,cy,ys})=>{curve(CX+s*(C1+125),by,CX+s*(C2-90),cy,br.color,3.5);
+      ys.forEach((ly,i)=>{curve(CX+s*(C2+90),cy,CX+s*CL,ly,br.color,1.6);if(gp.leaves[i])leafCard(CX+s*CL,ly,gp.leaves[i],br.color,right)});
+      pill(CX+s*C2,cy,gp.label,gp.sub,br.color,180,false)});
+    pill(CX+s*C1,by,br.label,br.sub,br.color,250,true)})}
+side(D.left,false);side(D.right,true);
+el("circle",{cx:CX,cy:H/2,r:96,fill:"#0B1440",stroke:"#F5C518","stroke-width":5});el("circle",{cx:CX,cy:H/2,r:84,fill:"#E0283A"});
+txt(CX,H/2-14,"SHIDOKAN",{"text-anchor":"middle","font-size":24,"font-family":"Anton, Impact, sans-serif",fill:"#F5F2EA","letter-spacing":"1"});
+txt(CX,H/2+16,"CHALLENGE",{"text-anchor":"middle","font-size":24,"font-family":"Anton, Impact, sans-serif",fill:"#F5F2EA","letter-spacing":"1"});
+txt(CX,H/2+48,"974",{"text-anchor":"middle","font-size":30,"font-family":"Anton, Impact, sans-serif",fill:"#F5C518"});
+</script>
