@@ -105,18 +105,25 @@ function addKazKomela(db, orgId, now = new Date()) {
   const cathy = db.insert('users', { org_id: orgId, name: 'Cathy', email: 'cathy@demo.re', password_hash: hashPassword('demo1234'), role: 'agent', hourly_rate: 13.5, color: '#e9b9c7' });
   const kaz = db.insert('properties', {
     org_id: orgId, name: 'Kaz Komela', type: 'Case créole', city: null, capacity: 4, bedrooms: 2,
-    cleaning_fee: 60, cleaning_duration_min: 120, commission_rate: 20, color: '#a9504a',
+    cleaning_fee: 132, cleaning_duration_min: 120, commission_rate: 20, color: '#a9504a',
     checkin_time: '16:00', checkout_time: '10:00', ical_token: `demo${Math.random().toString(36).slice(2, 12)}`,
   });
   const start = new Date(Math.min(new Date(`${t}T08:30:00+04:00`).getTime(), now.getTime()));
   const job = db.insert('interventions', {
     org_id: orgId, property_id: kaz, type: 'menage', title: 'Ménage Kaz Komela', scheduled_date: t, scheduled_time: '08:30',
-    duration_min: 120, assigned_to: cathy, status: 'en_cours', billable_amount: 60,
+    duration_min: 120, assigned_to: cathy, status: 'en_cours', billable_amount: 132,
     checklist: JSON.stringify(['Changement draps et serviettes', 'Cuisine et vaisselle', 'Salle de bain / WC', 'Sols et poussières', 'Poubelles', 'Réassort consommables', 'Photos de fin de ménage']),
   });
   db.insert('time_entries', { org_id: orgId, user_id: cathy, intervention_id: job, clock_in: start.toISOString(), notes: 'Arrivée 8h30' });
   closeKazKomela(db, now);
   return { cathy, kaz, job };
+}
+
+/** Kaz Komela housekeeping (intendance) is 132 €: replaces the 60 € placeholder only. */
+function setKazKomelaFee(db) {
+  const p = db.run("UPDATE properties SET cleaning_fee = 132 WHERE name = 'Kaz Komela' AND cleaning_fee = 60").changes;
+  const i = db.run("UPDATE interventions SET billable_amount = 132 WHERE title = 'Ménage Kaz Komela' AND billable_amount = 60").changes;
+  return p + i > 0;
 }
 
 /** Cathy finished the Kaz Komela cleaning at 14:00 on 26/10/2026. Idempotent. */
@@ -137,4 +144,4 @@ if (require.main === module) {
   db.close();
 }
 
-module.exports = { seed, addKazKomela, closeKazKomela };
+module.exports = { seed, addKazKomela, closeKazKomela, setKazKomelaFee };
