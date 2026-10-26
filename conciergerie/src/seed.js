@@ -115,7 +115,20 @@ function addKazKomela(db, orgId, now = new Date()) {
     checklist: JSON.stringify(['Changement draps et serviettes', 'Cuisine et vaisselle', 'Salle de bain / WC', 'Sols et poussières', 'Poubelles', 'Réassort consommables', 'Photos de fin de ménage']),
   });
   db.insert('time_entries', { org_id: orgId, user_id: cathy, intervention_id: job, clock_in: start.toISOString(), notes: 'Arrivée 8h30' });
+  closeKazKomela(db, now);
   return { cathy, kaz, job };
+}
+
+/** Cathy finished the Kaz Komela cleaning at 14:00 on 26/10/2026. Idempotent. */
+function closeKazKomela(db, now = new Date()) {
+  const end = new Date('2026-10-26T14:00:00+04:00');
+  if (now < end) return false;
+  const e = db.get(`SELECT t.id, t.intervention_id FROM time_entries t JOIN users u ON u.id = t.user_id
+    WHERE u.email = 'cathy@demo.re' AND t.notes = 'Arrivée 8h30' AND t.clock_out IS NULL AND t.clock_in LIKE '2026-10-26%'`);
+  if (!e) return false;
+  db.update('time_entries', { clock_out: end.toISOString() }, { id: e.id });
+  db.update('interventions', { status: 'terminee', completed_at: end.toISOString() }, { id: e.intervention_id });
+  return true;
 }
 
 if (require.main === module) {
@@ -124,4 +137,4 @@ if (require.main === module) {
   db.close();
 }
 
-module.exports = { seed, addKazKomela };
+module.exports = { seed, addKazKomela, closeKazKomela };

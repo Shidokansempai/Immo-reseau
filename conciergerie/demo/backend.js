@@ -3,7 +3,7 @@
 const { Router } = require('express');
 const { open } = require('../src/db');
 const { authenticate } = require('../src/auth');
-const { seed, addKazKomela } = require('../src/seed');
+const { seed, addKazKomela, closeKazKomela } = require('../src/seed');
 const { sendDueMessages } = require('../src/lib/scheduler');
 
 const DB_KEY = 'sakura-palm-demo-db';
@@ -37,6 +37,7 @@ function start() {
   // Existing test data: add the real Kaz Komela cleaning once.
   const org = db.get('SELECT org_id FROM users WHERE email = ?', 'admin@demo.re');
   if (org && addKazKomela(db, org.org_id)) save();
+  if (closeKazKomela(db)) save();
 
   const api = Router();
   api.use('/auth', require('../src/routes/auth')(db, { allowSignup: true }));
