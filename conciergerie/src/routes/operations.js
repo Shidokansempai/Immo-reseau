@@ -2,7 +2,8 @@
 // Interventions (planning terrain) and pointage (time tracking).
 const express = require('express');
 const { HttpError, pick, findOwned, assertRef } = require('./crud');
-const { isDay, localToUtc, addDays } = require('../lib/dates');
+const { isDay, localToUtc, addDays, today } = require('../lib/dates');
+const { cleaningStats, interventionSummary } = require('../lib/cleaning');
 
 const I_FIELDS = ['property_id', 'booking_id', 'type', 'title', 'scheduled_date', 'scheduled_time', 'duration_min',
   'assigned_to', 'status', 'billable_amount', 'checklist', 'notes', 'report'];
@@ -127,7 +128,34 @@ module.exports = function operationsRoutes(db) {
     if (e.intervention_id && req.body.complete) {
       db.update('interventions', { status: 'terminee', completed_at: new Date().toISOString(), report: req.body.report || null }, { id: e.intervention_id });
     }
-    res.json(db.get('SELECT * FROM time_entries WHERE id = ?', e.id));
+    const entry = db.get('SELECT * FROM time_entries WHERE id = ?', e.id);
+    res.json({ ...entry, cleaning: e.intervention_id ? interventionSummary(db, e.intervention_id) : null });
+  });
+
+  /** Manager closes an agent's running clock-in (e.g. "Cathy a fini à 11h"). */
+  r.post('/time/:id/stop', (req, res) => {
+    if (isAgent(req)) throw new HttpError(403, 'Accès réservé');
+    const t = findOwned(db, 'time_entries', req.params.id, req.orgId);
+    if (t.clock_out) throw new HttpError(400, 'Ce pointage est déjà terminé');
+    const end = req.body.clock_out ? new Date(req.body.clock_out) : new Date();
+    if (Number.isNaN(end.getTime())) throw new HttpError(400, 'Heure de fin invalide');
+    if (end.toISOString() <= t.clock_in) throw new HttpError(400, 'L\'heure de fin doit être après l\'arrivée');
+    if (end > new Date(Date.now() + 5 * 60000)) throw new HttpError(400, 'L\'heure de fin ne peut pas être dans le futur');
+    db.update('time_entries', { clock_out: end.toISOString() }, { id: t.id });
+    if (t.intervention_id && req.body.complete) {
+      db.update('interventions', { status: 'terminee', completed_at: end.toISOString(), report: req.body.report || null }, { id: t.intervention_id });
+    }
+    res.json({ ...db.get('SELECT * FROM time_entries WHERE id = ?', t.id), cleaning: t.intervention_id ? interventionSummary(db, t.intervention_id) : null });
+  });
+
+  /** Hourly cleaning ratio over a period (default: current month). */
+  r.get('/stats/cleaning', (req, res) => {
+    if (isAgent(req)) throw new HttpError(403, 'Accès réservé');
+    const tz = db.get('SELECT tz_offset FROM organizations WHERE id = ?', req.orgId).tz_offset;
+    const t = today(tz);
+    const from = isDay(req.query.from) ? req.query.from : `${t.slice(0, 8)}01`;
+    const to = isDay(req.query.to) ? req.query.to : t;
+    res.json(cleaningStats(db, req.orgId, from, to));
   });
 
   function timeQuery(req) {

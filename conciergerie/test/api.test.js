@@ -87,6 +87,17 @@ test('full workflow: signup → property → booking → operations → billing'
   assert.equal((await g.post('/api/time/clock-in', {})).status, 409);
   const out = await g.post('/api/time/clock-out', { complete: true, report: 'RAS' });
   assert.equal(out.status, 200);
+  assert.equal(out.body.cleaning.property_name, 'Villa');
+  const stats = (await a.get(`/api/stats/cleaning?from=${future(0)}&to=${future(30)}`)).body;
+  assert.equal(stats.items.length, 1);
+  assert.equal(stats.by_agent[0].name, 'Agent');
+
+  // A manager closes a running clock-in with an end time.
+  const start = new Date(Date.now() - 3 * 3600000).toISOString();
+  const open = (await a.post('/api/time', { user_id: agent.id, clock_in: start, intervention_id: menage.id })).body;
+  const stop = await a.post(`/api/time/${open.id}/stop`, { clock_out: new Date(Date.now() - 3600000).toISOString() });
+  assert.equal(stop.status, 200);
+  assert.equal((await a.post(`/api/time/${open.id}/stop`, {})).status, 400);
   assert.equal((await a.get(`/api/interventions/${menage.id}`)).body.status, 'terminee');
   assert.equal((await a.get('/api/time/report')).body[0].user_name, 'Agent');
   assert.match((await a.get('/api/time/export.csv')).body, /Intervenant;Début/);

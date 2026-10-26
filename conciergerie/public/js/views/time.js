@@ -1,4 +1,4 @@
-import { html, str, api, on, $, fdate, fdatetime, ftime, hours, money, qs, today, modal, attempt, formModal, L, raw, download } from '../ui.js';
+import { html, str, api, on, $, fdate, fdatetime, ftime, hours, money, qs, today, modal, attempt, formModal, L, raw, download, toast } from '../ui.js';
 import { topbar } from '../app.js';
 
 /** Best-effort geolocation (resolves to {} when refused/unavailable). */
@@ -26,9 +26,11 @@ export function clockOutDialog(current, onDone) {
     actions: [{ label: 'Annuler' }, { label: '⏹ Terminer le pointage', cls: 'primary', onClick: async (el) => {
       const form = $('form', el);
       const pos = await position();
-      await attempt(() => api.post('/time/clock-out', {
+      const r = await attempt(() => api.post('/time/clock-out', {
         complete: Boolean(form.complete?.checked), report: form.report?.value || null, notes: form.notes.value || null, ...pos,
-      }), 'Pointage terminé');
+      }));
+      const c = r.cleaning;
+      toast(c && c.actual_min != null ? `Ménage terminé en ${Math.floor(c.actual_min / 60)}h${String(c.actual_min % 60).padStart(2, '0')} – merci !` : 'Pointage terminé');
       onDone?.();
     } }],
   });

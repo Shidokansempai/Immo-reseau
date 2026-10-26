@@ -88,3 +88,19 @@ test('automation: past welcome messages are not sent after the stay', () => {
   assert.equal(db.get('SELECT COUNT(*) AS n FROM messages WHERE booking_id = ?', bid).n, 0);
   db.close();
 });
+
+test('cleaning ratio: computed only once the cleaning is clocked out', () => {
+  const { summarize } = require('../src/lib/cleaning');
+  const job = { id: 1, property_name: 'Kaz Komela', duration_min: 120, billable_amount: 60 };
+  const start = '2026-10-26T04:30:00.000Z'; // 8:30 à La Réunion
+  const running = summarize(job, [{ user_name: 'Cathy', hourly_rate: 13.5, clock_in: start, clock_out: null }], new Date('2026-10-26T06:00:00Z'));
+  assert.equal(running.running, true);
+  assert.equal(running.elapsed_min, 90);
+  assert.equal(running.ratio, null);
+  const done = summarize(job, [{ user_name: 'Cathy', hourly_rate: 13.5, clock_in: start, clock_out: '2026-10-26T07:00:00.000Z' }]);
+  assert.equal(done.actual_min, 150); // 8:30 → 11:00
+  assert.equal(done.deviation_min, 30);
+  assert.equal(done.ratio, 24); // 60 € / 2,5 h
+  assert.equal(done.labour_cost, 33.75);
+  assert.equal(done.margin, 26.25);
+});

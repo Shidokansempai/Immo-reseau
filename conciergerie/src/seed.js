@@ -88,8 +88,34 @@ function seed(db, now = new Date()) {
   db.insert('messages', { org_id: orgId, booking_id: current, guest_id: g.guest_id, direction: 'in', channel: 'whatsapp', status: 'received', read: 0, sent_at: new Date(now.getTime() - 3600000).toISOString(), body: 'Hello! The pool looks great but we cannot find the beach towels. Could you help? Thanks, John' });
   db.insert('messages', { org_id: orgId, booking_id: bookingIds[4], guest_id: guests[4], direction: 'in', channel: 'email', status: 'received', read: 0, sent_at: new Date(now.getTime() - 7200000).toISOString(), body: 'Bonjour, serait-il possible de partir à 12h au lieu de 10h le jour du départ ? Merci beaucoup, Laura' });
 
+  addKazKomela(db, orgId, now);
+
   console.log(`Démo créée (organisation #${orgId}). Connexion : admin@demo.re / demo1234 – agent : agent@demo.re / demo1234`);
   return { orgId, admin };
+}
+
+/**
+ * Real case added on 26/10/2026: Cathy started the cleaning of the Kaz Komela
+ * at 8:30; the hourly ratio is computed when she clocks out. Idempotent.
+ * Address, cleaning fee and hourly rate are placeholders to adjust in the app.
+ */
+function addKazKomela(db, orgId, now = new Date()) {
+  if (db.get('SELECT id FROM users WHERE email = ?', 'cathy@demo.re')) return null;
+  const t = today('+04:00', now);
+  const cathy = db.insert('users', { org_id: orgId, name: 'Cathy', email: 'cathy@demo.re', password_hash: hashPassword('demo1234'), role: 'agent', hourly_rate: 13.5, color: '#e9b9c7' });
+  const kaz = db.insert('properties', {
+    org_id: orgId, name: 'Kaz Komela', type: 'Case créole', city: null, capacity: 4, bedrooms: 2,
+    cleaning_fee: 60, cleaning_duration_min: 120, commission_rate: 20, color: '#a9504a',
+    checkin_time: '16:00', checkout_time: '10:00', ical_token: `demo${Math.random().toString(36).slice(2, 12)}`,
+  });
+  const start = new Date(Math.min(new Date(`${t}T08:30:00+04:00`).getTime(), now.getTime()));
+  const job = db.insert('interventions', {
+    org_id: orgId, property_id: kaz, type: 'menage', title: 'Ménage Kaz Komela', scheduled_date: t, scheduled_time: '08:30',
+    duration_min: 120, assigned_to: cathy, status: 'en_cours', billable_amount: 60,
+    checklist: JSON.stringify(['Changement draps et serviettes', 'Cuisine et vaisselle', 'Salle de bain / WC', 'Sols et poussières', 'Poubelles', 'Réassort consommables', 'Photos de fin de ménage']),
+  });
+  db.insert('time_entries', { org_id: orgId, user_id: cathy, intervention_id: job, clock_in: start.toISOString(), notes: 'Arrivée 8h30' });
+  return { cathy, kaz, job };
 }
 
 if (require.main === module) {
@@ -98,4 +124,4 @@ if (require.main === module) {
   db.close();
 }
 
-module.exports = { seed };
+module.exports = { seed, addKazKomela };
