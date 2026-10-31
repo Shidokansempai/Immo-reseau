@@ -31,10 +31,12 @@ h["A2"].font = Font(italic=True, color="666666")
 
 hyp = [
     ("Adhérents", None, None),
-    ("Nombre d'adhérents enfants (5-11 ans)", 20, "nb"),
-    ("Cotisation annuelle enfant", 120, "eur"),
-    ("Nombre d'adhérents ados / adultes / vétérans", 12, "nb"),
-    ("Cotisation annuelle ado / adulte", 150, "eur"),
+    ("Nombre d'adhérents babies", 10, "nb"),
+    ("Cotisation annuelle baby", 239, "eur"),
+    ("Nombre d'adhérents enfants", 30, "nb"),
+    ("Cotisation annuelle enfant", 259, "eur"),
+    ("Nombre d'adhérents ados / adultes / vétérans", 23, "nb"),
+    ("Cotisation annuelle ado / adulte", 339, "eur"),
     ("Fonctionnement courant", None, None),
     ("Prix de la licence fédérale par adhérent", 40, "eur"),
     ("Affiliation du club à la fédération", 150, "eur"),
@@ -140,7 +142,7 @@ line("625", "Déplacements en compétition", f"={R('Déplacements en compétitio
 line("625", "Défraiements des encadrants", f"={R('Défraiements des encadrants (kilomètres, frais)')}", f"={R('Défraiements des encadrants (kilomètres, frais)')}")
 line("626", "Frais bancaires, téléphone, site internet", f"={R('Frais bancaires, téléphone, site internet')}", f"={R('Frais bancaires, téléphone, site internet')}")
 section("65 – Autres charges de gestion courante")
-nb_adh = f"({R(chr(78) + 'ombre d' + chr(39) + 'adhérents enfants (5-11 ans)')}+{R(chr(78) + 'ombre d' + chr(39) + 'adhérents ados / adultes / vétérans')})"
+nb_adh = f"({R("Nombre d'adhérents babies")}+{R("Nombre d'adhérents enfants")}+{R(chr(78) + 'ombre d' + chr(39) + 'adhérents ados / adultes / vétérans')})"
 lic = f"={nb_adh}*{R('Prix de la licence fédérale par adhérent')}"
 line("6511", "Licences fédérales", lic, lic)
 line("6511", "Affiliation du club à la fédération", f"={R('Affiliation du club à la fédération')}", f"={R('Affiliation du club à la fédération')}")
@@ -160,7 +162,8 @@ line("74", "Département de La Réunion (à solliciter)", 0, 0)
 line("74", "Région Réunion (à solliciter)", 0, 0)
 line("74", "Agence nationale du Sport – PSF via la Ligue (à solliciter)", 0, 0)
 section("75 – Autres produits de gestion courante")
-cot = (f"={R(chr(78) + 'ombre d' + chr(39) + 'adhérents enfants (5-11 ans)')}*{R('Cotisation annuelle enfant')}"
+cot = (f"={R("Nombre d'adhérents babies")}*{R('Cotisation annuelle baby')}"
+       f"+{R("Nombre d'adhérents enfants")}*{R('Cotisation annuelle enfant')}"
        f"+{R(chr(78) + 'ombre d' + chr(39) + 'adhérents ados / adultes / vétérans')}*{R('Cotisation annuelle ado / adulte')}")
 line("756", "Cotisations des adhérents (licences incluses)", cot, cot)
 line("7541", "Sponsors et mécénat (L'Assiette Fleurie, DTTP Réunion…)", f"={R('Sponsors / mécénat (L' + chr(39) + 'Assiette Fleurie, DTTP Réunion…)')}", f"={R('Sponsors / mécénat (L' + chr(39) + 'Assiette Fleurie, DTTP Réunion…)')}")
