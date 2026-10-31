@@ -38,12 +38,12 @@ hyp = [
     ("Nombre d'adhérents ados / adultes / vétérans", 23, "nb"),
     ("Cotisation annuelle ado / adulte", 339, "eur"),
     ("Fonctionnement courant", None, None),
-    ("Prix de la licence fédérale par adhérent", 40, "eur"),
-    ("Affiliation du club à la fédération", 150, "eur"),
+    ("Prix de la licence fédérale par adhérent", 39, "eur"),
+    ("Affiliation Shidokan par adhérent", 21, "eur"),
     ("Assurance de l'association", 400, "eur"),
-    ("Déplacements en compétition (transport, engagements)", 2000, "eur"),
-    ("Matériel courant et pharmacie", 500, "eur"),
-    ("Défraiements des encadrants (kilomètres, frais)", 600, "eur"),
+    ("Déplacements en compétition (transport, engagements)", 0, "eur"),
+    ("Matériel courant et pharmacie", 1200, "eur"),
+    ("Défraiements des encadrants (kilomètres, frais)", 0, "eur"),
     ("Frais bancaires, téléphone, site internet", 300, "eur"),
     ("Événement et partenaires", None, None),
     ("Recettes buvette (Shidokan Challenge)", 900, "eur"),
@@ -145,7 +145,8 @@ section("65 – Autres charges de gestion courante")
 nb_adh = f"({R("Nombre d'adhérents babies")}+{R("Nombre d'adhérents enfants")}+{R(chr(78) + 'ombre d' + chr(39) + 'adhérents ados / adultes / vétérans')})"
 lic = f"={nb_adh}*{R('Prix de la licence fédérale par adhérent')}"
 line("6511", "Licences fédérales", lic, lic)
-line("6511", "Affiliation du club à la fédération", f"={R('Affiliation du club à la fédération')}", f"={R('Affiliation du club à la fédération')}")
+AFF = f"={nb_adh}*{R('Affiliation Shidokan par adhérent')}"
+line("6511", "Affiliation Shidokan (par adhérent)", AFF, AFF)
 line("6588", "Licences solidaires et stages gratuits pendant les vacances scolaires", 500, 1000, True)
 last_ch = row - 1
 tot_ch = total("TOTAL DES CHARGES", first_ch, last_ch)
