@@ -80,7 +80,7 @@ def chrome(img, i):
     text(d, (60, 52), "SHIDOKAN CHALLENGE 974  ·  LE TAMPON", font(BEBAS, 34), GOLD)
     text(d, (W - 60, 52), f"{i}/{N}", font(BEBAS, 34), GREY, "ra")
     d.line([(60, H - 92), (W - 60, H - 92)], fill=(255, 255, 255, 60), width=2)
-    text(d, (60, H - 70), "JULES  ·  Conseiller immobilier & Sempai, Fighter Academy Karate", font(SANS, 24), GREY)
+    text(d, (60, H - 70), "JULES FRAYNAL  ·  Sempai, Fighter Academy Karate – Shidokan Réunion", font(SANS, 24), GREY)
     if i < N: text(d, (W - 60, H - 72), "SWIPE  >", font(BEBAS, 32), GOLD, "ra")
 
 def lesson(i, num, title_lines, body, office, ph, fx=0.5, fy=0.5):
@@ -97,7 +97,7 @@ def lesson(i, num, title_lines, body, office, ph, fx=0.5, fy=0.5):
     lines = wrap(d, office, font(SANSI, 32), 880)
     box_h = 70 + len(lines) * 44
     box(img, (60, box_top, W - 60, box_top + box_h), (255, 255, 255, 18), GOLD, 2, 18); d = ImageDraw.Draw(img)
-    text(d, (90, box_top + 20), "AU BUREAU", font(BEBAS, 32), GOLD)
+    text(d, (90, box_top + 20), "CE QUE J'EN RETIENS", font(BEBAS, 32), GOLD)
     yy = box_top + 58
     for ln in lines:
         text(d, (90, yy), ln, font(SANSI, 32), GREY); yy += 44
@@ -137,10 +137,10 @@ chrome(img, 2); slides.append(img)
 # 3-5 — les leçons
 slides.append(lesson(3, 1, ["LA PRÉPARATION", "FAIT LA DIFFÉRENCE"],
     "Le jour J, on n'improvise pas : on exécute. Rôles attribués, plan de salle dessiné à l'avance, chaque minute prévue. Accès à 7h30, coup d'envoi à 9h00 pile.",
-    "Une vente ou un dossier de financement se gagne avant le rendez-vous, jamais pendant.", "f1ded2d0", 0.47, 0.45))
+    "Un événement réussi se gagne avant le jour J, jamais pendant.", "f1ded2d0", 0.47, 0.45))
 slides.append(lesson(4, 2, ["UNE ÉQUIPE ENGAGÉE", "VAUT PLUS QU'UN BUDGET"],
     "20 bénévoles, 16 arbitres, des parents pâtissiers. Personne n'était payé. Tout le monde était là, du montage au dernier tatami rangé.",
-    "On ne manage pas des tâches : on embarque des personnes autour d'un objectif commun.", "3f818896", 0.5, 0.35))
+    "On ne mobilise pas des bras : on rassemble des personnes autour d'une même passion.", "3f818896", 0.5, 0.35))
 slides.append(lesson(5, 3, ["LA CONFIANCE SE", "CONSTRUIT SUR LE TERRAIN"],
     "La Ville, la Ligue, nos sponsors : ils nous ont suivis parce qu'on a tenu parole. Et l'élu aux sports s'est déplacé pour nous.",
     "La confiance ne se décrète pas. Elle se prouve, engagement après engagement.", "7262a192", 0.56, 0.4))
@@ -187,12 +187,12 @@ y = 260
 for ln, col in [("DISCIPLINE.", WHITE), ("RESPECT.", WHITE), ("ENGAGEMENT.", GOLD)]:
     text(d, (60, y), ln, font(ANTON, 120), col); y += 140
 d.rectangle((60, y + 32, 220, y + 40), fill=RED)
-y = para(d, (60, y + 70), "Au dojo comme dans mon métier, je n'ai jamais trouvé de meilleure méthode.", font(SANSB, 42), WHITE, 960)
+y = para(d, (60, y + 70), "Sur le tatami comme dans la vie, je n'ai jamais trouvé de meilleure méthode.", font(SANSB, 42), WHITE, 960)
 box(img, (60, y + 40, W - 60, y + 210), (243, 196, 72, 30), GOLD, 3, 22); d = ImageDraw.Draw(img)
-para(d, (100, y + 72), "Et vous, quelle passion nourrit votre façon de travailler ? Dites-le moi en commentaire.", font(SANSI, 38), GOLD, 880)
+para(d, (100, y + 72), "Et vous, qu'est-ce que le sport vous a appris ? Dites-le moi en commentaire.", font(SANSI, 38), GOLD, 880)
 yy = H - 215
-for ln in ["Conseiller immobilier & manager – Immo Réseau", "Mandataire en courtage – 2L Courtage",
-           "Sempai – Fighter Academy Karate, Le Tampon"]:
+for ln in ["Sempai Jules Fraynal", "Instructeur – Fighter Academy Karate · Shidokan Réunion",
+           "Le Tampon, La Réunion"]:
     text(d, (60, yy), ln, font(SANS, 28), GREY); yy += 38
 chrome(img, 8); slides.append(img)
 
