@@ -1,0 +1,594 @@
+// IMMO ASSIST — schéma de données multi-tenant
+// ----------------------------------------------------------------------------
+// Chaque donnée métier porte un `organizationId` : c'est la frontière stricte
+// entre tenants. Toutes les requêtes applicatives passent par des helpers
+// (lib/tenant.ts) qui injectent ce filtre — aucune donnée ne fuit entre comptes.
+//
+// PostgreSQL (SaaS hébergé & dev). Les "enums" sont des String documentées —
+// portables et faciles à faire évoluer.
+//   - DATABASE_URL : connexion applicative (pooled en serverless, ex. Neon/Vercel)
+//   - DIRECT_URL   : connexion directe pour les migrations / db push
+// En local, les deux peuvent pointer vers la même instance (docker-compose).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─── Tenant & abonnement ─────────────────────────────────────────────────────
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  // Branding (section 22/24) — personnalisation des rapports & de l'UI
+  logoUrl   String?
+  brandColor String? @default("#c9a24b")
+  city      String?  @default("Le Tampon")
+  region    String?  @default("La Réunion")
+  phone     String?
+  email     String?
+  legalInfo String?  // mentions légales (cartes de visite, rapports PDF)
+
+  // Abonnement SaaS (section 23) — architecture Stripe-ready
+  plan              String   @default("PRO_IA") // SOLO | PRO | PRO_IA | AGENCE
+  subscriptionStatus String  @default("trialing") // trialing | active | past_due | canceled
+  stripeCustomerId  String?
+  trialEndsAt       DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users         User[]
+  contacts      Contact[]
+  pipelines     Pipeline[]
+  stages        PipelineStage[]
+  properties    Property[]
+  mandates      Mandate[]
+  buyerProfiles BuyerProfile[]
+  tasks         Task[]
+  events        Event[]
+  interactions  Interaction[]
+  valuations    Valuation[]
+  automations   AutomationRule[]
+  reminderRules ReminderRule[]
+  templates     MessageTemplate[]
+  notifications Notification[]
+  documents     Document[]
+  commissions   Commission[]
+  auditLogs     AuditLog[]
+  settings      IntegrationSetting[]
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String   // hash bcrypt
+  // Rôles (section 2) : PLATFORM_ADMIN | AGENCY_ADMIN | ADVISOR
+  role      String   @default("ADVISOR")
+  phone     String?
+  avatarUrl String?
+  active    Boolean  @default(true)
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  contacts      Contact[]
+  tasks         Task[]
+  events        Event[]
+  interactions  Interaction[]
+  properties    Property[]
+  mandates      Mandate[]
+  notifications Notification[]
+  auditLogs     AuditLog[]
+
+  @@index([organizationId])
+}
+
+// ─── CRM Contacts (section 4) ────────────────────────────────────────────────
+
+model Contact {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  // Types (section 4) : PROSPECT_SELLER | SELLER | PROSPECT_BUYER | BUYER |
+  //   INVESTOR | CLIENT | REFERRER | PARTNER | NOTARY | BROKER | OTHER
+  type      String   @default("PROSPECT_SELLER")
+  // Statut relationnel : NEW | CONTACTED | QUALIFIED | ACTIVE | WON | LOST | INACTIVE
+  status    String   @default("NEW")
+  email     String?
+  phone     String?
+  address   String?
+  city      String?
+  birthDate DateTime?
+  source    String?  // Pige, Recommandation, Site web, Boîtage, Porte-à-porte, Salon...
+  tags      String?  // CSV simple ("chaud,exclusif-possible")
+  notes     String?
+  score     Int      @default(0) // scoring prospection 0-100
+
+  lastContactAt DateTime?
+  nextFollowUpAt DateTime?
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  ownerId        String?
+  owner          User?        @relation(fields: [ownerId], references: [id])
+
+  // Position dans le pipeline de prospection
+  stageId String?
+  stage   PipelineStage? @relation(fields: [stageId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  interactions  Interaction[]
+  tasks         Task[]
+  events        Event[]
+  buyerProfile  BuyerProfile?
+  documents     Document[]
+  // Mandats où ce contact est le vendeur
+  mandatesAsSeller Mandate[] @relation("MandateSeller")
+  properties    Property[] @relation("PropertyOwnerContact")
+  notifications Notification[]
+
+  @@index([organizationId])
+  @@index([organizationId, type])
+  @@index([organizationId, stageId])
+}
+
+model Interaction {
+  id      String   @id @default(cuid())
+  // CALL | EMAIL | SMS | WHATSAPP | VISIT | MEETING | NOTE | ESTIMATION | OFFER
+  type    String
+  // OUTBOUND | INBOUND
+  direction String @default("OUTBOUND")
+  subject String?
+  body    String?
+  outcome String?  // "sans réponse", "RDV pris", "refus"...
+  at      DateTime @default(now())
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  contactId String
+  contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id])
+
+  @@index([organizationId])
+  @@index([contactId])
+}
+
+// ─── Prospection : pipeline configurable (section 5) ─────────────────────────
+
+model Pipeline {
+  id        String   @id @default(cuid())
+  name      String
+  isDefault Boolean  @default(false)
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  stages PipelineStage[]
+
+  @@index([organizationId])
+}
+
+model PipelineStage {
+  id        String  @id @default(cuid())
+  name      String
+  order     Int
+  color     String? @default("#2563eb")
+  // marque l'étape "gagnée" (sert aux stats de conversion)
+  isWon     Boolean @default(false)
+
+  pipelineId String
+  pipeline   Pipeline @relation(fields: [pipelineId], references: [id], onDelete: Cascade)
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  contacts Contact[]
+
+  @@index([organizationId])
+  @@index([pipelineId])
+}
+
+// ─── Biens (section 8) ───────────────────────────────────────────────────────
+
+model Property {
+  id        String   @id @default(cuid())
+  reference String?  // réf interne auto (ex: TAM-2026-014)
+  title     String
+  // APARTMENT | HOUSE | LAND | COMMERCIAL | BUILDING | OTHER
+  propertyType String @default("HOUSE")
+  // Statut (section 8) : PROSPECT | ESTIMATION | MANDATE_TO_SIGN | MANDATE_ACTIVE |
+  //   UNDER_OFFER | COMPROMISE | SOLD | ARCHIVED
+  status    String   @default("MANDATE_ACTIVE")
+
+  address   String?
+  city      String?
+  postalCode String?
+  lat       Float?
+  lng       Float?
+
+  livingArea Float?   // m² habitables
+  landArea   Float?   // m² terrain
+  rooms      Int?
+  bedrooms   Int?
+  bathrooms  Int?
+  floor      Int?
+  hasParking Boolean  @default(false)
+  hasGarage  Boolean  @default(false)
+  hasPool    Boolean  @default(false)
+  hasElevator Boolean @default(false)
+  yearBuilt  Int?
+  condition  String?  // neuf | bon | à rafraîchir | à rénover
+  dpe        String?  // A..G
+  ges        String?  // A..G
+
+  price      Float?
+  fees       Float?   // honoraires €
+  feesPct    Float?   // honoraires %
+  description String?
+  features   String?  // CSV ("vue mer,calme,proche écoles")
+  photoUrl   String?  // photo principale (demo)
+
+  listedAt   DateTime?
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  ownerId        String?
+  owner          User?        @relation(fields: [ownerId], references: [id])
+  ownerContactId String?
+  ownerContact   Contact?     @relation("PropertyOwnerContact", fields: [ownerContactId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  mandate   Mandate?
+  events    Event[]
+  documents Document[]
+  commission Commission?
+
+  @@index([organizationId])
+  @@index([organizationId, status])
+}
+
+// ─── Mandats (section 9) ─────────────────────────────────────────────────────
+
+model Mandate {
+  id        String   @id @default(cuid())
+  number    String   // ex: M-2026-0042
+  // SIMPLE | EXCLUSIVE | SEMI_EXCLUSIVE
+  type      String   @default("SIMPLE")
+  // DRAFT | ACTIVE | EXPIRED | SOLD | CANCELED
+  status    String   @default("ACTIVE")
+  signedAt  DateTime?
+  expiresAt DateTime?
+  price     Float?
+  fees      Float?
+  feesPct   Float?
+  notes     String?
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  ownerId        String?
+  owner          User?        @relation(fields: [ownerId], references: [id])
+
+  propertyId String   @unique
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  sellerId   String?
+  seller     Contact? @relation("MandateSeller", fields: [sellerId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  documents Document[]
+
+  @@index([organizationId])
+  @@index([organizationId, status])
+}
+
+// ─── Acquéreurs : profil de recherche + matching (section 10) ────────────────
+
+model BuyerProfile {
+  id        String   @id @default(cuid())
+  budgetMin Float?
+  budgetMax Float?
+  // secteurs recherchés, CSV ("Le Tampon,Saint-Pierre,Petite-Île")
+  areas     String?
+  // types recherchés, CSV ("HOUSE,APARTMENT")
+  propertyTypes String?
+  minArea   Float?
+  minBedrooms Int?
+  needLand   Boolean @default(false)
+  needParking Boolean @default(false)
+  needPool   Boolean @default(false)
+  financingReady Boolean @default(false) // pré-qualifié courtage (atout 2L)
+  notes     String?
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  contactId String  @unique
+  contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId])
+}
+
+// ─── Tâches (section 3/29) ───────────────────────────────────────────────────
+
+model Task {
+  id        String   @id @default(cuid())
+  title     String
+  notes     String?
+  // CALL | FOLLOWUP | VISIT | ESTIMATION | DOCUMENT | ADMIN | OTHER
+  kind      String   @default("FOLLOWUP")
+  priority  String   @default("NORMAL") // LOW | NORMAL | HIGH
+  done      Boolean  @default(false)
+  dueAt     DateTime?
+  // true si générée par une automatisation / le moteur de relance
+  automated Boolean  @default(false)
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id])
+  contactId String?
+  contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId])
+  @@index([organizationId, done])
+}
+
+// ─── Planning (section 13) ───────────────────────────────────────────────────
+
+model Event {
+  id        String   @id @default(cuid())
+  title     String
+  // VISIT | ESTIMATION | SELLER_MEETING | BUYER_MEETING | SIGNATURE | CALL | FOLLOWUP | COMPROMISE | OTHER
+  kind      String   @default("VISIT")
+  startAt   DateTime
+  endAt     DateTime?
+  location  String?
+  notes     String?
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id])
+  contactId String?
+  contact   Contact? @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  propertyId String?
+  property   Property? @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+
+  @@index([organizationId])
+  @@index([organizationId, startAt])
+}
+
+// ─── Avis de valeur (section 11) ─────────────────────────────────────────────
+
+model Valuation {
+  id        String   @id @default(cuid())
+  address   String?
+  city      String?
+  propertyType String @default("HOUSE")
+  livingArea Float?
+  landArea   Float?
+  rooms      Int?
+  bedrooms   Int?
+  condition  String?
+  dpe        String?
+  features   String?
+
+  // Résultats calculés
+  priceLow   Float?
+  priceMid   Float?
+  priceHigh  Float?
+  pricePerSqm Float?
+  // JSON sérialisé : comparables, analyse de secteur, arguments
+  analysis   String?
+  status     String  @default("DRAFT") // DRAFT | FINALIZED
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  contactId  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId])
+}
+
+// ─── Moteur d'automatisation (section 7) ─────────────────────────────────────
+
+model AutomationRule {
+  id        String   @id @default(cuid())
+  name      String
+  enabled   Boolean  @default(true)
+  // Déclencheur : NEW_PROSPECT | NO_REPLY_7D | MANDATE_SIGNED | VISIT_DONE |
+  //   BIRTHDAY | MANDATE_EXPIRING_30D | NEW_PROPERTY_MATCH | AFTER_ESTIMATION | AFTER_OFFER
+  trigger   String
+  // Action : CREATE_TASK | CREATE_FOLLOWUP | PROPOSE_MESSAGE | CREATE_ALERT | NOTIFY
+  action    String
+  // JSON de configuration (ex: {"title":"Premier contact","delayDays":0})
+  config    String?
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId])
+}
+
+// ─── Moteur de relance (section 6) ───────────────────────────────────────────
+
+model ReminderRule {
+  id        String  @id @default(cuid())
+  name      String
+  enabled   Boolean @default(true)
+  // condition : NO_CONTACT | AFTER_ESTIMATION | AFTER_VISIT | AFTER_OFFER | MANDATE_EXPIRING
+  condition String
+  delayDays Int     @default(7)
+  // LOW | NORMAL | HIGH
+  priority  String  @default("NORMAL")
+  // action générée : TASK | SUGGEST_MESSAGE
+  action    String  @default("TASK")
+  templateId String?
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+}
+
+// ─── Modèles de messages (section 14/22) ─────────────────────────────────────
+
+model MessageTemplate {
+  id       String @id @default(cuid())
+  name     String
+  // SMS | EMAIL | WHATSAPP
+  channel  String @default("SMS")
+  subject  String?
+  body     String  // supporte {{prenom}}, {{ville}}, {{bien}}...
+  category String? // approche_pige, relance_j7, suivi_vendeur, anniversaire...
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+}
+
+// ─── Notifications (section 21) ──────────────────────────────────────────────
+
+model Notification {
+  id        String   @id @default(cuid())
+  // NEW_TASK | FOLLOWUP | EVENT | MANDATE_EXPIRING | NEW_PROSPECT | NEW_MESSAGE |
+  //   DOCUMENT_TO_SIGN | PAYMENT | BIRTHDAY | BUYER_MATCH
+  type      String
+  title     String
+  body      String?
+  link      String?
+  read      Boolean  @default(false)
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id])
+  contactId String?
+  contact   Contact? @relation(fields: [contactId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+
+  @@index([organizationId])
+  @@index([organizationId, read])
+}
+
+// ─── Documents (section 17) ──────────────────────────────────────────────────
+
+model Document {
+  id        String   @id @default(cuid())
+  name      String
+  // MANDATE | VALUATION | VISIT_FORM | REPORT | CLIENT_DOC | PROPERTY_DOC |
+  //   COMPROMISE | INVOICE | ADMIN | OTHER
+  category  String   @default("OTHER")
+  url       String?  // emplacement (architecture signature électronique-ready)
+  signed    Boolean  @default(false)
+  signatureStatus String? // none | pending | signed
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  contactId  String?
+  contact    Contact?  @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  propertyId String?
+  property   Property? @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+  mandateId  String?
+  mandate    Mandate?  @relation(fields: [mandateId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+
+  @@index([organizationId])
+}
+
+// ─── Finances & commissions (section 18) ─────────────────────────────────────
+
+model Commission {
+  id        String  @id @default(cuid())
+  salePrice Float?
+  fees      Float?      // honoraires totaux
+  advisorPct Float  @default(70) // part conseiller %
+  advisorAmount Float?
+  agencyAmount  Float?
+  referrerAmount Float?    // apporteur d'affaires
+  // FORECAST | INVOICED | PAID
+  status    String  @default("FORECAST")
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  propertyId String  @unique
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  referrerId String?  // contact apporteur
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId])
+}
+
+// ─── Intégrations (section 22/25) ────────────────────────────────────────────
+// Clés & configs stockées côté serveur uniquement, jamais exposées au frontend.
+
+model IntegrationSetting {
+  id        String  @id @default(cuid())
+  // ai | dvf | smtp | whatsapp | stripe | maps | google_calendar | outlook
+  key       String
+  enabled   Boolean @default(false)
+  // JSON de config non sensible (le secret réel vit dans les variables d'env)
+  config    String?
+  hasSecret Boolean @default(false)
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, key])
+  @@index([organizationId])
+}
+
+// ─── Journal d'audit / RGPD (section 26) ─────────────────────────────────────
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String   // create | update | delete | login | export | consent...
+  entity    String?  // Contact | Mandate | ...
+  entityId  String?
+  meta      String?
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([organizationId])
+}

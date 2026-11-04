@@ -1,0 +1,25 @@
+# PostgreSQL local pour le développement.
+#   docker compose up -d
+#   npm run setup     # crée le schéma + données de démo
+#   npm run dev
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: immo-assist-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: immo
+      POSTGRES_PASSWORD: immo
+      POSTGRES_DB: immoassist
+    ports:
+      - "5432:5432"
+    volumes:
+      - immo_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U immo -d immoassist"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  immo_pgdata:
