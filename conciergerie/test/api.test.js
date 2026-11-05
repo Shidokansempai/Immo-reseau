@@ -114,6 +114,14 @@ test('full workflow: signup → property → booking → operations → billing'
   const html = await a.get(`/api/invoices/${st.body.id}/print`);
   assert.match(html.body, /ACQUITTÉE/);
 
+  // Welcome card (booking with guest name, and generic per property).
+  await a.put(`/api/properties/${prop.id}`, { wifi_name: 'Villa-WiFi', wifi_password: 'soleil974' });
+  const card = await a.get(`/api/bookings/${b.body.id}/welcome-card`);
+  assert.match(card.body, /Léa/);
+  assert.match(card.body, /Villa-WiFi/);
+  assert.match(card.body, /<svg viewBox/);
+  assert.match((await a.get(`/api/properties/${prop.id}/welcome-card`)).body, /Bienvenue chez vous/);
+
   // Public iCal export.
   const ics = await fetch(`${base}/ical/${prop.ical_token}.ics`).then((r) => r.text());
   assert.match(ics, /BEGIN:VEVENT/);

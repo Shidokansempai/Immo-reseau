@@ -18,7 +18,8 @@
   "private": true,
   "dependencies": {
     "express": "^5.2.1",
-    "nodemailer": "^10.0.15"
+    "nodemailer": "^10.0.15",
+    "qrcode": "1.5"
   },
   "devDependencies": {
     "esbuild": "^0.25.12",

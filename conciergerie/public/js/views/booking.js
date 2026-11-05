@@ -1,4 +1,4 @@
-import { html, str, api, on, money, fdate, fday, fdatetime, guestName, nights, L, tag, opts, formModal, attempt, confirmDialog, toast, today } from '../ui.js';
+import { html, str, api, on, money, fdate, fday, fdatetime, guestName, nights, L, tag, opts, formModal, attempt, confirmDialog, toast, today, showDocument } from '../ui.js';
 import { topbar } from '../app.js';
 import { openComposer } from './messages.js';
 
@@ -56,7 +56,7 @@ export default async function bookingView(el, { params, go }) {
     const actions = html`
       ${b.status === 'confirmed' ? html`<button data-status="checked_in">✅ Voyageur arrivé</button>` : ''}
       ${b.status === 'checked_in' ? html`<button data-status="checked_out">🚪 Voyageur parti</button>` : ''}
-      <button data-msg>💬 Message</button><button data-edit>✏️ Modifier</button>
+      <button data-card>🌸 Carte de bienvenue</button><button data-msg>💬 Message</button><button data-edit>✏️ Modifier</button>
       ${b.status !== 'cancelled' ? html`<button class="danger" data-status="cancelled">Annuler</button>` : html`<button data-status="confirmed">Réactiver</button>`}`;
     el.innerHTML = str(html`
       ${topbar(html`<a href="#/reservations" class="muted">Réservations</a> › ${guestName(b)}`, actions)}
@@ -116,6 +116,7 @@ export default async function bookingView(el, { params, go }) {
   on(el, 'click', '[data-send]', async (e, btn) => { await attempt(() => api.post(`/messages/${btn.dataset.send}/send-now`), 'Message traité'); b = await load(); });
   on(el, 'click', '[data-cancel]', async (e, btn) => { await attempt(() => api.post(`/messages/${btn.dataset.cancel}/cancel`), 'Envoi annulé'); b = await load(); });
   on(el, 'click', '[data-resched]', async () => { const r = await attempt(() => api.post(`/messages/reschedule/${b.id}`)); toast(`${r.scheduled} message(s) programmé(s)`); b = await load(); });
+  on(el, 'click', '[data-card]', () => attempt(() => showDocument(`/bookings/${b.id}/welcome-card`, `Carte de bienvenue – ${guestName(b)}`)));
   on(el, 'click', '[data-invoice]', async () => { const inv = await attempt(() => api.post(`/invoices/from-booking/${b.id}`), 'Brouillon de facture créé'); go(`/factures?id=${inv.id}`); });
   on(el, 'click', '[data-new-int]', async () => {
     const { openInterventionForm } = await import('./interventions.js');

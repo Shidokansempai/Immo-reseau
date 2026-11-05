@@ -1,4 +1,4 @@
-import { html, str, api, on, $, money, formModal, attempt, toast, fdatetime } from '../ui.js';
+import { html, str, api, on, $, money, formModal, attempt, toast, fdatetime, showDocument } from '../ui.js';
 import { topbar } from '../app.js';
 
 export default async function propertiesView(el) {
@@ -65,7 +65,7 @@ export default async function propertiesView(el) {
       <div class="small" style="margin-top:8px">👥 ${p.capacity} pers. · 🛏 ${p.bedrooms} ch. · 🕓 ${p.checkin_time} / ${p.checkout_time}</div>
       <div class="small">👤 ${owners[p.owner_id] || html`<span class="muted">Sans propriétaire</span>`} · Commission ${p.commission_rate} % · Ménage ${money(p.cleaning_fee)}</div>
       <div class="small">🔑 ${p.keybox_code || '—'} · 📶 ${p.wifi_name || '—'}</div>
-      <div class="row" style="margin-top:10px"><button class="sm" data-edit="${p.id}">✏️ Modifier</button>
+      <div class="row" style="margin-top:10px"><button class="sm" data-edit="${p.id}">✏️ Modifier</button><button class="sm" data-card="${p.id}">🌸 Carte de bienvenue</button>
         <a class="btn sm" href="#/calendrier">📅</a>
         ${p.ical_url ? html`<button class="sm" data-sync="${p.id}">↻ Importer iCal</button>` : ''}</div></div>`)}</div>`
       : html`<div class="card empty">Aucun logement. Commencez par en ajouter un !</div>`);
@@ -74,6 +74,7 @@ export default async function propertiesView(el) {
   el.innerHTML = str(html`${topbar('Logements', html`<button class="primary" data-new>+ Nouveau logement</button>`)}<div id="list"></div>`);
   on(el, 'click', '[data-new]', () => edit());
   on(el, 'click', '[data-edit]', (e, b) => edit(el._list.find((p) => p.id === Number(b.dataset.edit))));
+  on(el, 'click', '[data-card]', (e, b) => attempt(() => showDocument(`/properties/${b.dataset.card}/welcome-card`, 'Carte de bienvenue')));
   on(el, 'click', '[data-sync]', async (e, b) => {
     b.disabled = true;
     try {

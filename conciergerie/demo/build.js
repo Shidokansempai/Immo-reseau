@@ -19,7 +19,7 @@ const plugin = {
     };
     b.onResolve({ filter: /^(express|node:sqlite|node:crypto|node:path|node:fs|fs|path|crypto|nodemailer)$/ }, (a) => ({ path: map[a.path] }));
     b.onResolve({ filter: /(^\.\/mailer|\/lib\/mailer)$/ }, () => ({ path: shim('mailer.js') }));
-    b.onLoad({ filter: /(public\/js\/.*|src\/routes\/invoices)\.js$/ }, (a) => {
+    b.onLoad({ filter: /(public\/js\/.*|src\/routes\/invoices|src\/lib\/welcomeCard)\.js$/ }, (a) => {
       let s = fs.readFileSync(a.path, 'utf8');
       for (const [k, v] of Object.entries(ASSETS)) s = s.split(k).join(v);
       return { contents: s, loader: 'js' };

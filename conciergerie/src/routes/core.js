@@ -7,6 +7,7 @@ const { hashPassword } = require('../auth');
 const { today, addDays, diffDays, isDay } = require('../lib/dates');
 const { syncPropertyCalendar } = require('../lib/scheduler');
 const { deliver, smtpConfig } = require('../lib/mailer');
+const { welcomeCardHtml } = require('../lib/welcomeCard');
 
 const PROPERTY_FIELDS = ['owner_id', 'name', 'type', 'address', 'city', 'capacity', 'bedrooms', 'wifi_name', 'wifi_password',
   'keybox_code', 'checkin_time', 'checkout_time', 'access_instructions', 'house_rules', 'parking_info', 'cleaning_fee',
@@ -40,6 +41,10 @@ module.exports = function coreRoutes(db) {
     } catch (e) {
       throw new HttpError(502, `Synchronisation impossible : ${e.message}`);
     }
+  });
+  r.get('/properties/:id/welcome-card', (req, res) => {
+    const p = findOwned(db, 'properties', req.params.id, req.orgId);
+    res.type('html').send(welcomeCardHtml({ property: p, org: db.get('SELECT * FROM organizations WHERE id = ?', req.orgId) }));
   });
   r.post('/properties/:id/ical-token', staffOnly, (req, res) => {
     const p = findOwned(db, 'properties', req.params.id, req.orgId);

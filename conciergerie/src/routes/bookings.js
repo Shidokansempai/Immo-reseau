@@ -3,6 +3,7 @@ const express = require('express');
 const { HttpError, pick, findOwned, assertRef } = require('./crud');
 const { isDay } = require('../lib/dates');
 const { onBookingChanged } = require('../lib/automation');
+const { welcomeCardHtml } = require('../lib/welcomeCard');
 
 const FIELDS = ['property_id', 'guest_id', 'source', 'external_ref', 'checkin_date', 'checkout_date', 'arrival_time',
   'adults', 'children', 'total_amount', 'cleaning_fee', 'platform_fee', 'tourist_tax', 'status', 'notes'];
@@ -75,6 +76,16 @@ module.exports = function bookingRoutes(db) {
       messages: db.all('SELECT * FROM messages WHERE booking_id = ? ORDER BY COALESCE(sent_at, scheduled_at, created_at)', b.id),
       invoices: db.all('SELECT id, number, status, total_ttc FROM invoices WHERE booking_id = ?', b.id),
     });
+  });
+
+  r.get('/:id/welcome-card', (req, res) => {
+    const b = findOwned(db, 'bookings', req.params.id, req.orgId);
+    res.type('html').send(welcomeCardHtml({
+      booking: b,
+      property: db.get('SELECT * FROM properties WHERE id = ?', b.property_id),
+      guest: b.guest_id ? db.get('SELECT * FROM guests WHERE id = ?', b.guest_id) : null,
+      org: db.get('SELECT * FROM organizations WHERE id = ?', req.orgId),
+    }));
   });
 
   r.post('/', (req, res) => {
