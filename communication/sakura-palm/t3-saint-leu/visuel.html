@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500&display=swap">
+<style>
+:root {
+  --palm: #2c3a1e; --gold: #c49e5c; --gold-d: #9e783e; --rose: #a9504a; --sakura: #f0c4cf; --cream: #f6f0e7;
+  --serif: "Cormorant Garamond", Georgia, serif; --caps: "Cinzel", Georgia, serif; --sans: "Jost", Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; }
+body { background: #ddd; }
+.canvas { position: relative; width: 1080px; overflow: hidden; background: var(--cream); color: var(--palm); font-family: var(--sans); }
+.post { height: 1350px; } .story { height: 1920px; }
+/* marble veins */
+.veins { position: absolute; inset: 0; width: 100%; height: 100%; }
+.frame { position: absolute; inset: 34px; border: 2px solid var(--gold); pointer-events: none; z-index: 5; }
+.frame::after { content: ""; position: absolute; inset: 8px; border: 1px solid rgba(196,158,92,.55); }
+.petal { position: absolute; z-index: 6; filter: drop-shadow(0 4px 6px rgba(169,80,74,.18)); }
+.photo { position: absolute; overflow: hidden; background-size: cover; background-position: center; }
+.photo.main { box-shadow: 0 14px 40px rgba(44,58,30,.22); }
+.medal { position: absolute; left: 50%; transform: translateX(-50%); border-radius: 50%; z-index: 7;
+  box-shadow: 0 10px 30px rgba(44,58,30,.28), 0 0 0 6px var(--cream); }
+.tag { font: 600 22px var(--caps); letter-spacing: .32em; color: var(--gold-d); text-transform: uppercase; text-align: center; }
+.title { font: 600 104px/0.95 var(--serif); text-align: center; letter-spacing: -.005em; }
+.sub { font: italic 500 38px var(--serif); color: var(--rose); text-align: center; }
+.rule { display: flex; align-items: center; justify-content: center; gap: 22px; color: var(--gold-d); font-size: 24px; }
+.rule::before, .rule::after { content: ""; width: 110px; height: 1.5px; background: var(--gold); }
+.thumbs { position: absolute; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.thumb .img { height: 100%; background-size: cover; background-position: center; border: 6px solid #fffdf8; box-shadow: 0 8px 20px rgba(44,58,30,.16); }
+.thumb p { font: 500 17px var(--caps); letter-spacing: .2em; color: var(--gold-d); text-align: center; margin-top: 12px; text-transform: uppercase; }
+.feats { display: flex; justify-content: center; gap: 0; font: 400 24px var(--sans); color: var(--palm); }
+.feats span { padding: 0 22px; } .feats span + span { border-left: 1.5px solid var(--gold); }
+.cta { font: 500 30px var(--serif); text-align: center; color: var(--palm); }
+.cta b { font-weight: 600; }
+.foot { font: 500 17px var(--caps); letter-spacing: .3em; color: var(--gold-d); text-align: center; }
+.abs { position: absolute; left: 0; right: 0; z-index: 4; }
+</style>
+</head>
+<body>
+
+<!-- ===== POST 1080 x 1350 ===== -->
+<section class="canvas post" id="post">
+  <svg class="veins" viewBox="0 0 1080 1350" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M-20 260 C 220 200 260 420 520 380 S 900 240 1110 330" fill="none" stroke="#c49e5c" stroke-opacity=".16" stroke-width="2"/>
+    <path d="M-30 1020 C 200 940 380 1120 640 1040 S 960 920 1110 980" fill="none" stroke="#c49e5c" stroke-opacity=".14" stroke-width="2"/>
+    <path d="M700 -20 C 660 180 820 300 760 520" fill="none" stroke="#c49e5c" stroke-opacity=".10" stroke-width="1.5"/>
+  </svg>
+  <div class="frame"></div>
+
+  <div class="photo main" style="left:62px; right:62px; top:62px; height:560px; background-image:url(img/jardin.jpg); background-position:center 62%"></div>
+  <img class="medal" src="img/logo.png" style="top:500px; width:210px; height:210px" alt="">
+
+  <div class="abs" style="top:736px"><p class="tag">Saint-Leu · La Réunion</p></div>
+  <div class="abs" style="top:780px"><h1 class="title">T3 pieds dans l'eau</h1></div>
+  <div class="abs" style="top:888px"><p class="sub">Le lagon au bout du jardin.</p></div>
+
+  <div class="thumbs" style="left:92px; right:92px; top:962px;">
+    <div class="thumb"><div class="img" style="height:190px; background-image:url(img/sunset-rochers.jpg)"></div><p>Couchers de soleil</p></div>
+    <div class="thumb"><div class="img" style="height:190px; background-image:url(img/chambre.jpg)"></div><p>Chambre</p></div>
+    <div class="thumb"><div class="img" style="height:190px; background-image:url(img/sejour.jpg); background-position:center 40%"></div><p>Séjour vue mer</p></div>
+  </div>
+
+  <div class="abs" style="top:1226px"><div class="rule">おもてなし</div></div>
+  <div class="abs" style="top:1268px"><p class="foot">Réservez en direct · Sakura Palm Conciergerie</p></div>
+
+  <svg class="petal" style="left:78px; top:640px; width:44px; transform:rotate(-30deg)" viewBox="0 0 40 40"><path d="M20 3c7 6 11 13 8 21-2 6-6 9-8 13-2-4-6-7-8-13C9 16 13 9 20 3z" fill="#f0c4cf"/><path d="M20 8c2 8 2 18 0 27" stroke="#e5a3b4" stroke-width=".8" fill="none"/></svg>
+  <svg class="petal" style="right:96px; top:690px; width:34px; transform:rotate(50deg)" viewBox="0 0 40 40"><path d="M20 3c7 6 11 13 8 21-2 6-6 9-8 13-2-4-6-7-8-13C9 16 13 9 20 3z" fill="#f0c4cf"/></svg>
+  <svg class="petal" style="right:120px; top:1200px; width:40px; transform:rotate(-80deg)" viewBox="0 0 40 40"><path d="M20 3c7 6 11 13 8 21-2 6-6 9-8 13-2-4-6-7-8-13C9 16 13 9 20 3z" fill="#f0c4cf"/><path d="M20 8c2 8 2 18 0 27" stroke="#e5a3b4" stroke-width=".8" fill="none"/></svg>
+  <svg class="petal" style="left:120px; top:1236px; width:28px; transform:rotate(120deg)" viewBox="0 0 40 40"><path d="M20 3c7 6 11 13 8 21-2 6-6 9-8 13-2-4-6-7-8-13C9 16 13 9 20 3z" fill="#f0c4cf"/></svg>
+</section>
+
+<div style="height:40px"></div>
+
+<!-- ===== STORY 1080 x 1920 ===== -->
+<section class="canvas story" id="story">
+  <svg class="veins" viewBox="0 0 1080 1920" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M-20 1180 C 240 1100 360 1320 620 1250 S 930 1120 1110 1200" fill="none" stroke="#c49e5c" stroke-opacity=".15" stroke-width="2"/>
+    <path d="M-30 1700 C 220 1640 420 1790 700 1720 S 980 1640 1110 1690" fill="none" stroke="#c49e5c" stroke-opacity=".12" stroke-width="2"/>
+  </svg>
+  <div class="frame"></div>
+
+  <div class="photo main" style="left:62px; right:62px; top:62px; height:880px; background-image:url(img/sunset-vague.jpg); background-position:center 55%"></div>
+  <img class="medal" src="img/logo.png" style="top:830px; width:220px; height:220px" alt="">
+
+  <div class="abs" style="top:1080px"><p class="tag">Saint-Leu · La Réunion</p></div>
+  <div class="abs" style="top:1126px"><h1 class="title" style="font-size:112px">T3 pieds<br>dans l'eau</h1></div>
+  <div class="abs" style="top:1352px"><p class="sub" style="font-size:42px">Le lagon au bout du jardin.</p></div>
+
+  <div class="thumbs" style="left:92px; right:92px; top:1436px;">
+    <div class="thumb"><div class="img" style="height:230px; background-image:url(img/jardin.jpg)"></div><p>Jardin</p></div>
+    <div class="thumb"><div class="img" style="height:230px; background-image:url(img/chambre.jpg)"></div><p>Chambre</p></div>
+    <div class="thumb"><div class="img" style="height:230px; background-image:url(img/sejour.jpg); background-position:center 40%"></div><p>Vue mer</p></div>
+  </div>
+
+  <div class="abs" style="top:1748px"><div class="rule">おもてなし</div></div>
+  <div class="abs" style="top:1796px"><p class="foot">Réservez en direct · Sakura Palm Conciergerie</p></div>
+
+  <svg class="petal" style="left:84px; top:968px; width:48px; transform:rotate(-30deg)" viewBox="0 0 40 40"><path d="M20 3c7 6 11 13 8 21-2 6-6 9-8 13-2-4-6-7-8-13C9 16 13 9 20 3z" fill="#f0c4cf"/><path d="M20 8c2 8 2 18 0 27" stroke="#e5a3b4" stroke-width=".8" fill="none"/></svg>
+  <svg class="petal" style="right:100px; top:1010px; width:36px; transform:rotate(50deg)" viewBox="0 0 40 40"><path d="M20 3c7 6 11 13 8 21-2 6-6 9-8 13-2-4-6-7-8-13C9 16 13 9 20 3z" fill="#f0c4cf"/></svg>
+  <svg class="petal" style="right:110px; top:1730px; width:40px; transform:rotate(-80deg)" viewBox="0 0 40 40"><path d="M20 3c7 6 11 13 8 21-2 6-6 9-8 13-2-4-6-7-8-13C9 16 13 9 20 3z" fill="#f0c4cf"/></svg>
+</section>
+</body>
+</html>
