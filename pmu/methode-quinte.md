@@ -31,3 +31,4 @@ Le consensus presse sert seulement à choisir la base (gagnant), pas les places.
 | Date | Course | Arrivée | Mon prono | Bilan |
 |---|---|---|---|---|
 | 07/11/2026 | Deauville, Prix de l'Opération Epsom | 1-14-9-13-12 | 1-4-16-7-13 (+12-14-2) | Gagnant OK, 3/5 dans les 8. Quinté perdu (9 absent, 4 et 16 trop joués). Grille v2 appliquée après coup : top 6 = 1-14-13-7-12-9, qui contient les 5 de l'arrivée. |
+| 08/11/2026 | Saint-Cloud, Prix Sagaro (3 100 m, herbe très souple) | à compléter | 7-11-8-10-1 (+15-5-13) | Base Orageux (7). Poids pénalisant sur terrain lourd, réf. Prix Rieussec (8, 11). |
