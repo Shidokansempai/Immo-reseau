@@ -1,4 +1,4 @@
-# Méthode Quinté+ — grille de notation (v3)
+# Méthode Quinté+ — grille de notation (v4)
 
 Grille corrigée après les Quintés du 07/11/2026 (Deauville) et du 08/11/2026 (Saint-Cloud).
 Chaque partant reçoit des points ; on joue les 6 à 8 meilleurs scores.
@@ -22,6 +22,7 @@ Chaque partant reçoit des points ; on joue les 6 à 8 meilleurs scores.
 | Retour après plus de 90 jours d'absence | −2 |
 
 Le consensus presse sert seulement à choisir la base (gagnant), pas les places.
+Règle anti-consensus (v4) : si mes 5 chevaux sont identiques au conseil IA PMU, remplacer le 5ᵉ par la meilleure value.
 
 ## Leçons
 - Ne pas surpondérer un « rebond » sur simple excuse de corde (Al Max 4 : non placé).
@@ -38,8 +39,9 @@ Le consensus presse sert seulement à choisir la base (gagnant), pas les places.
 ## Adaptation trot attelé
 Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 - Déferré des 4 pieds (D4) quand le cheval y est habitué : +1
-- Meilleur record km du lot (vitesse prouvée) : +1
-- Taux de top 3 supérieur à 45 % sur la carrière : +1
+- Meilleur record km du lot (vitesse prouvée) : +2 (v4, Elegance Kronos 3ᵉ)
+- Taux de top 3 supérieur à 45 % sur la carrière : +2 (v4, Iris des Roseaux 5ᵉ)
+- Avis d'entraîneur seul, sans autre signal : 0 (v4, Géricault non placé)
 - Disqualification (D) dans les 3 dernières courses : −1
 - Départ au recul (+25 m) : −1, sauf cheval de classe
 
@@ -49,4 +51,5 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 |---|---|---|---|---|
 | 07/11/2026 | Deauville, Prix de l'Opération Epsom | 1-14-9-13-12 | 1-4-16-7-13 (+12-14-2) | Gagnant OK, 3/5 dans les 8. Quinté perdu (9 absent, 4 et 16 trop joués). Grille v2 appliquée après coup : top 6 = 1-14-13-7-12-9, qui contient les 5 de l'arrivée. |
 | 08/11/2026 | Saint-Cloud, Prix Sagaro (3 100 m, herbe très souple) | 7-1-10-11-4 | 7-11-8-10-1 (+15-5-13) | Gagnant OK, 4/5 dans le quinté unitaire : Bonus 4. Simple placé 7 et 2sur4 7-11 gagnants. Raté : 4 (pénalisé à tort pour la corde 16 sur 3 100 m), 8 surestimé. |
-| 09/11/2026 | Bordeaux-Le Bouscat, GP de l'Hippodrome (trot attelé, 2 650 m) | à compléter | 5-13-11-6-4 (+15-10-12) | Base Kerosen du Gers (5). Même 5 que l'IA PMU : rapport faible attendu. |
+| 09/11/2026 | Bordeaux-Le Bouscat, GP de l'Hippodrome (trot attelé, 2 650 m) | 5-6-15-13-10 | 5-13-11-6-4, ticket joué 5-13-11-6-15 (+10-12) | Gagnant OK. Les 5 de l'arrivée dans mes 8. Ticket value : Bonus 4 ; 2sur4 5-13 gagnant ; placé 11 perdu. Le ticket IA PMU (avec le 4) ne gagnait rien. |
+| 10/11/2026 | Fontainebleau, Prix Roland Fougedoire (1 200 m ligne droite, souple) | à compléter | 5-9-14-8-7 (+16-10-3) | Base Marbellesa (5). Données partielles (cotes et poids incomplets). |
