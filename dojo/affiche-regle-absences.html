@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Règle des absences</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink:#141414; --red:#b3141b; --muted:#555; --line:#d9d4cc; --paper:#fbf9f5; }
+  html, body { background: var(--paper); }
+  body { width: 210mm; height: 297mm; font-family: "Inter", "Liberation Sans", sans-serif; color: var(--ink); }
+  .page { position: relative; width: 210mm; height: 297mm; padding: 16mm 16mm 12mm; display: flex; flex-direction: column; overflow: hidden; }
+  .kanji { position: absolute; right: 8mm; top: 40mm; font-family: "IPAGothic", sans-serif; font-size: 150mm; line-height: 1; color: var(--red); opacity: .06; pointer-events: none; }
+  .band { position: absolute; left: 0; top: 0; bottom: 0; width: 6mm; background: var(--red); }
+  header { text-align: center; padding-bottom: 6mm; border-bottom: 1.2pt solid var(--ink); }
+  .club { font-family: "Inter Display", "Inter", sans-serif; font-weight: 800; letter-spacing: .28em; font-size: 11pt; text-transform: uppercase; }
+  .group { margin-top: 1.5mm; font-size: 9pt; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; }
+  h1 { margin-top: 6mm; font-family: "Inter Display", "Inter", sans-serif; font-weight: 900; font-size: 34pt; line-height: 1.02; letter-spacing: -.01em; }
+  h1 span { color: var(--red); }
+  .rule { margin: 7mm 0 0; padding: 6mm 7mm; background: var(--ink); color: #fff; border-radius: 2mm; display: flex; gap: 6mm; align-items: center; }
+  .rule .k { font-family: "IPAGothic", sans-serif; font-size: 34pt; color: #fff; line-height: 1; }
+  .rule p.big { font-weight: 800; font-size: 15.5pt; line-height: 1.25; }
+  .rule p.small { margin-top: 1.6mm; font-size: 9.5pt; color: #cfcfcf; line-height: 1.45; }
+  .rule em { color: #fff; font-style: italic; }
+  .why { margin-top: 6mm; font-size: 10.5pt; line-height: 1.55; color: #2a2a2a; }
+  .why b { color: var(--red); }
+  h2 { margin-top: 7mm; font-family: "Inter Display", "Inter", sans-serif; font-size: 11pt; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; display: flex; align-items: center; gap: 3mm; }
+  h2::after { content: ""; flex: 1; height: .8pt; background: var(--line); }
+  .steps { margin-top: 4mm; display: grid; gap: 3.2mm; }
+  .step { display: grid; grid-template-columns: 17mm 1fr; border: .8pt solid var(--line); border-radius: 2mm; background: #fff; overflow: hidden; }
+  .num { display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f1ede6; font-family: "Inter Display", sans-serif; }
+  .num b { font-size: 22pt; font-weight: 900; line-height: 1; }
+  .num sup { font-size: 10pt; font-weight: 800; }
+  .num small { font-size: 7pt; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-top: 1mm; }
+  .step.s3 .num { background: var(--red); color: #fff; }
+  .step.s3 .num sup { font-size: 10pt; font-weight: 800; }
+  .num small { color: #f3c9cb; }
+  .body { padding: 3.6mm 5mm; }
+  .body h3 { font-size: 11.5pt; font-weight: 800; }
+  .body ul { margin-top: 1.4mm; padding-left: 4.5mm; font-size: 9.8pt; line-height: 1.5; color: #333; }
+  .quote { margin-top: 7mm; text-align: center; font-family: "DejaVu Serif", serif; font-style: italic; font-size: 13pt; line-height: 1.45; }
+  .quote span { color: var(--red); font-style: normal; font-weight: 700; }
+  footer { margin-top: auto; padding-top: 5mm; border-top: 1.2pt solid var(--ink); display: flex; justify-content: space-between; align-items: flex-end; }
+  .sign { font-size: 9.5pt; line-height: 1.5; }
+  .sign b { font-size: 10.5pt; }
+  .osu { font-family: "Inter Display", sans-serif; font-weight: 900; font-size: 26pt; letter-spacing: .08em; color: var(--red); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="band"></div>
+  <div class="kanji">礼</div>
+
+  <header>
+    <div class="club">Fighter Academy Karaté · Le Tampon</div>
+    <div class="group">Groupe Ados / Adultes · Règle du dojo</div>
+    <h1>Absent ?<br><span>On prévient.</span></h1>
+  </header>
+
+  <div class="rule">
+    <div class="k">礼</div>
+    <div>
+      <p class="big">Vous ne pouvez pas venir ? Prévenez AVANT le cours.</p>
+      <p class="small">Un message sur le groupe, ou directement à Sensei Fabrice ou à Sempai Jules.<br>Pas besoin de vous justifier : <em>« Absent ce soir, désolé. »</em> suffit.</p>
+    </div>
+  </div>
+
+  <p class="why">Prévenir, c'est la base du <b>Reigi</b>, le respect. Respect envers vos instructeurs, qui préparent chaque cours pour vous. Respect envers vos partenaires, qui comptent sur vous pour s'entraîner. Celui qui prévient sera toujours le bienvenu. Celui qui se tait en assume les conséquences.</p>
+
+  <h2>Le prix du silence</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="num"><b>1<sup>re</sup></b><small>fois</small></div>
+      <div class="body">
+        <h3>Le rappel</h3>
+        <ul>
+          <li>Présentation et excuses au Sensei, en seiza, avant le salut</li>
+          <li>Soji : nettoyage du tatami en fin de cours</li>
+        </ul>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num"><b>2<sup>e</sup></b><small>fois</small></div>
+      <div class="body">
+        <h3>Le prix physique</h3>
+        <ul>
+          <li>Série « silence » en début de cours : pompes, burpees, chaise</li>
+          <li>Pas de randori ni de combat ce soir-là</li>
+        </ul>
+      </div>
+    </div>
+    <div class="step s3">
+      <div class="num"><b>3<sup>e</sup></b><small>fois</small></div>
+      <div class="body">
+        <h3>La responsabilité</h3>
+        <ul>
+          <li>Entretien avec Sensei Fabrice (avec les parents pour les mineurs)</li>
+          <li>Compétitions et passage de grade mis en attente</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="quote">Ici, on forme des karatékas.<br><span>Un karatéka tient parole.</span></p>
+
+  <footer>
+    <div class="sign"><b>Sensei Fabrice Levis &amp; Sempai Jules</b><br>Fighter Academy Karaté · Shidokan</div>
+    <div class="osu">OSU</div>
+  </footer>
+</div>
+</body>
+</html>
