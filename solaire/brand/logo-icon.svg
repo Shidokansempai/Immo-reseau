@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Kaz Solèy">
+  <!-- Soleil levant -->
+  <circle cx="100" cy="92" r="34" fill="#F5B700"/>
+  <g stroke="#F5B700" stroke-width="7" stroke-linecap="round">
+    <line x1="100" y1="22" x2="100" y2="40"/>
+    <line x1="51" y1="42" x2="63" y2="55"/>
+    <line x1="149" y1="42" x2="137" y2="55"/>
+    <line x1="30" y1="90" x2="47" y2="90"/>
+    <line x1="170" y1="90" x2="153" y2="90"/>
+  </g>
+  <!-- Toit de kaz créole = panneau solaire -->
+  <path d="M22 132 L100 78 L178 132 Z" fill="#0E3B4C"/>
+  <g stroke="#3FA7C4" stroke-width="2.4">
+    <line x1="61" y1="105" x2="139" y2="105"/>
+    <line x1="42" y1="118.5" x2="158" y2="118.5"/>
+    <line x1="74" y1="96" x2="66" y2="132"/>
+    <line x1="100" y1="78" x2="100" y2="132"/>
+    <line x1="126" y1="96" x2="134" y2="132"/>
+  </g>
+  <!-- Lambrequins -->
+  <path d="M22 132 H178 v6 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 Z" fill="#E4572E"/>
+  <!-- Lagon -->
+  <path d="M30 168 q17.5 -10 35 0 t35 0 t35 0 t35 0" fill="none" stroke="#3FA7C4" stroke-width="6" stroke-linecap="round"/>
+</svg>

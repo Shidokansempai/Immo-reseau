@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulateur solaire La Réunion · Kaz Solèy</title>
+<meta name="description" content="Calculez en 1 minute vos économies avec des panneaux solaires à La Réunion : production, prime ZNI, aide KAP Région, retour sur investissement.">
+<meta property="og:title" content="Simulateur solaire La Réunion · Kaz Solèy">
+<meta property="og:description" content="Calculez en 1 minute vos économies avec des panneaux solaires à La Réunion : production, prime ZNI, aide KAP Région, retour sur investissement.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/og.png">
+<meta name="theme-color" content="#0E3B4C">
+<link rel="icon" href="img/logo-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"Kaz Solèy","description":"Installation de panneaux solaires, batteries et chauffe-eau solaires à La Réunion","areaServed":"La Réunion","address":{"@type":"PostalAddress","addressLocality":"Le Tampon","postalCode":"97430","addressRegion":"La Réunion","addressCountry":"FR"},"url":"https://kazsoley.re"}</script>
+</head>
+<body>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="index.html" aria-label="Kaz Solèy – accueil"><img src="img/logo.svg" alt="Kaz Solèy" width="300" height="81"></a>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+  <nav class="nav"><a href="index.html">Accueil</a><a href="particuliers.html">Particuliers</a><a href="professionnels.html">Professionnels</a><a href="aides.html">Aides 2026</a><a href="simulateur.html" aria-current=page>Simulateur</a><a class="btn btn-sun btn-sm" href="contact.html">Étude gratuite</a></nav>
+</div></header>
+<main>
+
+<section class="page-hero"><div class="wrap"><span class="eyebrow">Simulateur gratuit</span><h1>Ce que votre toit<br>peut vous rapporter</h1><p class="lead">Barèmes <span data-periode></span>. Deux scénarios comparés : revente du surplus avec prime ZNI, ou autonomie avec batterie et aide KAP Région.</p></div></section>
+<section class="section alt"><div class="wrap"><div class="simu">
+  <form id="simu-form" class="simu-form" novalidate>
+    <h3>Vos informations</h3>
+    <label for="facture">Votre facture EDF moyenne</label>
+    <div id="facture-out" class="facture-out">150 €/mois</div>
+    <input id="facture" name="facture" type="range" min="50" max="500" step="10" value="150">
+    <label for="zone">Où se trouve votre kaz ?</label>
+    <select id="zone" name="zone"></select>
+    <label>Qui est à la maison en journée ?</label>
+    <div class="radio-row">
+      <label><input type="radio" name="presence" value="absent">Personne</label>
+      <label><input type="radio" name="presence" value="partiel" checked>Parfois</label>
+      <label><input type="radio" name="presence" value="present">Souvent / clim</label>
+    </div>
+    <p style="font-size:.85rem;color:#B9D3DB;margin-top:18px">Aucune donnée n'est envoyée : le calcul se fait sur votre téléphone.</p>
+  </form>
+  <div id="simu-result" aria-live="polite"></div>
+</div></div></section>
+<section class="section"><div class="wrap" style="max-width:860px">
+<h2>Comment on calcule</h2>
+<p>Votre consommation est estimée à partir de votre facture (hors abonnement) et du prix moyen du kWh EDF Réunion. La puissance recommandée couvre environ 85 % de votre consommation annuelle, entre 2 et 9 kWc. La production dépend de votre zone (données d'ensoleillement PVGIS). Les prix sont des moyennes posées TTC observées à La Réunion. Les gains sont calculés <strong>sans hausse du prix de l'électricité</strong>, avec une perte de rendement des panneaux de 0,5 % par an.</p>
+<p>Au-delà de 9 kWc (commerce, gîte, exploitation agricole) : voir <a href="professionnels.html">Kaz Pro</a>.</p>
+</div></section>
+<section class="section"><div class="wrap"><div class="cta-band">
+<div><h2>Votre toit reçoit le soleil gratuitement.</h2><p style="margin:.4em 0 0;font-weight:600">La question, c'est : qui encaisse ?</p></div>
+<div class="hero-ctas"><a class="btn btn-dark" href="simulateur.html">Simuler mes économies</a><a class="btn btn-ghost" href="contact.html">Être rappelé</a></div>
+</div></div></section>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="grid">
+    <div><img class="logo" src="img/logo-blanc.svg" alt="Kaz Solèy"><p>Panneaux solaires, batteries secours et chauffe-eau solaires. Conçus pour l'île, posés par des gens d'ici.</p></div>
+    <div><h4>Offres</h4><a href="particuliers.html">Kaz Éco · Confort · Autonome</a><a href="professionnels.html">Kaz Pro</a><a href="aides.html">Aides &amp; primes</a><a href="simulateur.html">Simulateur</a></div>
+    <div><h4>Contact</h4><a data-tel href="#">0692 00 00 00</a><a data-mail href="#">contact@kazsoley.re</a><a data-wa href="#">WhatsApp</a><a href="https://instagram.com/kazsoley">Instagram @kazsoley</a></div>
+    <div><h4>Zone</h4><p>Le Tampon, Saint-Pierre, Saint-Louis, Saint-Joseph, Saint-Leu, Saint-Paul… tout le Sud et l'Ouest de La Réunion.</p></div>
+  </div>
+  <div class="legal"><span>© <span data-year>2026</span> Kaz Solèy · Le Tampon, La Réunion</span><a href="mentions-legales.html">Mentions légales &amp; confidentialité</a></div>
+</div></footer>
+<a class="wa-float" data-wa href="#" aria-label="Nous écrire sur WhatsApp">💬</a>
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/simulateur.js"></script>
+</body>
+</html>
