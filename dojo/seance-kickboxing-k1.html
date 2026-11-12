@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Séance kickboxing K1</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink:#141414; --red:#b3141b; --blue:#1f5fa8; --green:#2e7d4f; --muted:#5a5a5a; --line:#ddd7ce; --soft:#f3efe8; --paper:#fbf9f5; }
+  html, body { background: var(--paper); }
+  body { font-family: "Inter","Liberation Sans",sans-serif; color: var(--ink); font-size: 9.6pt; line-height: 1.45; }
+  .page { position: relative; width: 210mm; height: 297mm; padding: 13mm 14mm 11mm 18mm; page-break-after: always; overflow: hidden; display: flex; flex-direction: column; }
+  .page:last-child { page-break-after: auto; }
+  .band { position: absolute; left: 0; top: 0; bottom: 0; width: 5mm; background: var(--red); }
+  .top { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1pt solid var(--ink); padding-bottom: 2.5mm; margin-bottom: 4mm; }
+  .top .club { font-family: "Inter Display","Inter",sans-serif; font-weight: 800; letter-spacing: .22em; font-size: 8.5pt; text-transform: uppercase; }
+  .top .pg { font-size: 8pt; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+  h1 { font-family: "Inter Display","Inter",sans-serif; font-weight: 900; font-size: 27pt; line-height: 1.02; }
+  h1 span { color: var(--red); }
+  h2 { font-family: "Inter Display","Inter",sans-serif; font-weight: 900; font-size: 16pt; line-height: 1.1; margin-bottom: 1mm; }
+  h2 small { font-size: 9pt; font-weight: 600; color: var(--muted); letter-spacing: .04em; margin-left: 2mm; }
+  h3 { font-size: 10.5pt; font-weight: 800; margin: 3.2mm 0 1.2mm; display: flex; align-items: center; gap: 2mm; }
+  h3 .t { font-size: 7.5pt; font-weight: 700; color: #fff; background: var(--ink); padding: .5mm 1.8mm; border-radius: 1mm; letter-spacing: .05em; }
+  h3 .t.r { background: var(--red); }
+  h4 { font-size: 9.4pt; font-weight: 800; margin: 1.6mm 0 .6mm; }
+  p.lead { color: #333; margin: 1.5mm 0 2mm; }
+  ul, ol { padding-left: 4.5mm; }
+  li { margin: .35mm 0; }
+  .muted { color: var(--muted); }
+  .red { color: var(--red); font-weight: 700; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+  .card { background: #fff; border: .7pt solid var(--line); border-radius: 1.8mm; padding: 2.6mm 3.2mm; }
+  .card.dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .card.warn { background: #fbeceb; border-color: #efc4c2; }
+  .tag { display: inline-block; font-size: 7pt; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--red); }
+  .err { margin-top: 1mm; font-size: 8.6pt; color: #6b1a1d; }
+  .err b { color: var(--red); }
+  table { width: 100%; border-collapse: collapse; font-size: 8.8pt; }
+  th { text-align: left; font-size: 7.5pt; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border-bottom: 1pt solid var(--ink); padding: 1mm 1.5mm; }
+  td { border-bottom: .6pt solid var(--line); padding: 1.3mm 1.5mm; vertical-align: top; }
+  td.n { font-weight: 800; white-space: nowrap; }
+  svg { display: block; width: 100%; height: auto; }
+  svg text { font-family: "Inter","Liberation Sans",sans-serif; }
+  .cap { font-size: 7.8pt; color: var(--muted); margin-top: 1mm; text-align: center; }
+  .foot { margin-top: auto; padding-top: 2mm; border-top: .6pt solid var(--line); font-size: 7.5pt; color: var(--muted); display: flex; justify-content: space-between; }
+  .kanji { font-family: "IPAGothic",sans-serif; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#141414"/></marker>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#b3141b"/></marker>
+    <marker id="arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1f5fa8"/></marker>
+  </defs>
+</svg>
+
+<!-- ============ PAGE 1 ============ -->
+<div class="page">
+  <div class="band"></div>
+  <div class="top"><div class="club">Fighter Academy · Le Tampon</div><div class="pg">Kickboxing K1 · 1/4</div></div>
+  <h1>Séance kickboxing<br><span>règles K1</span></h1>
+  <p class="lead">90 min · ados / adultes. Objectif : maîtriser les <b>armes propres au K1</b> (low kick, genou, clinch court), les placer dans des <b>combinaisons</b>, puis les appliquer en <b>sparring K1</b>.</p>
+
+  <h3>Les règles K1, à rappeler au salut</h3>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag" style="color:#2e7d4f">Autorisé</span>
+      <ul style="margin-top:1mm">
+        <li><b>Poings</b> : jab, cross, crochets, uppercuts, backfist tournant</li>
+        <li><b>Pieds</b> : low kick (cuisse, extérieur et intérieur), middle, high kick, teep, coups de pied retournés</li>
+        <li><b>Genoux</b> : au corps et au visage, en direct ou depuis une saisie courte</li>
+        <li><b>Clinch</b> : saisie brève pour placer <b>UN seul genou</b>, puis on lâche</li>
+      </ul>
+    </div>
+    <div class="card warn">
+      <span class="tag">Interdit</span>
+      <ul style="margin-top:1mm">
+        <li><b>Coudes</b>, sous toutes leurs formes</li>
+        <li>Clinch prolongé, tenir la tête ou la jambe pour enchaîner plusieurs genoux</li>
+        <li>Projections, balayages, frapper un adversaire au sol</li>
+        <li>Frappes à l'arrière de la tête, dans la nuque, le dos ou les parties génitales</li>
+        <li>Attraper une jambe et la garder</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Déroulé en un coup d'œil</h3>
+  <svg viewBox="0 0 720 92">
+    <g font-size="9.5" fill="#fff" font-weight="700">
+      <rect x="0"   y="8" width="24"  height="40" fill="#141414"/><text x="3" y="32">Salut</text>
+      <rect x="24"  y="8" width="96"  height="40" fill="#1f5fa8"/><text x="30" y="32">Échauffement</text>
+      <rect x="120" y="8" width="160" height="40" fill="#2e7d4f"/><text x="126" y="32">Les armes K1</text>
+      <rect x="280" y="8" width="160" height="40" fill="#b3141b"/><text x="286" y="32">Combinaisons au pao</text>
+      <rect x="440" y="8" width="80"  height="40" fill="#b3141b" opacity=".75"/><text x="446" y="32">Défense-contre</text>
+      <rect x="520" y="8" width="120" height="40" fill="#141414"/><text x="526" y="32">Sparring K1</text>
+      <rect x="640" y="8" width="40"  height="40" fill="#1f5fa8" opacity=".8"/><text x="643" y="32">Finish</text>
+      <rect x="680" y="8" width="40"  height="40" fill="#141414" opacity=".8"/><text x="683" y="32">Calme</text>
+    </g>
+    <g font-size="8.5" fill="#5a5a5a"><text x="0" y="62">0'</text><text x="24" y="62">3'</text><text x="120" y="62">15'</text><text x="280" y="62">35'</text><text x="440" y="62">55'</text><text x="520" y="62">65'</text><text x="640" y="62">80'</text><text x="680" y="62">85'</text><text x="704" y="62">90'</text></g>
+    <text x="0" y="84" font-size="8.5" fill="#5a5a5a">Rounds : 2 min de travail, 30 s de repos (sparring : 2 min / 1 min). Appli interval timer.</text>
+  </svg>
+
+  <div class="grid2" style="margin-top:2mm">
+    <div>
+      <h3>Matériel</h3>
+      <ul>
+        <li>Gants (10 à 14 oz), bandes, <b>protège-dents</b></li>
+        <li>Protège-tibias pour tout le travail à deux</li>
+        <li>Pao thaï ou pattes d'ours : 1 pour 2</li>
+        <li>Cordes à sauter</li>
+        <li>Casque conseillé pour le sparring (obligatoire pour les mineurs)</li>
+      </ul>
+      <h3>Le code des numéros</h3>
+      <table>
+        <tr><td class="n">1 · 2</td><td>jab · cross</td><td class="n">LK</td><td>low kick</td></tr>
+        <tr><td class="n">3 · 4</td><td>crochet avant · arrière</td><td class="n">MK</td><td>middle kick</td></tr>
+        <tr><td class="n">5 · 6</td><td>uppercut avant · arrière</td><td class="n">HK</td><td>high kick</td></tr>
+        <tr><td class="n">G</td><td>genou</td><td class="n">FK</td><td>teep (front kick)</td></tr>
+      </table>
+      <p class="muted" style="margin-top:1mm">Impair = main avant, pair = main arrière. Sans précision, un coup de pied part de la jambe arrière.</p>
+    </div>
+    <div>
+      <div class="card warn">
+        <span class="tag">Sécurité</span>
+        <ul style="margin-top:1mm">
+          <li>Le teneur de pao <b>accompagne</b> l'impact et ne tend jamais le bras face à un genou.</li>
+          <li>Les low kicks à deux se font <b>au tibia contre le tibia</b> (check) ou à 30 % sur la cuisse, jamais sur le genou.</li>
+          <li>Sparring = <b>contact léger et contrôlé</b>. Genoux au visage interdits en sparring.</li>
+          <li>Mineurs : casque, et seulement des genoux au corps.</li>
+          <li>Coup reçu à la tête qui fait « voir des étoiles » : <b>on sort du sparring</b> pour la soirée.</li>
+        </ul>
+      </div>
+      <div class="card dark" style="margin-top:3mm">
+        <span class="tag" style="color:#ff8f93">L'esprit K1</span>
+        <p style="margin-top:1mm">Le K1, c'est <b>la pression et le volume</b> : on avance, on enchaîne, on finit chaque combinaison par une frappe de jambe, et on sort en angle. Rien n'est fait par hasard.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Sensei Fabrice Levis &amp; Sempai Jules</span><span>Vérifiez le règlement K1 de votre fédération pour la compétition</span></div>
+</div>
+
+<!-- ============ PAGE 2 ============ -->
+<div class="page">
+  <div class="band"></div>
+  <div class="top"><div class="club">Fighter Academy · Kickboxing K1</div><div class="pg">2/4</div></div>
+  <h2>Échauffement et armes du K1 <small>3–35'</small></h2>
+
+  <div class="grid2">
+    <div>
+      <h3><span class="t">3–15'</span> Échauffement</h3>
+      <ol>
+        <li><b>Corde à sauter (4')</b> : 2 min pieds joints, 1 min pas alternés, 1 min en accélérant.</li>
+        <li><b>Mobilité (3')</b> : hanches (cercles, ouvertures), chevilles, épaules, nuque.</li>
+        <li><b>Shadow K1 (3 × 1')</b>, avec un thème par minute :
+          <ul><li>min 1 : poings uniquement, en avançant</li><li>min 2 : poings + low kick à la fin de chaque enchaînement</li><li>min 3 : teep, genoux, sorties en angle</li></ul></li>
+        <li><b>Activation (2')</b> : 20 « switch kicks » (changement de garde + middle kick), 10 squats sautés.</li>
+      </ol>
+
+      <h3><span class="t r">15–20'</span> Arme 1 : le low kick</h3>
+      <svg viewBox="0 0 330 150">
+        <rect x="0" y="0" width="330" height="150" rx="6" fill="#f3efe8"/>
+        <text x="10" y="16" font-size="9.5" font-weight="800">Cibles du low kick (jambes vues de face)</text>
+        <g fill="#fff" stroke="#141414" stroke-width="2">
+          <path d="M120 25 L150 25 L148 80 L144 135 L128 135 L124 80 Z"/>
+          <path d="M180 25 L210 25 L206 80 L202 135 L186 135 L182 80 Z"/>
+        </g>
+        <circle cx="122" cy="55" r="9" fill="#b3141b" opacity=".85"/>
+        <circle cx="147" cy="58" r="9" fill="#1f5fa8" opacity=".85"/>
+        <circle cx="134" cy="112" r="8" fill="#2e7d4f" opacity=".85"/>
+        <circle cx="136" cy="84" r="6" fill="none" stroke="#141414" stroke-width="1.5"/><path d="M131 79 L141 89 M141 79 L131 89" stroke="#141414" stroke-width="1.5"/>
+        <g font-size="8.5" font-weight="700">
+          <line x1="113" y1="55" x2="70" y2="45" stroke="#b3141b"/><text x="10" y="42" fill="#b3141b">Cuisse extérieure</text><text x="10" y="52" fill="#5a5a5a" font-weight="500">la cible n° 1</text>
+          <line x1="156" y1="58" x2="230" y2="50" stroke="#1f5fa8"/><text x="233" y="48" fill="#1f5fa8">Cuisse intérieure</text><text x="233" y="58" fill="#5a5a5a" font-weight="500">jambe avant, low</text><text x="233" y="68" fill="#5a5a5a" font-weight="500">kick avant</text>
+          <line x1="126" y1="112" x2="70" y2="115" stroke="#2e7d4f"/><text x="10" y="112" fill="#2e7d4f">Mollet</text><text x="10" y="122" fill="#5a5a5a" font-weight="500">(calf kick)</text>
+          <line x1="142" y1="88" x2="230" y2="100" stroke="#141414"/><text x="233" y="100">Genou : JAMAIS</text>
+        </g>
+      </svg>
+      <ul style="margin-top:1mm">
+        <li>Le pied d'appui <b>pivote vers l'extérieur</b> (talon vers la cible), la hanche tourne, on frappe avec le <b>tibia</b>, pas avec le pied.</li>
+        <li>Le bras du côté de la jambe qui frappe descend en balancier, l'autre main protège le menton.</li>
+        <li><b>Drill</b> : 2 × 1 min de low kicks au pao tenu à la cuisse, chacun son tour.</li>
+      </ul>
+      <p class="err"><b>Erreur :</b> monter le low kick « en ligne droite » sans pivot. Il n'a alors aucune puissance et expose le tibia au genou adverse.</p>
+    </div>
+
+    <div>
+      <h3><span class="t r">20–25'</span> Arme 2 : le check (bloquer le low kick)</h3>
+      <svg viewBox="0 0 330 120">
+        <rect x="0" y="0" width="330" height="120" rx="6" fill="#fff" stroke="#ddd7ce"/>
+        <text x="10" y="15" font-size="9.5" font-weight="800">Vue de côté</text>
+        <line x1="10" y1="108" x2="320" y2="108" stroke="#ddd7ce" stroke-width="2"/>
+        <g stroke="#b3141b" stroke-width="4" stroke-linecap="round" fill="none">
+          <circle cx="210" cy="28" r="8" fill="#b3141b" stroke="none"/>
+          <line x1="210" y1="36" x2="212" y2="70"/>
+          <line x1="212" y1="70" x2="222" y2="106"/>
+          <line x1="212" y1="70" x2="188" y2="76"/><line x1="188" y1="76" x2="192" y2="100"/>
+          <line x1="210" y1="44" x2="196" y2="38"/>
+        </g>
+        <path d="M80 92 Q130 92 180 88" stroke="#1f5fa8" stroke-width="3" fill="none" marker-end="url(#arb)"/>
+        <text x="70" y="82" font-size="8.5" fill="#1f5fa8" font-weight="700">low kick adverse</text>
+        <text x="236" y="62" font-size="8.5" fill="#b3141b" font-weight="700">genou levé et</text>
+        <text x="236" y="72" font-size="8.5" fill="#b3141b" font-weight="700">ouvert à 45°</text>
+        <text x="236" y="84" font-size="8" fill="#5a5a5a">tibia contre tibia</text>
+      </svg>
+      <ul style="margin-top:1mm">
+        <li>On lève le genou de la jambe visée, <b>ouvert vers l'extérieur</b>, pour présenter le tibia. Le pied reste sous le genou.</li>
+        <li>Les mains restent en garde haute : le low kick cache souvent un crochet.</li>
+        <li><b>Drill</b> : uke lance des low kicks à 30 %, tori checke. 3 checks, puis tori répond <b>2-LK</b> dès que son pied retouche le sol.</li>
+      </ul>
+
+      <h3><span class="t r">25–30'</span> Arme 3 : le teep (front kick)</h3>
+      <ul>
+        <li>On monte le genou, on <b>pousse la hanche vers l'avant</b> et on frappe avec la plante du pied au ventre.</li>
+        <li>C'est le « jab des jambes » : il arrête un adversaire qui avance et crée la distance pour le low kick.</li>
+        <li><b>Drill</b> : le teneur avance avec le pao contre le ventre, le frappeur le stoppe en teep, puis enchaîne 1-2-LK.</li>
+      </ul>
+
+      <h3><span class="t r">30–35'</span> Arme 4 : la saisie courte et le genou</h3>
+      <svg viewBox="0 0 330 70">
+        <rect x="0" y="0" width="330" height="70" rx="6" fill="#f3efe8"/>
+        <g font-size="8.5" font-weight="800" fill="#fff" text-anchor="middle">
+          <rect x="10" y="16" width="90" height="30" rx="4" fill="#2e7d4f"/><text x="55" y="35">1. Saisie nuque</text>
+          <rect x="120" y="16" width="90" height="30" rx="4" fill="#b3141b"/><text x="165" y="35">2. UN genou</text>
+          <rect x="230" y="16" width="90" height="30" rx="4" fill="#141414"/><text x="275" y="35">3. Lâcher</text>
+        </g>
+        <g stroke="#141414" stroke-width="1.5"><path d="M100 31 H118" marker-end="url(#ar)"/><path d="M210 31 H228" marker-end="url(#ar)"/></g>
+        <text x="165" y="62" font-size="8" text-anchor="middle" fill="#5a5a5a">En K1 : une saisie = un genou, puis on lâche. Sinon c'est un avertissement.</text>
+      </svg>
+      <ul style="margin-top:1mm">
+        <li>Une main (ou les deux) derrière la nuque, on tire vers le bas, et le genou arrière monte au pao tenu au ventre.</li>
+        <li><b>Drill</b> : 3 × 45 s. Saisie, genou, on lâche, on recule d'un pas avec 1-2. On recommence.</li>
+      </ul>
+      <p class="err"><b>Erreur :</b> garder la saisie et enchaîner plusieurs genoux. C'est autorisé en muay thaï, <b>pas en K1</b>.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Toujours travailler des deux côtés</span><span>Kickboxing K1</span></div>
+</div>
+
+<!-- ============ PAGE 3 ============ -->
+<div class="page">
+  <div class="band"></div>
+  <div class="top"><div class="club">Fighter Academy · Kickboxing K1</div><div class="pg">3/4</div></div>
+  <h2>Combinaisons et défense-contre <small>35–65'</small></h2>
+
+  <h3><span class="t r">35–55'</span> Bloc 2 : 8 combinaisons K1 au pao</h3>
+  <p>Par 2, pao thaï ou pattes d'ours. <b>8 rounds de 2 min, 30 s de repos</b>, on change de rôle à chaque round. Le teneur annonce la combinaison, le frappeur l'enchaîne <b>sans temps mort</b>, puis sort en angle.</p>
+  <table>
+    <tr><th>R</th><th>Combinaison</th><th>Pourquoi elle marche</th><th>Clé technique</th></tr>
+    <tr><td class="n">1</td><td><b>1-2-LK</b></td><td>La base du K1. Le cross fait reculer la garde, et la cuisse est découverte</td><td>Le low kick part sur le retour du cross, avec le même élan de hanche</td></tr>
+    <tr><td class="n">2</td><td><b>1-2-3-LK</b></td><td>Le crochet avant fait pivoter et charge le low kick arrière</td><td>Pivoter le pied avant sur le crochet</td></tr>
+    <tr><td class="n">3</td><td><b>LK avant</b> (intérieur) · 2 · 3</td><td>Le low kick intérieur casse la garde, on rentre aux poings</td><td>Petit pas de côté pour ouvrir l'angle avant de frapper</td></tr>
+    <tr><td class="n">4</td><td><b>1-2-G</b></td><td>Le cross fait baisser les mains, le genou monte au plexus</td><td>Le genou part de la jambe arrière, en poussant les hanches vers l'avant</td></tr>
+    <tr><td class="n">5</td><td><b>FK · 1-2-MK</b></td><td>Le teep crée la distance, le middle kick conclut</td><td>Reposer le pied du teep vers l'avant pour rester en pression</td></tr>
+    <tr><td class="n">6</td><td><b>2-3-2</b> (cross, crochet au corps, cross visage) <b>· LK</b></td><td>On travaille sur deux niveaux, haut et bas</td><td>Fléchir les genoux pour le crochet au corps, sans pencher le buste</td></tr>
+    <tr><td class="n">7</td><td><b>1-2-HK</b> (high kick arrière)</td><td>Après deux poings, la garde se resserre au centre et la tête s'ouvre sur le côté</td><td>Le pied d'appui pivote complètement, les mains restent hautes</td></tr>
+    <tr><td class="n">8</td><td><b>Appel libre</b> : le teneur annonce au hasard, de plus en plus vite</td><td>Automatiser</td><td>Pas de pause entre l'appel et la frappe</td></tr>
+  </table>
+  <p class="muted" style="margin-top:1mm">Confirmés : ajoutez un <b>backfist tournant</b> à la fin du round 7 (1-2-HK, puis backfist si le high kick est paré).</p>
+
+  <div class="grid2" style="margin-top:2mm">
+    <div>
+      <h3>Sortir en angle après la combinaison</h3>
+      <svg viewBox="0 0 330 150">
+        <rect x="0" y="0" width="330" height="150" rx="6" fill="#f3efe8"/>
+        <text x="10" y="16" font-size="9.5" font-weight="800">Vue de dessus</text>
+        <g fill="#141414" opacity=".75"><ellipse cx="160" cy="40" rx="8" ry="14"/><ellipse cx="195" cy="45" rx="8" ry="14"/></g>
+        <text x="215" y="44" font-size="8.5" font-weight="700">ADVERSAIRE</text>
+        <g fill="#b3141b" opacity=".3"><ellipse cx="150" cy="110" rx="8" ry="14"/><ellipse cx="185" cy="118" rx="8" ry="14"/></g>
+        <g fill="#b3141b"><ellipse cx="85" cy="75" rx="8" ry="14" transform="rotate(30 85 75)"/><ellipse cx="110" cy="95" rx="8" ry="14" transform="rotate(30 110 95)"/></g>
+        <path d="M145 105 Q120 92 100 85" stroke="#b3141b" stroke-width="2.5" fill="none" marker-end="url(#arr)"/>
+        <path d="M168 128 L168 75" stroke="#141414" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+        <path d="M160 72 L168 62 L176 72" stroke="#141414" stroke-width="1.5" fill="none"/>
+        <text x="40" y="128" font-size="8.5" fill="#b3141b" font-weight="700">sortie à 45° vers</text>
+        <text x="40" y="139" font-size="8.5" fill="#b3141b" font-weight="700">la gauche</text>
+        <text x="190" y="100" font-size="8.5" fill="#5a5a5a">ligne de</text><text x="190" y="110" font-size="8.5" fill="#5a5a5a">riposte adverse</text>
+      </svg>
+      <p style="margin-top:1mm">On ne recule <b>jamais en ligne droite</b>. Le pas en angle sort de la ligne de riposte et remet en position de frappe.</p>
+    </div>
+    <div>
+      <h3><span class="t r">55–65'</span> Bloc 3 : défense-contre à deux</h3>
+      <p>Gants et protège-tibias, 30 % de puissance. 3 drills de 3 min, on inverse les rôles à la moitié.</p>
+      <h4>1. Check et retour</h4>
+      <p>Uke : LK. Tori : check, puis <b>2-3-LK</b> dès que le pied touche le sol.</p>
+      <h4>2. Parade du jab et contre au corps</h4>
+      <p>Uke : 1. Tori : parade de la main droite (on « attrape » le jab), puis <b>2 au corps, 3 au visage, LK</b>.</p>
+      <h4>3. Écarter le teep</h4>
+      <p>Uke : FK. Tori : la main avant <b>dévie la jambe vers l'extérieur</b> sans la tenir (règle K1), uke se retrouve de dos, et tori contre en <b>2-LK</b>.</p>
+      <p class="err"><b>Erreur :</b> attendre l'attaque les pieds plantés. On reste mobile et sur la pointe des pieds.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Le teneur de pao est un coach : il annonce, il corrige, il encourage</span><span>Kickboxing K1</span></div>
+</div>
+
+<!-- ============ PAGE 4 ============ -->
+<div class="page">
+  <div class="band"></div>
+  <div class="top"><div class="club">Fighter Academy · Kickboxing K1</div><div class="pg">4/4</div></div>
+  <h2>Sparring K1, finish et retour au calme <small>65–90'</small></h2>
+
+  <div class="grid2">
+    <div>
+      <h3><span class="t r">65–80'</span> Bloc 4 : sparring K1</h3>
+      <p><b>5 rounds de 2 min, 1 min de repos</b>. Contact léger. Rotation des partenaires à chaque round, à gabarit et niveau proches.</p>
+      <table>
+        <tr><th>R</th><th>Thème</th><th>Consigne</th></tr>
+        <tr><td class="n">1</td><td>Boxe</td><td>Poings uniquement, pour trouver la distance</td></tr>
+        <tr><td class="n">2</td><td>Poings + low kicks</td><td>Chaque enchaînement <b>finit par une frappe de jambe</b>. Chaque low kick reçu doit être checké.</td></tr>
+        <tr><td class="n">3</td><td>Attaquant / contreur</td><td>A n'a le droit que d'attaquer, B que de contrer (une contre-attaque après chaque attaque). On inverse à la minute.</td></tr>
+        <tr><td class="n">4</td><td>K1 complet</td><td>Toutes les armes K1, <b>genoux au corps seulement</b>, une saisie = un genou</td></tr>
+        <tr><td class="n">5</td><td>Appel du sensei</td><td>K1 complet, et le sensei crie un numéro (« 1-2-LK ! ») : les deux doivent le placer dans les 3 secondes</td></tr>
+      </table>
+
+      <h3>Organisation des rounds</h3>
+      <svg viewBox="0 0 330 70">
+        <rect x="0" y="0" width="330" height="70" rx="6" fill="#fff" stroke="#ddd7ce"/>
+        <g font-size="8" font-weight="800" fill="#fff" text-anchor="middle">
+          <rect x="10" y="14" width="42" height="26" fill="#141414"/><text x="31" y="31">R1 2'</text>
+          <rect x="52" y="14" width="20" height="26" fill="#d9d4cc"/>
+          <rect x="72" y="14" width="42" height="26" fill="#141414"/><text x="93" y="31">R2 2'</text>
+          <rect x="114" y="14" width="20" height="26" fill="#d9d4cc"/>
+          <rect x="134" y="14" width="42" height="26" fill="#b3141b"/><text x="155" y="31">R3 2'</text>
+          <rect x="176" y="14" width="20" height="26" fill="#d9d4cc"/>
+          <rect x="196" y="14" width="42" height="26" fill="#b3141b"/><text x="217" y="31">R4 2'</text>
+          <rect x="238" y="14" width="20" height="26" fill="#d9d4cc"/>
+          <rect x="258" y="14" width="62" height="26" fill="#b3141b"/><text x="289" y="31">R5 2'</text>
+        </g>
+        <text x="165" y="58" font-size="8" text-anchor="middle" fill="#5a5a5a">gris = 1 min : on boit, on tourne, UNE correction du sensei</text>
+      </svg>
+
+      <div class="card warn" style="margin-top:2.5mm">
+        <span class="tag">Règles du sparring</span>
+        <ul style="margin-top:1mm">
+          <li>On <b>touche</b>, on ne cherche pas à mettre KO. Le partenaire qui monte en puissance est arrêté.</li>
+          <li>Le plus expérimenté <b>s'adapte</b> au moins expérimenté.</li>
+          <li>On se touche les gants au début et à la fin de chaque round.</li>
+          <li>Pas de genou au visage, pas de coude, pas de frappe après « Yame ».</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <h3><span class="t r">80–85'</span> Finish : conditionnement K1</h3>
+      <div class="card">
+        <h4>« Dutch drill » au pao (3')</h4>
+        <p>Le teneur tient le pao à la cuisse. Le frappeur enchaîne <b>1-2-LK</b> le plus vite possible pendant 30 s, 30 s de repos, 3 fois. On compte le nombre de combinaisons propres.</p>
+        <h4>Gainage du combattant (2')</h4>
+        <ul>
+          <li>30 s planche sur les poings</li>
+          <li>30 s <b>« sit-ups puis 1-2 »</b> : on remonte du sol et on frappe 1-2 en haut</li>
+          <li>30 s planche latérale gauche, puis 30 s à droite</li>
+        </ul>
+      </div>
+
+      <h3><span class="t">85–90'</span> Retour au calme</h3>
+      <ol>
+        <li><b>Étirements (3')</b> : hanches et adducteurs (papillon, fente basse), ischios, mollets. Insistez sur les <b>fléchisseurs de hanche</b>, très sollicités par les kicks.</li>
+        <li><b>Respiration (1')</b> : inspiration 4 s, expiration 6 s, yeux fermés.</li>
+        <li><b>Débrief (1')</b> : chaque élève cite <b>une combinaison qu'il a placée</b> en sparring.</li>
+        <li>Salut.</li>
+      </ol>
+
+      <div class="card dark" style="margin-top:3mm">
+        <span class="tag" style="color:#ff8f93">Le mot de la fin</span>
+        <p style="margin-top:1mm;font-size:10.5pt;line-height:1.5">« Le K1, ce n'est pas frapper fort. C'est frapper <b>juste, souvent, et le premier</b>. La puissance vient avec la répétition. La répétition vient avec la présence. Alors on se voit au prochain cours. »</p>
+      </div>
+
+      <h3>Pour aller plus loin</h3>
+      <ul>
+        <li><b>Débutants</b> : rounds 1 à 5 du bloc 2 seulement, et pas de sparring (remplacez par du travail au sac).</li>
+        <li><b>Compétiteurs</b> : passez les rounds de sparring à 3 min, comme en compétition K1.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>Fighter Academy · Le Tampon</span><span class="kanji">押忍 · OSU</span></div>
+</div>
+</body>
+</html>
