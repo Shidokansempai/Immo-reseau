@@ -25,6 +25,8 @@ Chaque partant reçoit des points ; on joue les 6 à 8 meilleurs scores.
 Le consensus presse sert seulement à choisir la base (gagnant), pas les places.
 Règle 2sur4 (v5) : toujours les 2 chevaux les plus réguliers/favoris, jamais la value (la value va dans le Quinté).
 Règle sprint (v5) : handicap ≤ 1 400 m = course la plus aléatoire, mise réduite.
+Règle données (v5) : pas de mise sans les écrans PMU (poids, cordes, musiques, cotes).
+Option Max : ne la prendre que si le ticket a de vraies chances (+50 % de coût, ne multiplie que des gains).
 Règle anti-consensus (v4) : si mes 5 chevaux sont identiques au conseil IA PMU, remplacer le 5ᵉ par la meilleure value.
 
 ## Leçons
@@ -56,4 +58,4 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 | 08/11/2026 | Saint-Cloud, Prix Sagaro (3 100 m, herbe très souple) | 7-1-10-11-4 | 7-11-8-10-1 (+15-5-13) | Gagnant OK, 4/5 dans le quinté unitaire : Bonus 4. Simple placé 7 et 2sur4 7-11 gagnants. Raté : 4 (pénalisé à tort pour la corde 16 sur 3 100 m), 8 surestimé. |
 | 09/11/2026 | Bordeaux-Le Bouscat, GP de l'Hippodrome (trot attelé, 2 650 m) | 5-6-15-13-10 | 5-13-11-6-4, ticket joué 5-13-11-6-15 (+10-12) | Gagnant OK. Les 5 de l'arrivée dans mes 8. Ticket value : Bonus 4 ; 2sur4 5-13 gagnant ; placé 11 perdu. Le ticket IA PMU (avec le 4) ne gagnait rien. |
 | 10/11/2026 | Fontainebleau, Prix Roland Fougedoire (1 200 m ligne droite, souple) | 4-9-15-5-13 | 5-8-9-10-14 (+6-12-7) | Perdu. Seuls 9 et 5 dans l'arrivée. 2sur4 5-8 perdu, alors que 5-9 aurait gagné. Gagnant (4, 16/1) écarté à tort ; 15 et 13 = poids les plus légers. Ancien commentaire :  Révisé avec les écrans PMU : 10 remplace 7 (cote en baisse, écurie Reynier, corde 3). IA PMU : 9-14-5-2. |
-| 11/11/2026 | Toulouse, Prix de la Ville de Toulouse (2 400 m herbe) | à compléter | provisoire 10-3-11-14-5 (+13-1) | Base Britania (10), à affiner avec les écrans PMU. |
+| 11/11/2026 | Toulouse, Prix de la Ville de Toulouse (2 400 m herbe) | 5-3-7-9-6 | 10-3-11-14-5 (joué en Quinté+ Max, 3 €) | Perdu : 5 et 3 font 1-2 mais le 7 manque, pas de Bonus 3. Base presse Britania (10) non placée. Prono provisoire sans écrans PMU = le plus faible. |
