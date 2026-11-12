@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-PH = os.path.join(BASE, "dl", "photos")
+PH = os.environ.get("PHOTOS", os.path.join(BASE, "dl", "photos"))
 FD = os.path.join(BASE, "fonts")
 OUT = sys.argv[1]
 W, H, FPS = 1080, 1920, 30
