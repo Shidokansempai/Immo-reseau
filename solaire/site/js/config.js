@@ -1,5 +1,5 @@
 /* =========================================================================
-   Kaz Solèy – paramètres du simulateur et des pages.
+   SP Energy – paramètres du simulateur et des pages.
    ► À METTRE À JOUR CHAQUE TRIMESTRE (1er fév., 1er mai, 1er août, 1er nov.)
      Source : CRE – open data « arrêtés tarifaires photovoltaïques en ZNI »
    ========================================================================= */
@@ -43,9 +43,9 @@ window.KAZ_CONFIG = {
   dureeAns: 25,
 
   contact: {
-    telephone: "0692 00 00 00",
-    whatsapp: "262692000000",
-    email: "contact@kazsoley.re",
+    telephone: "0693 92 66 87",
+    whatsapp: "262693926687",
+    email: "spenergy@gmail.com",
     zone: "Le Tampon · Sud & Ouest de La Réunion"
   }
 };

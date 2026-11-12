@@ -1,14 +1,14 @@
-# 05 – Instagram : la page Kaz Solèy
+# 05 – Instagram : la page SP Energy
 
 ## 1. Le profil
 
 | Élément | Contenu |
 |---|---|
-| Nom d'utilisateur | **@kazsoley** (variantes : @kazsoley974, @kaz.soley) |
-| Nom affiché (recherchable) | **Kaz Solèy · Panneaux solaires Réunion** |
+| Nom d'utilisateur | **@spenergy974** (variantes : @spenergy.re, @sp.energy974) |
+| Nom affiché (recherchable) | **SP Energy · Panneaux solaires Réunion** |
 | Catégorie | Entreprise de panneaux solaires |
 | Photo de profil | `instagram/profil.png` (emblème soleil + toit de kaz) |
-| Lien | kazsoley.re/simulateur (ou lien Linktree : Simulateur · WhatsApp · Avis Google) |
+| Lien | spenergy.re/simulateur (ou lien Linktree : Simulateur · WhatsApp · Avis Google) |
 | Boutons | WhatsApp · Itinéraire · E-mail |
 
 **Bio (150 caractères max) :**
@@ -45,12 +45,12 @@ Les 3 premiers visuels sont prêts dans `instagram/` (`post-01-lancement.png`,
 >
 > EDF, si.
 >
-> Kaz Solèy est né d'une idée simple : à La Réunion, chaque toit est une centrale qui dort.
+> SP Energy est né d'une idée simple : à La Réunion, chaque toit est une centrale qui dort.
 > Nous, on la réveille. Panneaux solaires, batteries secours, dossiers d'aides : on s'occupe de
 > tout, de la mairie jusqu'à EDF.
 >
 > 👉 Simulez vos économies : lien en bio.
-> #KazSoley #Solaire974 #PanneauxSolaires #LaReunion #Autoconsommation
+> #SPEnergy #Solaire974 #PanneauxSolaires #LaReunion #Autoconsommation
 
 **Post 2 – Le chiffre (image `post-02`)**
 > 1 550 kWh. C'est ce que produit, chaque année, un seul kWc posé sur un toit du Sud de l'île.
@@ -82,7 +82,7 @@ Les 3 premiers visuels sont prêts dans `instagram/` (`post-01-lancement.png`,
 
 **Post 9 – Partenariat Fighter Academy Karaté (Le Tampon)**
 > Discipline, rigueur, endurance. Ce qu'on enseigne au dojo, on l'applique sur les toits.
-> Kaz Solèy est fier de soutenir la Fighter Academy Karaté. 🥋☀️
+> SP Energy est fier de soutenir la Fighter Academy Karaté. 🥋☀️
 
 **Post 10 – Reel « Pendant la coupure »** (batterie backup)
 
@@ -120,7 +120,7 @@ Les 3 premiers visuels sont prêts dans `instagram/` (`post-01-lancement.png`,
 
 - **Locaux :** #LaReunion #Reunion974 #974 #IleDeLaReunion #SaintPierre974 #LeTampon974 #SaintPaul974 #SaintLeu974 #SudSauvage
 - **Métier :** #PanneauxSolaires #Photovoltaique #Autoconsommation #EnergieSolaire #BatterieSolaire #ChauffeEauSolaire #RGE
-- **Marque :** #KazSoley #Solaire974 #EnergiePei #VotreToitTravaille
+- **Marque :** #SPEnergy #Solaire974 #EnergiePei #VotreToitTravaille
 
 ## 6. Publicité Meta (Instagram + Facebook)
 

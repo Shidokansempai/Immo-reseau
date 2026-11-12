@@ -73,7 +73,7 @@ loyer garanti 20 ans. Au-delà de 500 kWc : appels d'offres CRE.
 | **Amortissement / déduction des charges** | Sociétés à l'IS | L'installation s'amortit ; l'électricité économisée améliore directement le résultat |
 | **FEADER / plan de compétitivité des exploitations** | Agriculteurs | Via la Chambre d'agriculture / DAAF |
 | **Prêts verts Bpifrance, banques locales** (BRED, Caisse d'Épargne CEPAC, Crédit Agricole Réunion) | Entreprises | Financement du reste à charge |
-| **Tiers-investissement / location** | Entreprises sans trésorerie | Kaz Solèy (ou un partenaire financeur) installe ; le client paie une mensualité inférieure à ses économies |
+| **Tiers-investissement / location** | Entreprises sans trésorerie | SP Energy (ou un partenaire financeur) installe ; le client paie une mensualité inférieure à ses économies |
 
 > ⚠️ **Défiscalisation outre-mer (Girardin industriel) :** les installations photovoltaïques sont
 > en principe **exclues** du dispositif depuis la loi de finances pour 2011. Ne jamais l'avancer
@@ -87,7 +87,7 @@ loyer garanti 20 ans. Au-delà de 500 kWc : appels d'offres CRE.
 
 ---
 
-## B. Les aides pour CRÉER Kaz Solèy
+## B. Les aides pour CRÉER SP Energy
 
 | Aide | Organisme | Intérêt |
 |---|---|---|

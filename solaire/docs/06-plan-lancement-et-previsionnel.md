@@ -3,7 +3,7 @@
 ## 1. Le plan en 3 sprints
 
 ### Sprint 1 (J1 → J30) : « Exister légalement et numériquement »
-- [ ] Vérifier le nom (INPI, Pappers, domaines, Instagram) – réserver `kazsoley.re` et `@kazsoley`
+- [ ] Vérifier le nom (INPI, Pappers, domaines, Instagram) – réserver `spenergy.re` et `@spenergy974`
 - [ ] Rendez-vous expert-comptable : statut SAS, TVA DOM, ZFANG, LODEOM
 - [ ] Dossier prêt d'honneur Initiative Réunion / Réseau Entreprendre + banque (BRED, CEPAC, CA Réunion) + garantie Bpifrance
 - [ ] Immatriculation, compte pro, assurance décennale + RC pro

@@ -1,6 +1,6 @@
-<p align="center"><img src="brand/logo.svg" width="420" alt="Kaz Solèy"></p>
+<p align="center"><img src="brand/logo.svg" width="420" alt="SP Energy"></p>
 
-# Kaz Solèy – Kit de lancement d'une entreprise photovoltaïque à La Réunion
+# SP Energy – Kit de lancement d'une entreprise photovoltaïque à La Réunion
 
 *« L'énergie péi de vot' kaz. »* – Installation de centrales solaires (autoconsommation,
 batteries, vente du surplus) pour particuliers, professionnels et copropriétés à La Réunion.

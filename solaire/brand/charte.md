@@ -1,13 +1,12 @@
-# Charte graphique – Kaz Solèy
+# Charte graphique – SP Energy
 
-> **Nom :** Kaz Solèy (créole : « la maison soleil »)
+> **Nom :** SP Energy
 > **Signature :** *L'énergie péi de vot' kaz.*
 > **Signature pro :** *Votre toit travaille. Vous encaissez.*
 
-⚠️ Avant dépôt : vérifier la disponibilité du nom à l'INPI (classes 37, 40, 42), sur le
-registre du commerce (societe.com / Pappers) et les noms de domaine `kazsoley.re` / `kazsoley.fr`
-ainsi que le compte Instagram `@kazsoley`. Alternatives prêtes : **Solèy Péi Énergie**,
-**Lambrequin Solaire**, **Kaz Lumière**.
+⚠️ À vérifier avant dépôt : disponibilité de « SP Energy » à l'INPI (classes 37, 40, 42) et au
+registre du commerce, du domaine `spenergy.re` et du compte Instagram `@spenergy974`
+(`@spenergy` seul est probablement déjà pris).
 
 ## Le logo
 

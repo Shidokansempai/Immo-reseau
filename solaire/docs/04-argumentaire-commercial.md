@@ -4,7 +4,7 @@
 
 ## 1. Le positionnement en une phrase
 
-**Kaz Solèy, c'est le conseiller énergie de proximité du Sud de La Réunion : on transforme
+**SP Energy, c'est le conseiller énergie de proximité du Sud de La Réunion : on transforme
 votre toit en centrale, on vous dit au centime ce que ça rapporte, et on reste là vingt ans.**
 
 ### Les 3 promesses (à répéter partout)
@@ -109,9 +109,9 @@ votre toit en centrale, on vous dit au centime ce que ça rapporte, et on reste 
 > une visite gratuite de 45 minutes.
 >
 > Au soleil,
-> **Jules – Kaz Solèy**
+> **Jules – SP Energy**
 > Conseiller énergie solaire · Sud de La Réunion
-> 📞 06 92 XX XX XX · kazsoley.re
+> 📞 0693 92 66 87 · spenergy.re
 
 ### 7.2 Prospection professionnelle (B2B – autorisé) – e-mail à un commerce / restaurant
 
@@ -133,7 +133,7 @@ votre toit en centrale, on vous dit au centime ce que ça rapporte, et on reste 
 >
 > Mardi ou jeudi matin ?
 >
-> **Jules – Kaz Solèy** · Votre toit travaille. Vous encaissez.
+> **Jules – SP Energy** · Votre toit travaille. Vous encaissez.
 
 ### 7.3 Relance J+7 après devis
 
@@ -150,7 +150,7 @@ votre toit en centrale, on vous dit au centime ce que ça rapporte, et on reste 
 > Pour info, le barème des primes change le {{date_trimestre}} : un dossier déposé avant vous
 > fait garder la prime actuelle de {{montant_prime}} €.
 >
-> Jules – Kaz Solèy
+> Jules – SP Energy
 
 ### 7.4 Message aux mandataires Immo Réseau (apporteurs d'affaires)
 
@@ -160,7 +160,7 @@ votre toit en centrale, on vous dit au centime ce que ça rapporte, et on reste 
 >
 > Vous l'entendez tous en visite : « Et la facture EDF, elle est de combien ? »
 >
-> Je lance **Kaz Solèy**, installation solaire dans le Sud. Deux façons de travailler ensemble :
+> Je lance **SP Energy**, installation solaire dans le Sud. Deux façons de travailler ensemble :
 > 1. **Vendeurs** : on chiffre gratuitement le potentiel solaire du bien → argument d'annonce
 >    (« Maison avec centrale solaire : facture divisée par 3 »).
 > 2. **Acquéreurs** : on intègre la centrale dans le projet de rénovation.
@@ -173,7 +173,7 @@ votre toit en centrale, on vous dit au centime ce que ça rapporte, et on reste 
 ### 7.5 SMS / WhatsApp après visite
 
 > Merci {{prénom}} pour l'accueil ce matin 🌞 Comme promis, votre simulation : {{lien}}. Ce
-> qu'il faut retenir : ≈ {{gain}} €/an, retour en {{roi}} ans. Je reste dispo, Jules – Kaz Solèy
+> qu'il faut retenir : ≈ {{gain}} €/an, retour en {{roi}} ans. Je reste dispo, Jules – SP Energy
 
 ### 7.6 Demande d'avis + parrainage (M+1 après mise en service)
 
@@ -184,7 +184,7 @@ votre toit en centrale, on vous dit au centime ce que ça rapporte, et on reste 
 
 ## 8. Le script d'appel (prospects ENTRANTS uniquement)
 
-> « Bonjour {{prénom}}, Jules de Kaz Solèy, vous avez fait une demande hier sur notre site –
+> « Bonjour {{prénom}}, Jules de SP Energy, vous avez fait une demande hier sur notre site –
 > vous avez deux minutes ? … Parfait. Je vais être direct : mon travail, c'est de vous dire si
 > le solaire est rentable chez vous, et si ce n'est pas le cas, je vous le dirai aussi. Trois
 > questions rapides… [découverte §3]. Très bien. D'après ce que vous me dites, on serait autour

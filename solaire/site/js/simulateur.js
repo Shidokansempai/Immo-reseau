@@ -1,4 +1,4 @@
-/* Kaz Solèy – simulateur d'économies (aucune donnée envoyée) */
+/* SP Energy – simulateur d'économies (aucune donnée envoyée) */
 (function () {
   const C = window.KAZ_CONFIG;
   const form = document.getElementById("simu-form");

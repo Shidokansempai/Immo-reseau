@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 200" role="img" aria-label="Kaz Solèy – L'énergie péi de votre kaz">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 200" role="img" aria-label="SP Energy – L'énergie péi de votre kaz">
   <g transform="translate(0,0)">
     <circle cx="100" cy="92" r="34" fill="#F5B700"/>
     <g stroke="#F5B700" stroke-width="7" stroke-linecap="round">
@@ -15,6 +15,6 @@
     <path d="M22 132 H178 v6 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 q-6.5 9 -13 0 Z" fill="#E4572E"/>
     <path d="M30 168 q17.5 -10 35 0 t35 0 t35 0 t35 0" fill="none" stroke="#3FA7C4" stroke-width="6" stroke-linecap="round"/>
   </g>
-  <text x="200" y="118" font-family="Montserrat, 'Arial Black', Arial, sans-serif" font-weight="800" font-size="78" fill="#FFFFFF" letter-spacing="-1">KAZ <tspan fill="#F5A300">SOLÈY</tspan></text>
+  <text x="200" y="118" font-family="Montserrat, 'Arial Black', Arial, sans-serif" font-weight="800" font-size="78" fill="#FFFFFF" letter-spacing="-1">SP <tspan fill="#F5A300">ENERGY</tspan></text>
   <text x="204" y="160" font-family="Montserrat, Arial, sans-serif" font-weight="600" font-size="21" fill="#E4572E" letter-spacing="4.2">L'ÉNERGIE PÉI DE VOT' KAZ</text>
 </svg>
