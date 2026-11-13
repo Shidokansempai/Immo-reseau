@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: Anton; src: url('/fonts/Anton-Regular.ttf'); }
+@font-face { font-family: Bebas; src: url('/fonts/BebasNeue-Regular.ttf'); }
+html, body { margin: 0; background: #000; overflow: hidden; }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+#gl, #fx { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+.t { position: absolute; left: 0; width: 1080px; text-align: center; font-family: Anton; color: #fff;
+     opacity: 0; white-space: nowrap; will-change: transform; line-height: 1;
+     -webkit-text-stroke: 16px #0a0a0e; paint-order: stroke fill; }
+.b { font-family: Bebas; -webkit-text-stroke: 8px #0a0a0e; letter-spacing: 4px; }
+.box { position: absolute; opacity: 0; font-family: Anton; white-space: nowrap; line-height: 1;
+       padding: 22px 44px; border: 8px solid #0a0a0e; transform-origin: center; }
+#shade { position: absolute; inset: 0; opacity: 0;
+         background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0) 55%, rgba(0,0,0,.9) 80%); }
+#flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+#black { position: absolute; inset: 0; background: #000; opacity: 1; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "/3d/node_modules/three/build/three.module.js",
+               "three/addons/": "/3d/node_modules/three/examples/jsm/" } }
+</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1080" height="1920"></canvas>
+  <canvas id="fx" width="1080" height="1920"></canvas>
+  <div id="shade"></div>
+  <div id="ui"></div>
+  <div id="flash"></div>
+  <div id="black"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>
