@@ -53,7 +53,7 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 ## Adaptation obstacles (haies / steeple)
 - Chute ou arrêt (A, T) dans les 3 dernières courses : −1
 - Vainqueur récent sur le même hippodrome d'obstacles : +3
-- Terrain lourd sur 3 500 m et plus : poids lourds (≥ 69 kg) −1 sauf favori
+- Terrain lourd sur 3 500 m et plus : poids lourds (≥ 69 kg) −1, sauf favori ou cheval à ≥ 50 % de top 3 (Silaway 3e avec 70 kg)
 - Toujours garder 8 chevaux : risque de chute élevé
 
 ## Journal des courses
@@ -66,4 +66,4 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 | 10/11/2026 | Fontainebleau, Prix Roland Fougedoire (1 200 m ligne droite, souple) | 4-9-15-5-13 | 5-8-9-10-14 (+6-12-7) | Perdu. Seuls 9 et 5 dans l'arrivée. 2sur4 5-8 perdu, alors que 5-9 aurait gagné. Gagnant (4, 16/1) écarté à tort ; 15 et 13 = poids les plus légers. Ancien commentaire :  Révisé avec les écrans PMU : 10 remplace 7 (cote en baisse, écurie Reynier, corde 3). IA PMU : 9-14-5-2. |
 | 11/11/2026 | Toulouse, Prix de la Ville de Toulouse (2 400 m herbe) | 5-3-7-9-6 | 10-3-11-14-5 (joué en Quinté+ Max, 3 €) | Perdu : 5 et 3 font 1-2 mais le 7 manque, pas de Bonus 3. Base presse Britania (10) non placée. Prono provisoire sans écrans PMU = le plus faible. |
 | 20/11/2026 | Vincennes, Prix Triton (trot attelé, 2 700 m GP, volte) | 5-4-6-13-9 | 5-4-13-14-9 (+11-12) | Gagnant OK. 2sur4 4-5 gagnant (1-2). Quinté : 4 des 5 premiers = Bonus 4sur5. Raté : Ketberny (6) 3e à 30/1. Les 1-2 de la course de réf refont 1-2. Ancien :  Course de réf : Kervéléan 1er, Keller de l'Iton 2e. 2sur4 4-5. Données partielles (pas de cotes ni de stats par cheval sur le parcours). |
-| 21/11/2026 | Auteuil, Prix Marc Antony (haies 3 900 m, Listed, lourd) | à compléter | 8-9-1-10-6 (+2-7-13) | Révisé avec les écrans PMU : Mousse du Chef (9, 65 kg, 3 top 3 en 5 courses) remplace Falcon Jet (2). 2sur4 8-1. |
+| 21/11/2026 | Auteuil, Prix Marc Antony (haies 3 900 m, Listed, lourd) | 12-8-1-11-5 (NP 10, 14) | 8-9-1-10-6 (+2-7-13) | 2sur4 8-1 gagnant (2e et 3e). Quinté : 8 et 1 seulement ; Eh Man (10) non-partant → combinaison normalement remboursée. Gagnant Blida (12, 10/1) en complément seulement. Favori Tigress (arrêt récent) non placé : malus validé. Ancien :  Révisé avec les écrans PMU : Mousse du Chef (9, 65 kg, 3 top 3 en 5 courses) remplace Falcon Jet (2). 2sur4 8-1. |
