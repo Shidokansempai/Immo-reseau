@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Cours Babies annulé</title>
+<style>
+  @font-face { font-family: Anton; src: url(video/fonts/Anton-Regular.ttf); }
+  @font-face { font-family: Bebas; src: url(video/fonts/BebasNeue-Regular.ttf); }
+  :root { --red:#c8101e; --gold:#d4af5a; --white:#f5f2eb; --grey:#969696; --ink:#0d0d0d; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html, body { width:1080px; height:1350px; background:var(--ink); overflow:hidden; }
+  .post { position:relative; width:1080px; height:1350px; padding:80px 84px 70px 110px; color:var(--white);
+    background:
+      radial-gradient(ellipse 70% 55% at 75% 45%, rgba(200,16,30,.22), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 10% 100%, rgba(212,175,90,.08), transparent 70%),
+      var(--ink);
+    display:flex; flex-direction:column; }
+  .grain { position:absolute; inset:0; opacity:.07; background-image:repeating-linear-gradient(115deg, #fff 0 1px, transparent 1px 4px); pointer-events:none; }
+  .band { position:absolute; left:0; top:0; bottom:0; width:26px; background:var(--red); }
+  .band::after { content:""; position:absolute; left:26px; top:0; bottom:0; width:4px; background:var(--gold); opacity:.8; }
+  .kanji { position:absolute; right:-30px; top:150px; font-family:"IPAGothic",sans-serif; font-size:760px; line-height:1; color:var(--red); opacity:.12; }
+  .top { font-family:Bebas; font-size:40px; letter-spacing:.24em; color:var(--gold); display:flex; justify-content:space-between; align-items:center; position:relative; }
+  .top small { font-size:30px; color:var(--grey); letter-spacing:.2em; }
+  .tag { margin-top:70px; align-self:flex-start; font-family:Bebas; font-size:44px; letter-spacing:.2em; padding:10px 26px 6px; border:3px solid var(--white); position:relative; }
+  h1 { margin-top:30px; font-family:Anton; font-weight:400; font-size:190px; line-height:1.02; text-transform:uppercase; position:relative; }
+  .stamp { margin-top:14px; align-self:flex-start; font-family:Anton; font-size:150px; line-height:1; color:var(--white); background:var(--red); padding:16px 36px 10px; transform:rotate(-3deg); position:relative; box-shadow:0 20px 50px rgba(200,16,30,.35); }
+  .why { margin-top:56px; font-family:Bebas; font-size:46px; letter-spacing:.06em; line-height:1.15; color:var(--white); position:relative; max-width:820px; }
+  .why b { color:var(--gold); font-weight:400; }
+  .rule { margin-top:auto; display:flex; gap:28px; align-items:center; background:rgba(13,13,13,.8); border:2px solid rgba(245,242,235,.18); border-left:8px solid var(--red); padding:26px 30px; position:relative; }
+  .rule .k { font-family:"IPAGothic",sans-serif; font-size:84px; line-height:1; color:var(--red); }
+  .rule .t { font-family:Anton; font-size:44px; line-height:1.1; }
+  .rule .s { font-family:Bebas; font-size:30px; letter-spacing:.1em; color:var(--grey); margin-top:6px; }
+  footer { margin-top:36px; padding-top:26px; border-top:2px solid rgba(245,242,235,.25); display:flex; justify-content:space-between; align-items:flex-end; position:relative; }
+  .club { white-space:nowrap; font-family:Anton; font-size:42px; line-height:1.05; }
+  .club span { display:block; font-family:Bebas; font-size:28px; letter-spacing:.12em; color:var(--gold); margin-top:6px; }
+  .osu { font-family:Anton; font-size:86px; line-height:.9; color:var(--red); letter-spacing:.06em; }
+</style>
+</head>
+<body>
+<div class="post">
+  <div class="kanji">礼</div>
+  <div class="grain"></div>
+  <div class="band"></div>
+
+  <div class="top">INFO DOJO <small>LE TAMPON · 974</small></div>
+
+  <div class="tag">COURS DES BABIES</div>
+  <h1>Cours</h1>
+  <div class="stamp">ANNULÉ</div>
+
+  <p class="why">Trop d'absents, la plupart <b>sans prévenir</b>.<br>Sans le groupe, pas de cours de qualité pour nos petits.</p>
+
+  <div class="rule">
+    <div class="k">礼</div>
+    <div>
+      <div class="t">ABSENT ? ON PRÉVIENT AVANT LE COURS.</div>
+      <div class="s">UN MESSAGE À SENSEI FABRICE OU SEMPAI JULES SUFFIT</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="club">FIGHTER ACADEMY KARATÉ<span>REPRISE AU PROCHAIN COURS · ON COMPTE SUR VOUS</span></div>
+    <div class="osu">OSU</div>
+  </footer>
+</div>
+</body>
+</html>
