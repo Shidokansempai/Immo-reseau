@@ -1,4 +1,4 @@
-# Méthode Quinté+ — grille de notation (v5)
+# Méthode Quinté+ — grille de notation (v6)
 
 Grille corrigée après les Quintés du 07/11/2026 (Deauville) et du 08/11/2026 (Saint-Cloud).
 Chaque partant reçoit des points ; on joue les 6 à 8 meilleurs scores.
@@ -56,6 +56,13 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 - Terrain lourd sur 3 500 m et plus : poids lourds (≥ 69 kg) −1, sauf favori ou cheval à ≥ 50 % de top 3 (Silaway 3e avec 70 kg)
 - Toujours garder 8 chevaux : risque de chute élevé
 
+## Règles v6 (après 8 courses)
+- Course de référence : +2 seulement si même hippodrome ET même distance ; +1 sinon (Lombok Jiel, réf. 2 100 m, non placé sur 2 700 m).
+- Statistiques historiques de l'épreuve (ex. aucun gagnant né hors de France) : en tenir compte pour la base, −1 pour la victoire.
+- Gagnant de sa course de rentrée : +1 (Inmarosa gagne à 18/1).
+- Favori cité par plus de 80 % de la presse dans un gros lot : le jouer placé, pas en base exclusive.
+- 2sur4 : associer le favori le plus fiable et le cheval le mieux placé dans la course de référence (gagné 4 fois sur 4 avec ce schéma).
+
 ## Journal des courses
 
 | Date | Course | Arrivée | Mon prono | Bilan |
@@ -67,4 +74,5 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 | 11/11/2026 | Toulouse, Prix de la Ville de Toulouse (2 400 m herbe) | 5-3-7-9-6 | 10-3-11-14-5 (joué en Quinté+ Max, 3 €) | Perdu : 5 et 3 font 1-2 mais le 7 manque, pas de Bonus 3. Base presse Britania (10) non placée. Prono provisoire sans écrans PMU = le plus faible. |
 | 20/11/2026 | Vincennes, Prix Triton (trot attelé, 2 700 m GP, volte) | 5-4-6-13-9 | 5-4-13-14-9 (+11-12) | Gagnant OK. 2sur4 4-5 gagnant (1-2). Quinté : 4 des 5 premiers = Bonus 4sur5. Raté : Ketberny (6) 3e à 30/1. Les 1-2 de la course de réf refont 1-2. Ancien :  Course de réf : Kervéléan 1er, Keller de l'Iton 2e. 2sur4 4-5. Données partielles (pas de cotes ni de stats par cheval sur le parcours). |
 | 21/11/2026 | Auteuil, Prix Marc Antony (haies 3 900 m, Listed, lourd) | 12-8-1-11-5 (NP 10, 14) | 8-9-1-10-6 (+2-7-13) | 2sur4 8-1 gagnant (2e et 3e). Quinté : 8 et 1 seulement ; Eh Man (10) non-partant → combinaison normalement remboursée. Gagnant Blida (12, 10/1) en complément seulement. Favori Tigress (arrêt récent) non placé : malus validé. Ancien :  Révisé avec les écrans PMU : Mousse du Chef (9, 65 kg, 3 top 3 en 5 courses) remplace Falcon Jet (2). 2sur4 8-1. |
-| 22/11/2026 | Vincennes, Prix de Bretagne (Gr. II, trot attelé 2 700 m GP, pluie) | à compléter | 16-15-12-1-5 (+10-14-17) | Approfondi : Frank Gio 1er du Marcel Laurent (12/11, 1'10"6) devant Lombok Jiel (1'10"8). 2sur4 16-12. Kuiper (1, 1-4-3-1-3-1, Goop) entre à la place de 10. Drivers vus sur le même parcours le 20/11 : Raffin 1er, Verva 2e, Abrivard 4e. |
+| 22/11/2026 | Vincennes, Prix de Bretagne (Gr. II, trot attelé 2 700 m GP, pluie) | 14-10-8-1-16 | 16-15-12-1-5 (+10-14-17) | Perdu. Seuls 1 et 16 dans l'arrivée ; 2sur4 16-12 perdu. Inmarosa (14, 18/1) gagne ; Frank Gio (né en Italie) 5e, la statistique historique avait raison. Free Time Jepson (10), sorti pour Kuiper, finit 2e. Ancien :  Approfondi : Frank Gio 1er du Marcel Laurent (12/11, 1'10"6) devant Lombok Jiel (1'10"8). 2sur4 16-12. Kuiper (1, 1-4-3-1-3-1, Goop) entre à la place de 10. Drivers vus sur le même parcours le 20/11 : Raffin 1er, Verva 2e, Abrivard 4e. |
+| 23/11/2026 | Vincennes, Prix de Montignac-Charente (attelé 2 700 m, course A, 17 partants) | à compléter | 14-11-17-13-3 (+16-12-15) | Réf. : Homard Land (13) bat Jet Express (11) sur le poteau. 2sur4 11-14. |
