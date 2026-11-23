@@ -61,7 +61,7 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 - Statistiques historiques de l'épreuve (ex. aucun gagnant né hors de France) : en tenir compte pour la base, −1 pour la victoire.
 - Gagnant de sa course de rentrée : +1 (Inmarosa gagne à 18/1).
 - Favori cité par plus de 80 % de la presse dans un gros lot : le jouer placé, pas en base exclusive.
-- 2sur4 : associer le favori le plus fiable et le cheval le mieux placé dans la course de référence (gagné 4 fois sur 4 avec ce schéma).
+- 2sur4 : associer le favori le plus fiable et le cheval le mieux placé dans la course de référence (4 gagnés sur 5 avec ce schéma ; l'échec du 22/11 venait d'une référence sur une autre distance).
 
 ## Journal des courses
 
