@@ -278,6 +278,8 @@ def scene_cta(img, t):
     text(img, "RÉSERVE TON COURS D'ESSAI", font(F_ANTON, 70), W / 2, 1320, WHITE, al * clamp(p))
     text(img, "Écris-nous en message privé", font(F_BEBAS, 70), W / 2, 1480, GREY,
          al * ease_out(prog(t, a + 2.8, 0.5)), tracking=3)
+    text(img, "KARATÉ · SHIDOBOXING · SHIDO-MIX-MARTIAL", font(F_BEBAS, 58), W / 2, 1610, WHITE,
+         al * ease_out(prog(t, a + 3.0, 0.5)), tracking=3)
     text(img, "FIGHTER ACADEMY KARATÉ · LE TAMPON", font(F_BEBAS, 60), W / 2, 1720, GOLD,
          al * ease_out(prog(t, a + 3.2, 0.5)), tracking=6)
 
