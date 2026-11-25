@@ -79,6 +79,13 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 4. Format unique, 5 € : 2sur4 (base + meilleur complément) 3 € + Quinté/Quarté à 1 seule base 2 €.
 5. Noter mise et gain réel après chaque course.
 
+## Bilan des formules (10 courses, 07/11 → 24/11, calcul a posteriori)
+- Quinté 2-3 € (option Max comprise) : gains réels 2,20 € à 4 € (bonus) → perdant.
+- Simple gagnant 1 € sur la base n°1 : 4 gagnants sur 10 (Zeloro ~4/1, Orageux ~3,6/1, Kerosen ~2,5/1, Keller ~3,9/1) → environ 18 € récupérés pour 10 € misés.
+- Simple placé 1 € sur la base n°1 : 5 placés sur 10 → environ à l'équilibre.
+- Option Max : +50 % de coût, n'agit que sur un gain → à supprimer.
+→ Format conseillé : simple gagnant 2 € sur la base, sans option Max. Échantillon trop petit pour conclure.
+
 ## Journal des courses
 
 | Date | Course | Arrivée | Mon prono | Bilan |
