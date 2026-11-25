@@ -67,6 +67,11 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 - Gros lot de trot à Vincennes (≥ 16 partants) : les favoris unanimes de la presse échouent souvent (22/11, 23/11). Les privilégier pour la place, jamais 3 favoris presse ensemble.
 - Sur un hippodrome déjà analysé, réutiliser ce qui a marché sur la même piste (Deauville PSF : vainqueurs récents du parcours et poids légers).
 
+## Règle v8
+- Deauville PSF : corde 1 à 4 = +2 (07/11 et 24/11 : la majorité des placés partaient à la corde ≤ 5).
+- Champ réduit : 1 seule base, jamais 2 (si une base échoue, tout est perdu).
+- Favori unanime de la presse (≥ 90 % des sélections) : retiré de la base, garde la place seulement (Hasapiko, Frank Gio, Britania).
+
 ## Journal des courses
 
 | Date | Course | Arrivée | Mon prono | Bilan |
@@ -80,4 +85,4 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 | 21/11/2026 | Auteuil, Prix Marc Antony (haies 3 900 m, Listed, lourd) | 12-8-1-11-5 (NP 10, 14) | 8-9-1-10-6 (+2-7-13) | 2sur4 8-1 gagnant (2e et 3e). Quinté : 8 et 1 seulement ; Eh Man (10) non-partant → combinaison normalement remboursée. Gagnant Blida (12, 10/1) en complément seulement. Favori Tigress (arrêt récent) non placé : malus validé. Ancien :  Révisé avec les écrans PMU : Mousse du Chef (9, 65 kg, 3 top 3 en 5 courses) remplace Falcon Jet (2). 2sur4 8-1. |
 | 22/11/2026 | Vincennes, Prix de Bretagne (Gr. II, trot attelé 2 700 m GP, pluie) | 14-10-8-1-16 | 16-15-12-1-5 (+10-14-17) | Perdu. Seuls 1 et 16 dans l'arrivée ; 2sur4 16-12 perdu. Inmarosa (14, 18/1) gagne ; Frank Gio (né en Italie) 5e, la statistique historique avait raison. Free Time Jepson (10), sorti pour Kuiper, finit 2e. Ancien :  Approfondi : Frank Gio 1er du Marcel Laurent (12/11, 1'10"6) devant Lombok Jiel (1'10"8). 2sur4 16-12. Kuiper (1, 1-4-3-1-3-1, Goop) entre à la place de 10. Drivers vus sur le même parcours le 20/11 : Raffin 1er, Verva 2e, Abrivard 4e. |
 | 23/11/2026 | Vincennes, Prix de Montignac-Charente (attelé 2 700 m, course A, 17 partants) | 15-13-3-16-9 | 14-11-17-13-3 (+16-12-15) | Perdu. Indy Rock (15) gagne à 55/1. Les 3 favoris presse (14, 11, 17) non placés ; le vainqueur de la course de réf. (13) 2e, Chitchat (3, choix à contre-courant de Zone-Turf) 3e, Ibiza Bella (16, value proposée) 4e. Ancien :  Réf. : Homard Land (13) bat Jet Express (11) sur le poteau. 2sur4 11-14. |
-| 24/11/2026 | Deauville, Prix du Château de Bayeux (PSF 2 500 m, handicap) | à compléter | Quarté 13-16-12-3 (+8, Cassius) | Joué au Quarté+. Bases Roulette (13, 2 victoires récentes sur 2 500 m à Deauville) et Starac (16, 52 kg, spécialiste de la piste). |
+| 24/11/2026 | Deauville, Prix du Château de Bayeux (PSF 2 500 m, handicap) | 16-8-3-2-1 | Quarté 13-16-12-3 (+8, Cassius) | Perdu au Quarté. Starac (16, base n°2) gagne à 8,4/1 ; Tamyz (8) 2e, Colgan Senora (3) 3e, Cassius (1, sans malus de poids) 5e : 4 de mes 6 chevaux dans les 5 premiers. Roulette (13) et Hasapiko (12, 75/75 presse) non placés. Champ à 2 bases trop fragile. Ancien :  Joué au Quarté+. Bases Roulette (13, 2 victoires récentes sur 2 500 m à Deauville) et Starac (16, 52 kg, spécialiste de la piste). |
