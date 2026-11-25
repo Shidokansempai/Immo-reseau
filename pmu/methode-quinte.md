@@ -72,6 +72,13 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 - Champ réduit : 1 seule base, jamais 2 (si une base échoue, tout est perdu).
 - Favori unanime de la presse (≥ 90 % des sélections) : retiré de la base, garde la place seulement (Hasapiko, Frank Gio, Britania).
 
+## Protocole gelé (à partir du 25/11/2026, 30 courses sans modifier la grille v8)
+1. Écrans PMU obligatoires avant de jouer (partants, cordes, poids, musiques, cotes, conseil IA).
+2. Filtre : passer son tour sur les obstacles, et sur les handicaps où aucun cheval n'atteint 6 points.
+3. Test de value : la base doit être cotée au-dessus de 3/1.
+4. Format unique, 5 € : 2sur4 (base + meilleur complément) 3 € + Quinté/Quarté à 1 seule base 2 €.
+5. Noter mise et gain réel après chaque course.
+
 ## Journal des courses
 
 | Date | Course | Arrivée | Mon prono | Bilan |
@@ -86,3 +93,4 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 | 22/11/2026 | Vincennes, Prix de Bretagne (Gr. II, trot attelé 2 700 m GP, pluie) | 14-10-8-1-16 | 16-15-12-1-5 (+10-14-17) | Perdu. Seuls 1 et 16 dans l'arrivée ; 2sur4 16-12 perdu. Inmarosa (14, 18/1) gagne ; Frank Gio (né en Italie) 5e, la statistique historique avait raison. Free Time Jepson (10), sorti pour Kuiper, finit 2e. Ancien :  Approfondi : Frank Gio 1er du Marcel Laurent (12/11, 1'10"6) devant Lombok Jiel (1'10"8). 2sur4 16-12. Kuiper (1, 1-4-3-1-3-1, Goop) entre à la place de 10. Drivers vus sur le même parcours le 20/11 : Raffin 1er, Verva 2e, Abrivard 4e. |
 | 23/11/2026 | Vincennes, Prix de Montignac-Charente (attelé 2 700 m, course A, 17 partants) | 15-13-3-16-9 | 14-11-17-13-3 (+16-12-15) | Perdu. Indy Rock (15) gagne à 55/1. Les 3 favoris presse (14, 11, 17) non placés ; le vainqueur de la course de réf. (13) 2e, Chitchat (3, choix à contre-courant de Zone-Turf) 3e, Ibiza Bella (16, value proposée) 4e. Ancien :  Réf. : Homard Land (13) bat Jet Express (11) sur le poteau. 2sur4 11-14. |
 | 24/11/2026 | Deauville, Prix du Château de Bayeux (PSF 2 500 m, handicap) | 16-8-3-2-1 | Quarté 13-16-12-3 (+8, Cassius) | Perdu au Quarté. Starac (16, base n°2) gagne à 8,4/1 ; Tamyz (8) 2e, Colgan Senora (3) 3e, Cassius (1, sans malus de poids) 5e : 4 de mes 6 chevaux dans les 5 premiers. Roulette (13) et Hasapiko (12, 75/75 presse) non placés. Champ à 2 bases trop fragile. Ancien :  Joué au Quarté+. Bases Roulette (13, 2 victoires récentes sur 2 500 m à Deauville) et Starac (16, 52 kg, spécialiste de la piste). |
+| 25/11/2026 | Deauville, Prix de Saint-Céneri-le-Gérei (PSF 1 300 m, handicap 16 partants) | à compléter | Provisoire : 10-1-6-12-9, en attente des écrans PMU | Course « zone rouge » (sprint handicap). Aucun cheval à 6 points sans les cordes : passer son tour si les écrans ne changent rien. |
