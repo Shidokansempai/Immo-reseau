@@ -86,6 +86,12 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 - Option Max : +50 % de coût, n'agit que sur un gain → à supprimer.
 → Format conseillé : simple gagnant 2 € sur la base, sans option Max. Échantillon trop petit pour conclure.
 
+## Aperçu au 27/11 (12 courses, rapports approximatifs pour 1 €)
+- Simple gagnant sur ma base n°1 : 4/12 (Zeloro, Orageux, Kerosen, Keller) ≈ 18 € pour 12 € → environ +50 %. Mais 0/6 depuis le 21/11.
+- Simple gagnant sur le favori du marché : 5/12 environ (les 4 mêmes + Ready Star) ≈ 20 € pour 12 € → environ +65 %.
+- Quinté/Quarté joués : perdants (bonus de 2,20 € à 4 €).
+- Les règles ajoutées (v5 → v8) n'ont pas amélioré le choix de la base. Échantillon trop petit (intervalle de confiance très large).
+
 ## Journal des courses
 
 | Date | Course | Arrivée | Mon prono | Bilan |
