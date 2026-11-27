@@ -92,6 +92,15 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 - Quinté/Quarté joués : perdants (bonus de 2,20 € à 4 €).
 - Les règles ajoutées (v5 → v8) n'ont pas amélioré le choix de la base. Échantillon trop petit (intervalle de confiance très large).
 
+## Règle v9 « favori + référence » (remplace la grille pour les paris, test sur 20 courses à partir du 28/11)
+Un seul pari : simple gagnant 2 € sur le favori du marché (1er ou 2e de la cote), seulement si TOUTES les conditions sont remplies :
+1. Il a gagné ou fini 2e sur la même piste ET la même distance (±100 m) dans les 45 derniers jours.
+2. Pas de disqualification ni chute/arrêt dans ses 3 dernières courses.
+3. Pas d'obstacles (haies/steeple).
+4. Cote entre 1,5/1 et 6/1.
+Sinon : on passe (ticket fantôme noté). Plus de Quinté/Quarté.
+Test a posteriori sur l'historique : 3 paris (Zeloro, Keller de l'Iton, Ready Star), 3 gagnés — règle construite en connaissant les résultats, donc ce score est trop beau pour être fiable.
+
 ## Journal des courses
 
 | Date | Course | Arrivée | Mon prono | Bilan |
@@ -109,3 +118,5 @@ Au trot, poids et corde ne s'appliquent pas. On les remplace par :
 | 25/11/2026 | Deauville, Prix de Saint-Céneri-le-Gérei (PSF 1 300 m, handicap 16 partants) | 8-7-1-10-5 | PASSE (aucun cheval à 6 pts). Ticket fantôme : gagnant 6 ; classement 6-16-7-10-1 | Bonne décision de passer : fantôme perdu (6 non placé), Awaiting Christmas (8, corde 15) gagne à ~15/1. 3 de mes 5 dans l'arrivée (7, 1, 10). Observation à suivre (grille gelée) : forme récente 4p2p2p non notée en plat. | Écrans PMU reçus. Max 4 pts : Bourgoin (6, 3e récent sur le parcours), Paintello (16, corde 4, 53,5 kg). IA PMU : 1-10-6-7. Solde PMU 0,09 €. |
 | 26/11/2026 | Vincennes, Prix de Sillé-le-Guillaume (attelé européen 2 850 m GP, 16 partants) | 8-1-7-15-16 | Base Harpy (2), 5-6 pts : simple gagnant 2 € si cote ≥ 3/1. Classement 2-8-1-11-9 | Perdu si joué (−2 €) : Harpy non placé. Ready Star (8) gagne à 1,9 (écarté par le test de value). Oscar Van Halbeek (1, 7/8 indicateurs stats) 2e. Observation : biais favori-outsider, le test « cote ≥ 3/1 » est à réévaluer après 30 courses. | Ready Star (8) favori unanime à ~2,2/1 : échoue au test de value. Jack des Ass (11) : 6 échecs à Vincennes. |
 | 27/11/2026 | Vincennes (nocturne), Prix Ville de Fontenay-sous-Bois (attelé 2 700 m, 14 partants) | à compléter | PASSE (règle v8). Fantôme : gagnant 8 ; classement 8-5-11-3-4 (+10-7-14) | Analyse détaillée : réf. Prix Mercator 30/10, même parcours : 8 (D4, Raffin) gagne, 5 battue après avoir mené, 4 disqualifiée. 8 = 6-7 pts, cote ~3,1/1, mais citée 30/30. 4 : disqualifiée en réf. (−1). |
+| 28/11/2026 | Vincennes, Prix d'Oraison (attelé 2 700 m GP, 16 partants) | à compléter | v9 : candidat Moji de Vandel (7, Raffin/Baudouin), à valider (référence même piste < 45 j ?) | |
+| 29/11/2026 | Auteuil, Prix François de Ganay (obstacles 3 600 m) | à compléter | PASSE (obstacles) | |
